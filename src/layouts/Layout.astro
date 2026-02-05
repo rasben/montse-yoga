@@ -1,5 +1,12 @@
+---
+	import '../styles/global.css'
+	import Header from "../components/Header.astro";
+	import { DarkMode } from "flowbite-svelte";
+import Contact from '../components/Contact.astro';
+---
+
 <!doctype html>
-<html lang="en">
+<html lang="en" class="h-auto">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
@@ -8,8 +15,14 @@
 		<meta name="generator" content={Astro.generator} />
 		<title>Astro Basics</title>
 	</head>
-	<body>
+	<body class="h-full min-h-screen bg-cover bg-linear-to-tr  from-orange-100 to-orange-200">
+	<Header />
+	<main>
 		<slot />
+	</main>
+
+	<Contact />
+
 	</body>
 </html>
 

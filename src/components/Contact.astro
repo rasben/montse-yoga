@@ -1,0 +1,34 @@
+---
+import montse from '../assets/montse.png'
+
+import { Heading, P, Button } from "flowbite-svelte";
+import { Button } from "flowbite-svelte";
+import { FacebookSolid, InstagramSolid, MailBoxOutline, MobilePhoneOutline, PhoneOutline } from "flowbite-svelte-icons";
+---
+
+
+<section id="contact" class="bg-primary-300 md:flex justify-items-center justify-center p-20">
+    <div class="md:w-3/5">
+        <Heading tag="h1">Let's talk!</Heading>
+        <P>
+            Contacting me is easiest through my social media
+        </P>
+    </div>
+
+    <figure class="w-2/5 grid-cols-2">
+        <Button class="m-2" href="https://www.instagram.com/mariamontserratmaria/">
+            <InstagramSolid class="me-2 h-5 w-5" /> Instagram
+        </Button>
+
+        <Button class="m-2" href="https://m.facebook.com/montserrat.alberola/">
+            <FacebookSolid class="me-2 h-5 w-5" /> Facebook
+        </Button>
+        <Button class="m-2" href="mailto:maria@maria-montserrat.com">
+            <MailBoxOutline class="me-2 h-5 w-5" /> maria@maria-montserrat.com
+        </Button>
+        <Button class="m-2" href="tel:+4540305519">
+            <PhoneOutline class="me-2 h-5 w-5" /> +45 40 30 55 19
+        </Button>
+
+    </figure>
+</section>

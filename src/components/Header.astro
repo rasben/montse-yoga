@@ -1,0 +1,19 @@
+---
+    import logo from '../assets/logo.png'
+    import { Navbar, NavBrand, NavLi, NavUl, NavHamburger, Button } from "flowbite-svelte";
+    import { BurgerOutline, BurgerSolid } from "flowbite-svelte-icons";
+---
+
+<Navbar color="amber">
+    <NavBrand href="/">
+        <img src={logo.src} alt="Logo" class="h-20 sm:h-25"/>
+    </NavBrand>
+    <div class="flex md:order-2">
+        <Button size="sm" href="#contact">Contact me</Button>
+    </div>
+    <NavUl class="order-1">
+        <NavLi href="/">About Me</NavLi>
+        <NavLi href="/losalcazares">Yoga in Los Alcázares</NavLi>
+        <NavLi href="https://mariamontserrat.impact.me/courses">Online courses</NavLi>
+    </NavUl>
+</Navbar>
