@@ -12,8 +12,8 @@
         <Button size="sm" href="#contact">Contact me</Button>
     </div>
     <NavUl class="order-1">
-        <NavLi href="/">About Me</NavLi>
-        <NavLi href="/losalcazares">Yoga in Los Alcázares</NavLi>
+        <NavLi href={import.meta.env.BASE_URL}>About Me</NavLi>
+        <NavLi href={`${import.meta.env.BASE_URL}losalcazares`}>Yoga in Los Alcázares</NavLi>
         <NavLi href="https://mariamontserrat.impact.me/courses">Online courses</NavLi>
     </NavUl>
 </Navbar>
