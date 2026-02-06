@@ -1,13 +1,36 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
-import Hero from "../components/Hero.astro";
-import Contact from "../components/Contact.astro";
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import {
+    FacebookSolid,
+    InstagramSolid,
+    MailBoxOutline,
+    PhoneOutline
+} from "flowbite-svelte-icons";
+import {Button, Heading} from "flowbite-svelte";
 ---
 
 <Layout>
-	<Hero />
+    <div class="flex h-screen">
+        <div class="m-auto text-center">
+            <Heading tag="h1" class="mb-8">
+                Yoga - Maria Montserrat
+            </Heading>
+
+            <Button class="m-2" href="https://instagram.com/mariamontserratmaria/">
+                <InstagramSolid class="me-2 h-5 w-5" /> Instagram
+            </Button>
+
+            <Button class="m-2" href="https://facebook.com/montserrat.alberola/">
+                <FacebookSolid class="me-2 h-5 w-5" /> Facebook
+            </Button>
+            <Button class="m-2" href="mailto:maria@maria-montserrat.com">
+                <MailBoxOutline class="me-2 h-5 w-5" /> maria@maria-montserrat.com
+            </Button>
+            <Button class="m-2" href="tel:+4540305519">
+                <PhoneOutline class="me-2 h-5 w-5" /> +45 40 30 55 19
+            </Button>
+        </div>
+    </div>
+
 </Layout>
+
