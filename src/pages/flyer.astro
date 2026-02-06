@@ -1,38 +1,48 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { Button, Heading, Spinner } from "flowbite-svelte";
-
 ---
 
 <script lang="ts">
-    let webUrl = "https://www.facebook.com/mariamontserratyoga/events";
+    // Replace this with your actual numeric ID
+    const PAGE_ID = "61585999057635";
+    const WEB_URL = "https://www.facebook.com/mariamontserratyoga/events";
 
-    // The "App" version of that URL
-    // 'facewebmodal' is the most reliable way to open specific web tabs inside the app
-    const appUrl = `fb://facewebmodal/f?href=${webUrl}`;
+    // The "Deep Link" formats
+    const iosAppUrl = `fb://page/?id=${PAGE_ID}&sk=events`;
+    const androidAppUrl = `fb://page/${PAGE_ID}/events`;
 
-    // 1. Try to open the Facebook App
-    window.location.href = appUrl;
+    function openEvents() {
+        const isAndroid = /Android/i.test(navigator.userAgent);
+        const appUrl = isAndroid ? androidAppUrl : iosAppUrl;
 
-    // 2. Set a fallback timer
-    // If the app doesn't open within 2 seconds, redirect to the browser version
-    setTimeout(() => {
-        //window.location.href = webUrl;
-    }, 4000);
+        // Attempt to open the app
+        window.location.href = appUrl;
+
+        // Fallback to web if app doesn't open
+        setTimeout(() => {
+            window.location.href = WEB_URL;
+        }, 4000);
+    }
+
+    openEvents();
 </script>
 
 <Layout>
     <div class="flex h-screen">
         <div class="m-auto text-center">
-            <div>
-            </div>
+
             <div class="py-10 relative">
+                <div>
+                    <Button href="https://facebook.com/mariamontserratyoga/events">
+                        Click here if nothing happens
+                    </Button>
+                </div>
+
                 <Heading tag="h1" class="text-white mix-blend-difference absolute top-1/2 -mt-5 left-0 right-0 z-10">Loading..</Heading>
                 <Spinner class="w-full h-full max-w-[400px] max-h-[400px]" type="pulse" color="rose" />
             </div>
-            <Button href="https://facebook.com/mariamontserratyoga/events">
-                Click here if nothing happens
-            </Button>
+
         </div>
     </div>
 </Layout>
