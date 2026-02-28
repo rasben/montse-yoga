@@ -7,6 +7,7 @@ import { Button, Heading, Spinner } from "flowbite-svelte";
     // Replace this with your actual numeric ID
     const PAGE_ID = "61585999057635";
     const WEB_URL = "https://www.facebook.com/mariamontserratyoga/events";
+    WEB_URL = "https://maria-montserrat.my.canva.site/"
 
     // The "Deep Link" formats
     const iosAppUrl = `fb://page/?id=${PAGE_ID}&sk=events`;
@@ -24,8 +25,8 @@ import { Button, Heading, Spinner } from "flowbite-svelte";
             window.location.href = WEB_URL;
         }, 4000);
     }
-
-    openEvents();
+    window.location.href = WEB_URL;
+    // openEvents();
 </script>
 
 <Layout>
@@ -34,7 +35,7 @@ import { Button, Heading, Spinner } from "flowbite-svelte";
 
             <div class="py-10 relative">
                 <div>
-                    <Button href="https://facebook.com/mariamontserratyoga/events">
+                    <Button href="{WEB_URL}">
                         Click here if nothing happens
                     </Button>
                 </div>
