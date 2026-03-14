@@ -25,7 +25,11 @@ import { Button, Heading, Spinner } from "flowbite-svelte";
             window.location.href = WEB_URL;
         }, 4000);
     }
-    window.location.href = WEB_URL;
+
+    setTimeout(() => {
+        window.location.href = WEB_URL;
+    }, 2000);
+
     // openEvents();
 </script>
 
