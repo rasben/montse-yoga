@@ -23,5 +23,8 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 
+# debug output from fetch-courses --debug
+debug/
+
 .claude/worktrees
 .claude/settings.local.json

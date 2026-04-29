@@ -38,6 +38,7 @@ npm run dev            # Dev server without opening a browser
 npm run build          # Static build to ./dist/
 npm run preview        # Preview the production build
 npm run publish-site   # Safe build-commit-push flow (see below)
+npm run fetch-courses  # Scrape impact.me and update src/data/courses.json (see below)
 npm run astro          # Raw Astro CLI (e.g. `npm run astro add <integration>`)
 ```
 
@@ -54,6 +55,40 @@ There is no test framework, linter, or formatter configured. Match the style of 
 5. Shows the changed files, prompts for a one-line plain-language commit message (with a sensible default), then `git add -A && git commit && git push`.
 
 When working with the non-technical contributor, **prefer this script over running `git add` / `git commit` / `git push` manually** — the build gate alone catches a lot of things that would otherwise break production. Power users can still use git directly.
+
+### `npm run fetch-courses` (updating the course listing)
+
+`scripts/fetch-courses.mjs` scrapes Maria's course listings from `mariamontserrat.impact.me/courses` and writes them to `src/data/courses.json`. The `Courses.astro` component reads that file at build time — there is no runtime fetch, so the site stays fully static.
+
+**Workflow when a course is added or changed:**
+
+```bash
+npm run fetch-courses           # update src/data/courses.json
+# review the output in your editor to make sure it looks right
+npm run publish-site            # build + commit + push (include courses.json in the commit)
+```
+
+**If the scraper stops working** (impact.me changed their HTML), run:
+
+```bash
+npm run fetch-courses -- --debug   # writes raw HTML to debug/courses.html
+```
+
+Open `debug/courses.html`, find the course card HTML structure, and update the `SELECTORS` block near the top of `scripts/fetch-courses.mjs`. The `debug/` folder is gitignored so the file won't be committed.
+
+**Manual fallback:** `src/data/courses.json` is just a plain JSON array. You can edit it by hand if the scraper can't be fixed quickly. Format:
+
+```json
+[
+  {
+    "title": "Course title",
+    "description": "Short description shown on the card.",
+    "image": "https://...",
+    "url": "https://mariamontserrat.impact.me/courses/slug",
+    "price": "€97"
+  }
+]
+```
 
 ## Project layout
 
