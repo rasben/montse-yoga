@@ -1,0 +1,143 @@
+---
+// Offerings section — sits between the hero and the contact section.
+// Leads with the burnout/audience positioning (teachers, carers, burned-out professionals),
+// then shows the practices Maria uses to address that. The teaching styles are the
+// HOW — the audience's situation is the headline.
+---
+
+<section id="offerings" class="relative overflow-hidden bg-white py-24 md:py-32">
+    <!-- Subtle background blobs for visual continuity -->
+    <div class="blob bg-secondary-100" style="width: 500px; height: 500px; top: -100px; right: -150px; opacity: 0.4;"></div>
+    <div class="blob bg-primary-100" style="width: 400px; height: 400px; bottom: -120px; left: -100px; opacity: 0.45;"></div>
+
+    <div class="relative mx-auto max-w-6xl px-6 md:px-10">
+
+        <!-- Section header — burnout/audience first -->
+        <div class="mx-auto max-w-2xl text-center">
+            <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">
+                This is for you
+            </p>
+            <h2 class="mt-4 font-display text-4xl leading-tight text-stone-900 sm:text-5xl">
+                You give a lot. <em class="font-normal text-primary-800">This gives back</em>.
+            </h2>
+            <p class="mt-6 text-lg leading-relaxed text-stone-700">
+                Maria works especially with teachers, child carers, and people in helping professions —
+                people who are used to holding space for everyone else. The practices below are
+                chosen because they work <em>with</em> a depleted nervous system, not against it.
+            </p>
+        </div>
+
+        <!-- "Who this is for" chips -->
+        <div class="mt-10 flex flex-wrap justify-center gap-3">
+            {[
+                "School teachers",
+                "Early years educators",
+                "Child carers",
+                "Healthcare workers",
+                "Social workers",
+                "Anyone in burnout",
+            ].map((label) => (
+                <span class="rounded-full bg-sand-100 px-4 py-2 text-sm font-medium text-stone-700 ring-1 ring-stone-900/8">
+                    {label}
+                </span>
+            ))}
+        </div>
+
+        <!-- Offering cards -->
+        <div class="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+
+            <!-- Yin Yoga -->
+            <article class="group relative rounded-3xl bg-sand-50 p-8 ring-1 ring-stone-900/5 transition hover:shadow-lg hover:shadow-primary-900/8">
+                <div class="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary-100 text-2xl">
+                    🌙
+                </div>
+                <h3 class="font-display text-2xl text-stone-900">Yin Yoga</h3>
+                <p class="mt-3 leading-relaxed text-stone-700">
+                    Long, passive holds that invite the body to soften rather than perform.
+                    Particularly effective for chronic stress and burnout — it works directly
+                    with the nervous system, not just the muscles.
+                </p>
+            </article>
+
+            <!-- Breathwork -->
+            <article class="group relative rounded-3xl bg-sand-50 p-8 ring-1 ring-stone-900/5 transition hover:shadow-lg hover:shadow-primary-900/8">
+                <div class="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-secondary-100 text-2xl">
+                    🌬️
+                </div>
+                <h3 class="font-display text-2xl text-stone-900">Breathwork</h3>
+                <p class="mt-3 leading-relaxed text-stone-700">
+                    Pranayama and conscious breathing techniques that down-regulate the stress
+                    response and bring you back into your body. One of the most immediate
+                    tools for people running on overdrive.
+                </p>
+            </article>
+
+            <!-- Somatic Movement -->
+            <article class="group relative rounded-3xl bg-sand-50 p-8 ring-1 ring-stone-900/5 transition hover:shadow-lg hover:shadow-primary-900/8">
+                <div class="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary-100 text-2xl">
+                    🌿
+                </div>
+                <h3 class="font-display text-2xl text-stone-900">Somatic Movement</h3>
+                <p class="mt-3 leading-relaxed text-stone-700">
+                    Body-awareness practices rooted in dance and creative expression. A way
+                    of discharging stored tension and reconnecting with yourself — without
+                    needing to "do it right."
+                </p>
+            </article>
+
+            <!-- Hatha & Vinyasa -->
+            <article class="group relative rounded-3xl bg-sand-50 p-8 ring-1 ring-stone-900/5 transition hover:shadow-lg hover:shadow-primary-900/8">
+                <div class="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary-100 text-2xl">
+                    🌊
+                </div>
+                <h3 class="font-display text-2xl text-stone-900">Hatha &amp; Vinyasa</h3>
+                <p class="mt-3 leading-relaxed text-stone-700">
+                    Breath-led movement that builds gentle strength and fluidity. A grounding
+                    practice for days when you need to feel capable in your body again — calm
+                    and creative, never competitive.
+                </p>
+            </article>
+
+            <!-- Kundalini -->
+            <article class="group relative rounded-3xl bg-sand-50 p-8 ring-1 ring-stone-900/5 transition hover:shadow-lg hover:shadow-primary-900/8">
+                <div class="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-secondary-100 text-2xl">
+                    🔥
+                </div>
+                <h3 class="font-display text-2xl text-stone-900">Kundalini</h3>
+                <p class="mt-3 leading-relaxed text-stone-700">
+                    Mantra, pranayama, and kriyas that work with the body's energy system.
+                    Deeply restorative in a different way — often described as transformational
+                    by people who felt "stuck" before.
+                </p>
+            </article>
+
+            <!-- Online Courses — for educators specifically -->
+            <article class="group relative rounded-3xl bg-primary-700 p-8 transition hover:bg-primary-800 hover:shadow-lg hover:shadow-primary-900/20">
+                <div class="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-white/20 text-2xl">
+                    🎓
+                </div>
+                <h3 class="font-display text-2xl text-white">Online Courses</h3>
+                <p class="mt-3 leading-relaxed text-primary-100">
+                    Self-paced programmes built especially for educators and carers —
+                    practice on your own schedule, wherever you are in the world.
+                </p>
+                <a
+                    href="https://mariamontserrat.impact.me/courses"
+                    class="mt-6 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-primary-800 transition hover:bg-primary-50"
+                >
+                    Browse courses
+                    <svg class="h-4 w-4 transition group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 4.293a1 1 0 011.414 0l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414-1.414L13.586 11H4a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                </a>
+            </article>
+
+        </div>
+
+        <!-- Maria's background, framed as credibility for this specific audience -->
+        <p class="mx-auto mt-16 max-w-2xl text-center text-sm leading-relaxed text-stone-500">
+            Maria's practice spans nearly two decades. Trained in yin yoga, breathwork, and somatic
+            movement — with additional studies in Chinese medicine — she brings a nervous-system-aware
+            approach that goes beyond poses.
+        </p>
+
+    </div>
+</section>

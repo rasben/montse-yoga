@@ -5,6 +5,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
+    /* Brand: warm coral / sun-soaked orange */
     --color-primary-50: #fff5f2;
     --color-primary-100: #fff1ee;
     --color-primary-200: #ffe4de;
@@ -16,6 +17,7 @@
     --color-primary-800: #cc4522;
     --color-primary-900: #a5371b;
 
+    /* Brand: soft sky blue */
     --color-secondary-50: #f0f9ff;
     --color-secondary-100: #e0f2fe;
     --color-secondary-200: #bae6fd;
@@ -26,6 +28,19 @@
     --color-secondary-700: #0369a1;
     --color-secondary-800: #075985;
     --color-secondary-900: #0c4a6e;
+
+    /* Sand / cream tones for soft wellness backgrounds */
+    --color-sand-50:  #fbf7f2;
+    --color-sand-100: #f7efe5;
+    --color-sand-200: #f0e2d1;
+    --color-sand-300: #e6cfb4;
+    --color-sand-400: #d6b58e;
+
+    /* Typography — soft wellness pairing:
+       Cormorant Garamond (warm display serif)
+       + Inter (clean humanist sans for body) */
+    --font-display: "Cormorant Garamond", "Cormorant", Georgia, "Times New Roman", serif;
+    --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
 }
 
 @source "../../node_modules/flowbite-svelte/dist";
@@ -37,9 +52,54 @@
         display: none;
     }
 
-}
+    body {
+        font-family: var(--font-sans);
+        color: #3a2a22;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
 
+    h1, h2, h3, h4 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        letter-spacing: -0.01em;
+    }
+}
 
 html, body {
     scroll-behavior: smooth;
 }
+
+/* Decorative gradient blobs used in the hero —
+   soft pastel shapes that drift behind the foreground content */
+.blob {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(60px);
+    opacity: 0.55;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Gentle float used by the hero accent shapes */
+@keyframes float-slow {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    50%      { transform: translateY(-18px) translateX(8px); }
+}
+.float-slow { animation: float-slow 10s ease-in-out infinite; }
+
+@keyframes float-slower {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    50%      { transform: translateY(14px) translateX(-10px); }
+}
+.float-slower { animation: float-slower 14s ease-in-out infinite; }
+
+/* Subtle fade-in for hero content on first paint */
+@keyframes fade-up {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fade-up 0.9s ease-out both; }
+.fade-up-delay-1 { animation: fade-up 0.9s ease-out 0.15s both; }
+.fade-up-delay-2 { animation: fade-up 0.9s ease-out 0.3s both; }
+.fade-up-delay-3 { animation: fade-up 0.9s ease-out 0.45s both; }

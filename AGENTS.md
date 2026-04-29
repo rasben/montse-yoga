@@ -10,6 +10,25 @@ Marketing website for yoga instructor Maria Montserrat, served at **[maria-monts
 
 **Stack:** Astro 5 · Svelte 5 · TypeScript 5 · Tailwind CSS 4 · Flowbite-Svelte
 
+## Maria's teaching niches
+
+Maria's practice spans nearly two decades across multiple continents. When writing copy or building content, always reflect her actual specialties — not generic yoga marketing language.
+
+**Teaching styles she works with:**
+- **Yin yoga** — long passive holds, release of connective tissue, doorway to stillness and meditation. Her most distinctive niche.
+- **Hatha & Vinyasa** — classical postures made fluid; breath-led movement with a creative, dance-inspired quality
+- **Kundalini** — kriyas, mantra, mudra, pranayama; transformational energy work
+- **Breathwork / Pranayama** — nervous system regulation, somatic breath practices drawn from yoga and other traditions
+- **Somatic movement** — body-awareness and creative movement rooted in her background as a dancer
+
+**Background and training:**
+- Formally trained in yin yoga, breathwork, and somatic movement
+- Additional studies in Chinese medicine and face reading (mian xiang) — informs her holistic approach
+- Background rooted in dance and creative expression
+- Based at The Yoga Flat in Copenhagen (multiple locations); also teaches online via impact.me
+
+**Voice notes for copy:** Calm, creative, meditative — not performance-oriented or fitness-focused. The offer is about reconnecting with yourself, not achieving poses. Classes are described as "calm, creative, and deeply meditative."
+
 ## Commands
 
 ```bash
@@ -65,9 +84,9 @@ dist/            Build output — never commit, never edit
 
 ```astro
 ---
-import beach from '../assets/beach.jpg';
+import maria from '../assets/maria-tree-pose.jpg';
 ---
-<img src={beach.src} alt="..." />
+<img src={maria.src} alt="..." />
 ```
 
 Files in `public/` are served as raw paths and are not processed.
