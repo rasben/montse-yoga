@@ -97,7 +97,9 @@ Infer who you're talking to from the conversation: the technical maintainer will
 
 ## Things to know
 
-- The site is currently 100% static generation. There are no API routes, no middleware, and no Svelte islands hydrated on the client. The one exception is `/flyer`, which uses an inline `<script>` to detect the device and redirect to Facebook.
+- The site is 100% static generation. There are no API routes, no middleware, and no Svelte islands hydrated on the client. Two pieces of client-side JavaScript exist:
+  - A **Plausible analytics** tag in `src/layouts/Layout.astro` (privacy-friendly, no cookies). Preserve it across redesigns and head/Layout refactors.
+  - A redirect script in `src/pages/flyer.astro` that sends visitors to Maria's Canva site after a short delay. Older Facebook deep-link logic remains in source but is currently disabled (commented-out `openEvents()`); the live behaviour is the Canva redirect only.
 - `src/components/Welcome.astro` and `Hero.astro` come from the Astro starter and are not currently referenced from any page.
 - Contact links (Instagram, Facebook, email, phone) appear in both `src/pages/index.astro` and `src/components/Contact.astro` — keep them in sync when updating.
 - Multi-lingual support is a planned goal. When implementing, prefer Astro's built-in [`i18n` routing](https://docs.astro.build/en/guides/internationalization/) over a third-party library.
