@@ -46,56 +46,6 @@
 @source "../../node_modules/flowbite-svelte/dist";
 @source "../../node_modules/flowbite-svelte-icons/dist";
 
-/* ============================================================
-   BOLD THEME — alternate, higher-saturation palette
-   ------------------------------------------------------------
-   An opt-in "louder" look for the same layout. Activated by
-   adding the `theme-bold` class to <html> (see ThemeToggle).
-   Because Tailwind v4 utilities resolve colours through these
-   CSS variables, re-declaring them inside a scoped selector
-   re-skins every bg-/text-/from-/ring- utility automatically —
-   no markup changes needed. Tweak the hexes here to taste.
-   ============================================================ */
-html.theme-bold {
-    /* Primary — magenta / dark purple, anchored on #b3298d (= 500) */
-    --color-primary-50:  #fbf0f7;
-    --color-primary-100: #f6dcec;
-    --color-primary-200: #eebada;
-    --color-primary-300: #e08bc1;
-    --color-primary-400: #cf57a5;
-    --color-primary-500: #b3298d;
-    --color-primary-600: #9c2079;
-    --color-primary-700: #801a62;
-    --color-primary-800: #6a1750;
-    --color-primary-900: #581643;
-
-    /* Secondary — deep teal, the complement that balances the magenta */
-    --color-secondary-50:  #eefbf8;
-    --color-secondary-100: #cdf3eb;
-    --color-secondary-200: #9ce5d7;
-    --color-secondary-300: #63cfbd;
-    --color-secondary-400: #35b09f;
-    --color-secondary-500: #1c9183;
-    --color-secondary-600: #14746a;
-    --color-secondary-700: #145d56;
-    --color-secondary-800: #144a45;
-    --color-secondary-900: #133e3a;
-
-    /* Sand — backgrounds tinted toward soft lilac so the page reads
-       warmer and on-brand with the magenta (still light, not dark) */
-    --color-sand-50:  #faf3f8;
-    --color-sand-100: #f3e6ef;
-    --color-sand-200: #e7cfe0;
-    --color-sand-300: #d3aac6;
-    --color-sand-400: #bd83ac;
-}
-
-/* The one "bg-white" section reads slightly tinted instead of stark
-   white, so the bolder palette feels intentional edge to edge. */
-html.theme-bold .bg-white {
-    background-color: #fdf7fb !important;
-}
-
 @layer base {
     /* disable chrome cancel button */
     input[type="search"]::-webkit-search-cancel-button {
