@@ -5,41 +5,65 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-    /* Brand: warm coral / sun-soaked orange */
-    --color-primary-50: #fff5f2;
-    --color-primary-100: #fff1ee;
-    --color-primary-200: #ffe4de;
-    --color-primary-300: #ffd5cc;
-    --color-primary-400: #ffbcad;
-    --color-primary-500: #fe795d;
-    --color-primary-600: #ef562f;
-    --color-primary-700: #eb4f27;
-    --color-primary-800: #cc4522;
-    --color-primary-900: #a5371b;
+    /* ============================================================
+       Mexican palette — bold, saturated, SOLID colours (no gradients).
+       Brand anchor: #b866a2 (orchid magenta) at primary-500.
+       Pairs the magenta with classic Mexican turquoise and marigold.
+       ============================================================ */
 
-    /* Brand: soft sky blue */
-    --color-secondary-50: #f0f9ff;
-    --color-secondary-100: #e0f2fe;
-    --color-secondary-200: #bae6fd;
-    --color-secondary-300: #7dd3fc;
-    --color-secondary-400: #38bdf8;
-    --color-secondary-500: #0ea5e9;
-    --color-secondary-600: #0284c7;
-    --color-secondary-700: #0369a1;
-    --color-secondary-800: #075985;
-    --color-secondary-900: #0c4a6e;
+    /* Primary — orchid magenta (anchor #b866a2) */
+    --color-primary-50:  #fbf0f7;
+    --color-primary-100: #f6dcee;
+    --color-primary-200: #eebbdd;
+    --color-primary-300: #e092c8;
+    --color-primary-400: #cd76ad;
+    --color-primary-500: #b866a2;
+    --color-primary-600: #9c4d86;
+    --color-primary-700: #7f3d6c;
+    --color-primary-800: #663057;
+    --color-primary-900: #4d2442;
+    --color-primary-950: #2f1428;
 
-    /* Sand / cream tones for soft wellness backgrounds */
-    --color-sand-50:  #fbf7f2;
-    --color-sand-100: #f7efe5;
-    --color-sand-200: #f0e2d1;
-    --color-sand-300: #e6cfb4;
-    --color-sand-400: #d6b58e;
+    /* Secondary — Mexican turquoise / teal (the magenta's partner) */
+    --color-secondary-50:  #e7fbf6;
+    --color-secondary-100: #c4f4e9;
+    --color-secondary-200: #8fe8d6;
+    --color-secondary-300: #52d6be;
+    --color-secondary-400: #1fbfa5;
+    --color-secondary-500: #06a48b;
+    --color-secondary-600: #038371;
+    --color-secondary-700: #04695b;
+    --color-secondary-800: #07534a;
+    --color-secondary-900: #08423b;
 
-    /* Typography — soft wellness pairing:
-       Cormorant Garamond (warm display serif)
-       + Inter (clean humanist sans for body) */
-    --font-display: "Cormorant Garamond", "Cormorant", Georgia, "Times New Roman", serif;
+    /* Accent — marigold / amber (cempasúchil warmth) */
+    --color-accent-50:  #fff7e6;
+    --color-accent-100: #ffe9bd;
+    --color-accent-200: #ffd482;
+    --color-accent-300: #ffbb40;
+    --color-accent-400: #fba514;
+    --color-accent-500: #ef8b00;
+    --color-accent-600: #cc6c02;
+    --color-accent-700: #a44e08;
+    --color-accent-800: #863d0e;
+    --color-accent-900: #6e330f;
+
+    /* Rojo — warm Mexican red, for occasional pop */
+    --color-rojo-400: #ef5a5a;
+    --color-rojo-500: #e23b3b;
+    --color-rojo-600: #cc2b2b;
+    --color-rojo-700: #a82020;
+
+    /* Papel — warm cream backgrounds (solid, not gradients) */
+    --color-sand-50:  #fdf6ec;
+    --color-sand-100: #faecd6;
+    --color-sand-200: #f2dab6;
+    --color-sand-300: #e8c391;
+    --color-sand-400: #d9a866;
+
+    /* Typography — Playfair Display (high-contrast display serif,
+       matching the reference image) + Inter for clean body text. */
+    --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
     --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
 }
 
@@ -54,14 +78,14 @@
 
     body {
         font-family: var(--font-sans);
-        color: #3a2a22;
+        color: #2f1428;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
     }
 
     h1, h2, h3, h4 {
         font-family: var(--font-display);
-        font-weight: 500;
+        font-weight: 700;
         letter-spacing: -0.01em;
     }
 }
@@ -70,31 +94,7 @@ html, body {
     scroll-behavior: smooth;
 }
 
-/* Decorative gradient blobs used in the hero —
-   soft pastel shapes that drift behind the foreground content */
-.blob {
-    position: absolute;
-    border-radius: 9999px;
-    filter: blur(60px);
-    opacity: 0.55;
-    pointer-events: none;
-    z-index: 0;
-}
-
-/* Gentle float used by the hero accent shapes */
-@keyframes float-slow {
-    0%, 100% { transform: translateY(0) translateX(0); }
-    50%      { transform: translateY(-18px) translateX(8px); }
-}
-.float-slow { animation: float-slow 10s ease-in-out infinite; }
-
-@keyframes float-slower {
-    0%, 100% { transform: translateY(0) translateX(0); }
-    50%      { transform: translateY(14px) translateX(-10px); }
-}
-.float-slower { animation: float-slower 14s ease-in-out infinite; }
-
-/* Subtle fade-in for hero content on first paint */
+/* Subtle fade-in for hero content on first paint (no gradients involved). */
 @keyframes fade-up {
     from { opacity: 0; transform: translateY(12px); }
     to   { opacity: 1; transform: translateY(0); }

@@ -1,7 +1,7 @@
 ---
 // Soft-wellness hero for the /teacher-yoga page.
-// Pairs an editorial serif headline with a single warm photo of Maria and
-// floating pastel "blobs" behind. Site nav lives in the global Header.
+// Pairs a bold Playfair Display headline with a single warm photo of Maria
+// over a solid colour block. Site nav lives in the global Header.
 //
 // Photo:
 //   maria-grass-seated.jpg — Maria seated in lotus pose on grass,
@@ -13,13 +13,9 @@ import { Image } from 'astro:assets';
 ---
 
 <section class="relative overflow-hidden">
-    <!-- Soft pastel background gradient -->
-    <div class="absolute inset-0 -z-20 bg-gradient-to-br from-sand-50 via-primary-50 to-secondary-50"></div>
+    <!-- Solid warm cream background -->
+    <div class="absolute inset-0 -z-20 bg-primary-100"></div>
 
-    <!-- Floating decorative blobs (purely decorative, behind content) -->
-    <div class="blob float-slow bg-primary-200" style="width: 480px; height: 480px; top: -120px; right: -80px;"></div>
-    <div class="blob float-slower bg-secondary-200" style="width: 360px; height: 360px; bottom: -120px; left: -100px;"></div>
-    <div class="blob float-slow bg-primary-300" style="width: 220px; height: 220px; top: 40%; left: 38%; opacity: 0.3;"></div>
 
 
     <!-- Hero content grid -->
@@ -36,9 +32,9 @@ import { Image } from 'astro:assets';
             </h1>
 
             <p class="fade-up-delay-2 mt-8 max-w-xl text-lg leading-relaxed text-stone-800 md:text-xl">
-                If you spend your days caring for others — teaching, nurturing, holding space
-                — this is space held for you. Yoga and breathwork that calms your nervous
-                system, not just your mind. Without pressure. Without perfection.
+                If you spend your days looking after other people — teaching, caring,
+                giving — this is time set aside for you. Yoga and breathwork that calms
+                your nervous system, not just your mind. Without pressure. Without perfection.
             </p>
 
             <div class="fade-up-delay-3 mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
@@ -70,7 +66,7 @@ import { Image } from 'astro:assets';
             <div class="relative mx-auto max-w-md md:max-w-none">
                 <!-- Backing organic shape -->
                 <div
-                    class="absolute -inset-4 -z-10 bg-primary-200/70 blur-sm"
+                    class="absolute -inset-4 -z-10 bg-secondary-500"
                     style="border-radius: 62% 38% 56% 44% / 48% 60% 40% 52%;"
                 ></div>
 
@@ -91,7 +87,7 @@ import { Image } from 'astro:assets';
 
                 <!-- Floating quote card -->
                 <figure
-                    class="absolute -bottom-6 -left-6 hidden max-w-[16rem] rounded-2xl bg-white/95 p-5 shadow-xl shadow-primary-900/15 ring-1 ring-stone-900/5 backdrop-blur-md sm:block md:-left-10"
+                    class="absolute -bottom-6 -left-6 hidden max-w-[16rem] rounded-2xl bg-white p-5 shadow-xl shadow-primary-900/15 ring-1 ring-stone-900/5 sm:block md:-left-10"
                 >
                     <svg class="h-6 w-6 text-primary-700" viewBox="0 0 24 24" fill="currentColor"><path d="M9.983 3v7.391c0 5.704-3.731 9.57-8.983 10.609l-.995-2.151c2.432-.917 3.995-3.638 3.995-5.849h-4v-10h9.983zm14.017 0v7.391c0 5.704-3.748 9.571-9 10.609l-.996-2.151c2.433-.917 3.996-3.638 3.996-5.849h-3.983v-10h9.983z"/></svg>
                     <blockquote class="mt-2 font-display text-lg italic leading-snug text-stone-900">

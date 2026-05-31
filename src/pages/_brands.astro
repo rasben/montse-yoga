@@ -95,9 +95,7 @@ const deliverables = [
 >
     <!-- ============================ HERO ============================ -->
     <section class="relative overflow-hidden">
-        <div class="absolute inset-0 -z-20 bg-gradient-to-br from-sand-50 via-primary-50 to-secondary-50"></div>
-        <div class="blob float-slow bg-primary-200" style="width: 480px; height: 480px; top: -120px; right: -80px;"></div>
-        <div class="blob float-slower bg-secondary-200" style="width: 360px; height: 360px; bottom: -120px; left: -100px;"></div>
+        <div class="absolute inset-0 -z-20 bg-sand-50"></div>
 
         <!-- Hero content -->
         <div class="relative z-10 mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-6 pb-24 pt-12 md:grid-cols-12 md:gap-16 md:px-10 md:pb-28 md:pt-20">
@@ -132,7 +130,7 @@ const deliverables = [
             <!-- Portrait -->
             <div class="fade-up-delay-2 relative md:col-span-6">
                 <div class="relative mx-auto max-w-md md:max-w-none">
-                    <div class="absolute -inset-4 -z-10 bg-primary-200/70 blur-sm" style="border-radius: 62% 38% 56% 44% / 48% 60% 40% 52%;"></div>
+                    <div class="absolute -inset-4 -z-10 bg-secondary-500" style="border-radius: 62% 38% 56% 44% / 48% 60% 40% 52%;"></div>
                     <div class="relative overflow-hidden shadow-2xl shadow-primary-900/20" style="border-radius: 62% 38% 56% 44% / 48% 60% 40% 52%;">
                         <img
                             src={img('de264b56be8d0a2fb3cae44c2ad3e33c.jpg')}
@@ -148,10 +146,9 @@ const deliverables = [
 
     <!-- ============================ ABOUT ============================ -->
     <section class="relative overflow-hidden bg-white py-24 md:py-32">
-        <div class="blob bg-secondary-100" style="width: 460px; height: 460px; top: -100px; right: -150px; opacity: 0.4;"></div>
         <div class="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-16 px-6 md:grid-cols-2 md:px-10">
             <div class="relative order-2 md:order-1">
-                <div class="absolute -inset-3 -z-10 bg-secondary-200/50 blur-sm" style="border-radius: 48% 52% 60% 40% / 56% 44% 56% 44%;"></div>
+                <div class="absolute -inset-3 -z-10 bg-primary-500" style="border-radius: 48% 52% 60% 40% / 56% 44% 56% 44%;"></div>
                 <div class="relative overflow-hidden shadow-xl shadow-primary-900/15" style="border-radius: 48% 52% 60% 40% / 56% 44% 56% 44%;">
                     <img
                         src={img('299251c842a4cc0800fb5ed40f0b90c8.jpg')}
@@ -209,7 +206,6 @@ const deliverables = [
 
     <!-- ============================ HOW I SHOW UP (reels) ============================ -->
     <section id="work" class="relative overflow-hidden bg-white py-24 md:py-32">
-        <div class="blob bg-primary-100" style="width: 420px; height: 420px; bottom: -120px; left: -100px; opacity: 0.45;"></div>
         <div class="relative mx-auto max-w-6xl px-6 md:px-10">
             <div class="mx-auto max-w-2xl text-center">
                 <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">How I show up</p>
@@ -224,7 +220,7 @@ const deliverables = [
             <div class="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {reels.map((r) => (
                     <article class="group flex flex-col overflow-hidden rounded-3xl bg-sand-50 ring-1 ring-stone-900/5 transition hover:shadow-lg hover:shadow-primary-900/8">
-                        <div class="relative flex aspect-[9/16] items-center justify-center bg-gradient-to-br from-primary-200 via-primary-100 to-secondary-100 p-6">
+                        <div class="relative flex aspect-[9/16] items-center justify-center bg-primary-500 p-6">
                             <span class="absolute right-4 top-4 inline-flex items-center gap-1 rounded-full bg-white/80 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-primary-800 backdrop-blur-sm">
                                 <svg class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor"><path d="M6 4l10 6-10 6V4z"/></svg> Reel
                             </span>
@@ -273,7 +269,7 @@ const deliverables = [
             <div class="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {specWork.map((w) => (
                     <article class="group flex flex-col overflow-hidden rounded-3xl bg-white ring-1 ring-stone-900/5 transition hover:shadow-lg hover:shadow-primary-900/8">
-                        <div class="relative flex aspect-[9/16] items-center justify-center bg-gradient-to-br from-secondary-200 via-secondary-100 to-sand-200 p-6">
+                        <div class="relative flex aspect-[9/16] items-center justify-center bg-secondary-500 p-6">
                             <span class="absolute left-3 top-3 inline-flex items-center gap-0.5 rounded-full bg-white/85 px-2.5 py-1.5 text-lg leading-none shadow-sm backdrop-blur-sm" role="img" aria-label={FLAG[w.lang].label} title={FLAG[w.lang].label}>{FLAG[w.lang].flag}</span>
                             <span class="absolute right-4 top-4 rounded-full bg-white/80 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-stone-700 backdrop-blur-sm">Ad-ready</span>
                             <p class="text-center font-display text-2xl leading-snug text-stone-900">{w.hook}</p>
@@ -359,8 +355,6 @@ const deliverables = [
 
     <!-- ============================ WORK TOGETHER (contact) ============================ -->
     <section id="work-together" class="relative overflow-hidden bg-sand-50 py-24 md:py-32">
-        <div class="blob bg-primary-200" style="width: 360px; height: 360px; top: -80px; left: -80px; opacity: 0.5;"></div>
-        <div class="blob bg-secondary-200" style="width: 320px; height: 320px; bottom: -100px; right: -60px; opacity: 0.45;"></div>
 
         <div class="relative mx-auto max-w-3xl px-6 text-center md:px-10">
             <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">Let's work together</p>

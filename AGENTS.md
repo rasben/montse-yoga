@@ -16,15 +16,14 @@ Maria's practice spans nearly two decades across multiple continents. When writi
 
 **Teaching styles she works with:**
 - **Yin yoga** — long passive holds, release of connective tissue, doorway to stillness and meditation. Her most distinctive niche.
-- **Hatha & Vinyasa** — classical postures made fluid; breath-led movement with a creative, dance-inspired quality
+- **Hatha & Vinyasa** — classical postures made fluid; breath-led, flowing movement with a creative quality
 - **Kundalini** — kriyas, mantra, mudra, pranayama; transformational energy work
 - **Breathwork / Pranayama** — nervous system regulation, somatic breath practices drawn from yoga and other traditions
-- **Somatic movement** — body-awareness and creative movement rooted in her background as a dancer
+- **Somatic movement** — body-awareness and creative movement for releasing stored tension and reconnecting with the body
 
 **Background and training:**
 - Formally trained in yin yoga, breathwork, and somatic movement
 - Additional studies in Chinese medicine and face reading (mian xiang) — informs her holistic approach
-- Background rooted in dance and creative expression
 - Based at The Yoga Flat in Copenhagen (multiple locations); also teaches online via impact.me
 
 **Voice notes for copy:** Calm, creative, meditative — not performance-oriented or fitness-focused. The offer is about reconnecting with yourself, not achieving poses. Classes are described as "calm, creative, and deeply meditative."

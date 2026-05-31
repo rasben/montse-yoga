@@ -14,21 +14,21 @@ const universes = [
     {
         label: 'For teachers',
         title: 'Yoga & breathwork',
-        body: 'Yin, breathwork, and somatic movement for burnout — classes in Copenhagen and self-paced courses for people who hold space for everyone else.',
+        body: 'Yin, breathwork, and somatic movement for burnout — classes in Copenhagen and self-paced courses for people who spend their days looking after everyone else.',
         cta: 'Practice with me',
         href: '/teacher-yoga',
         external: false,
-        accent: 'from-primary-200 via-primary-100 to-secondary-100',
+        accent: 'bg-primary-500',
         icon: '🌙',
     },
     {
         label: 'For brands',
         title: 'UGC & content creation',
-        body: 'Authentic, conversion-focused content in English, Spanish, and Danish — skincare, wellness, lifestyle, food, travel, and health. 582K+ accounts reached last month.',
+        body: 'Authentic, conversion-focused content in English, Spanish, and Danish — skincare, wellness, lifestyle, food, travel, and health. 582K+ accounts reached in a single month.',
         cta: 'See my work',
         href: 'https://brands.maria-montserrat.com',
         external: true,
-        accent: 'from-secondary-200 via-secondary-100 to-sand-200',
+        accent: 'bg-secondary-500',
         icon: '🎬',
     },
     {
@@ -38,7 +38,7 @@ const universes = [
         cta: 'Read the blog',
         href: BLOG_URL,
         external: true,
-        accent: 'from-sand-200 via-primary-100 to-primary-200',
+        accent: 'bg-accent-500',
         icon: '✍️',
     },
 ];
@@ -50,9 +50,7 @@ const universes = [
 >
     <!-- ============================ INTRO ============================ -->
     <section class="relative overflow-hidden">
-        <div class="absolute inset-0 -z-20 bg-gradient-to-br from-sand-50 via-primary-50 to-secondary-50"></div>
-        <div class="blob float-slow bg-primary-200" style="width: 460px; height: 460px; top: -120px; right: -90px;"></div>
-        <div class="blob float-slower bg-secondary-200" style="width: 380px; height: 380px; bottom: -140px; left: -110px;"></div>
+        <div class="absolute inset-0 -z-20 bg-primary-100"></div>
 
         <div class="relative z-10 mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-6 py-16 md:grid-cols-12 md:gap-16 md:px-10 md:py-24">
             <!-- Copy -->
@@ -65,9 +63,9 @@ const universes = [
                 </h1>
                 <p class="fade-up-delay-2 mt-8 max-w-xl text-lg leading-relaxed text-stone-800 md:text-xl">
                     Mexican-born, Denmark-based. I'm a yoga &amp; breathwork teacher and a
-                    trilingual content creator — calm, creative, and a little bit dance.
-                    I hold space for people running on empty, and I make honest content
-                    for brands that fit how I actually live.
+                    trilingual content creator. My classes are calm, creative, and
+                    unhurried — a place to slow down and breathe when you're worn out.
+                    I also make honest content for brands that fit the way I actually live.
                 </p>
                 <p class="fade-up-delay-3 mt-6 text-sm font-semibold uppercase tracking-widest text-stone-600">
                     Pick the path that fits you ↓
@@ -77,7 +75,7 @@ const universes = [
             <!-- Photo -->
             <div class="fade-up-delay-2 relative md:col-span-5">
                 <div class="relative mx-auto max-w-sm md:max-w-none">
-                    <div class="absolute -inset-4 -z-10 bg-primary-200/70 blur-sm" style="border-radius: 62% 38% 56% 44% / 48% 60% 40% 52%;"></div>
+                    <div class="absolute -inset-4 -z-10 bg-accent-500" style="border-radius: 62% 38% 56% 44% / 48% 60% 40% 52%;"></div>
                     <div class="relative overflow-hidden shadow-2xl shadow-primary-900/20" style="border-radius: 62% 38% 56% 44% / 48% 60% 40% 52%;">
                         <Image
                             src={maria}
@@ -94,7 +92,7 @@ const universes = [
     </section>
 
     <!-- ============================ THREE UNIVERSES ============================ -->
-    <section class="relative overflow-hidden bg-white py-20 md:py-28">
+    <section class="relative overflow-hidden bg-secondary-100 py-20 md:py-28">
         <div class="relative mx-auto max-w-6xl px-6 md:px-10">
             <div class="mx-auto max-w-2xl text-center">
                 <h2 class="font-display text-3xl leading-tight text-stone-900 sm:text-4xl">
@@ -112,8 +110,8 @@ const universes = [
                         {...(u.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                         class="group flex flex-col overflow-hidden rounded-3xl bg-sand-50 ring-1 ring-stone-900/5 shadow-sm transition hover:-translate-y-1 hover:shadow-xl hover:shadow-primary-900/10"
                     >
-                        <div class={`flex items-center justify-center bg-gradient-to-br px-8 py-10 ${u.accent}`}>
-                            <span class="flex h-16 w-16 items-center justify-center rounded-2xl bg-white/70 text-3xl backdrop-blur-sm">{u.icon}</span>
+                        <div class={`flex items-center justify-center px-8 py-10 ${u.accent}`}>
+                            <span class="flex h-16 w-16 items-center justify-center rounded-2xl bg-white/90 text-3xl">{u.icon}</span>
                         </div>
                         <div class="flex flex-1 flex-col p-8">
                             <p class="text-xs font-semibold uppercase tracking-[0.3em] text-primary-800">{u.label}</p>
@@ -131,7 +129,7 @@ const universes = [
             <!-- Collaboration — deliberately a different kind of box from the three
                  core "universes": this one is a joint project with another person,
                  and intentionally NOT in the global header. -->
-            <div class="mt-10 overflow-hidden rounded-3xl bg-gradient-to-br from-secondary-800 to-secondary-900 shadow-lg ring-1 ring-secondary-900/20">
+            <div class="mt-10 overflow-hidden rounded-3xl bg-secondary-800 shadow-lg ring-1 ring-secondary-900/20">
                 <div class="flex flex-col gap-6 p-8 md:flex-row md:items-center md:justify-between md:p-10">
                     <div class="max-w-xl">
                         <p class="inline-flex items-center rounded-full bg-white/15 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-white ring-1 ring-white/20">
