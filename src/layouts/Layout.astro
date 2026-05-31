@@ -2,6 +2,7 @@
 import '../styles/global.css'
 import Header from '../components/Header.astro';
 import SiteFooter from '../components/SiteFooter.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
 
 interface Props {
     title?: string;
@@ -53,6 +54,7 @@ const {
 		{showHeader && <Header />}
 		<slot />
 		{showFooter && <SiteFooter />}
+		<ThemeToggle />
 	</body>
 </html>
 
