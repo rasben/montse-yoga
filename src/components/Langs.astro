@@ -1,0 +1,25 @@
+---
+// The three languages Maria works in, shown as flags.
+// Each flag carries an aria-label/title so it's still announced to screen
+// readers and on hover (emoji flags are otherwise read as country codes).
+//
+// Flag choices: English → 🇬🇧, Spanish → 🇪🇸 + 🇲🇽 (Maria is Mexican-born),
+// Danish → 🇩🇰.
+interface Props {
+    class?: string;
+}
+const { class: cls = '' } = Astro.props;
+
+const flags = [
+    { flag: '🇬🇧', label: 'English' },
+    { flag: '🇪🇸', label: 'Spanish (Spain)' },
+    { flag: '🇲🇽', label: 'Spanish (Mexico)' },
+    { flag: '🇩🇰', label: 'Danish' },
+];
+---
+
+<span class={`inline-flex items-center gap-1.5 align-middle ${cls}`} role="img" aria-label="In English, Spanish and Danish">
+    {flags.map((f) => (
+        <span title={f.label} aria-hidden="true" class="leading-none">{f.flag}</span>
+    ))}
+</span>

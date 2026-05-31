@@ -1,11 +1,48 @@
 ---
-    import logo from '../assets/logo.png'
-    import { Navbar, NavBrand, NavLi, NavUl, NavHamburger, Button } from "flowbite-svelte";
-    import { BurgerOutline, BurgerSolid } from "flowbite-svelte-icons";
+// Global site header — rendered on every page via Layout.astro so the logo
+// and the three "Maria universes" are always one click away.
+//
+//   • For teachers     → /teacher-yoga  (yoga & breathwork)
+//   • For brands       → /brands        (UGC / content creation)
+//   • For readers      → the Substack blog
+import logo from '../assets/logo.png';
+
+const path = Astro.url.pathname;
+// normalise trailing slash for matching
+const here = path !== '/' && path.endsWith('/') ? path.slice(0, -1) : path;
+
+const links = [
+    { label: 'For teachers', href: '/teacher-yoga' },
+    { label: 'For brands', href: 'https://maria-montserrat.my.canva.site/ugc-portfolio', external: true },
+    { label: 'For readers', href: 'https://mariamontserratmaria.substack.com/', external: true },
+];
 ---
 
-<Navbar color="amber">
-    <NavBrand href="/">
-        <img src={logo.src} alt="Logo" class="h-20 sm:h-25"/>
-    </NavBrand>
-</Navbar>
+<header class="sticky top-0 z-50 border-b border-stone-900/5 bg-sand-50/85 backdrop-blur-md">
+    <div class="mx-auto flex flex-col items-center gap-2 px-6 py-3 sm:flex-row sm:justify-between md:px-10">
+        <a href="/" class="flex items-center gap-2.5" aria-label="Maria Montserrat — home">
+            <img src={logo.src} alt="" class="h-10 sm:h-12" />
+            <span class="font-display text-lg text-stone-900 sm:text-xl">Maria Montserrat</span>
+        </a>
+
+        <nav aria-label="Primary" class="flex flex-wrap items-center justify-center gap-1 sm:gap-2">
+            {links.map((l) => {
+                const active = !l.external && here === l.href;
+                return (
+                    <a
+                        href={l.href}
+                        aria-current={active ? 'page' : undefined}
+                        {...(l.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                        class={`rounded-full px-3 py-2 text-sm font-semibold transition sm:px-4 ${
+                            active
+                                ? 'bg-primary-700 text-white'
+                                : 'text-stone-700 hover:bg-white/70 hover:text-primary-800'
+                        }`}
+                    >
+                        {l.label}
+                    </a>
+                );
+            })}
+        </nav>
+    </div>
+</header>

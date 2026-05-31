@@ -1,0 +1,398 @@
+---
+// "Brands" — Maria's UGC / content-creator page, ported from her Canva site
+// (https://maria-montserrat.my.canva.site/ugc-portfolio). Route: /brands
+//
+// This is Maria's *content-creator* persona (brand/UGC work), distinct from
+// the teacher-yoga page. Rendered in the site's own design system
+// (coral / sand / sky + Cormorant Garamond / Inter) rather than the magenta
+// Canva theme, so the content lives in the "real" styling.
+//
+// IMAGES — TEMPORARY: the photos below are hot-linked straight from Maria's
+// Canva site so we can preview the layout. They should be replaced with
+// optimized local assets (drop files into src/assets/brands/ and switch
+// to `astro:assets` <Image>) once Maria uploads the originals. Each image's
+// Canva filename is the last path segment of its URL.
+import Layout from '../layouts/Layout.astro';
+import Langs from '../components/Langs.astro';
+
+const CANVA = 'https://maria-montserrat.my.canva.site/ugc-portfolio/_assets/media';
+const img = (file: string) => `${CANVA}/${file}`;
+
+const BLOG_URL = 'https://mariamontserratmaria.substack.com/';
+
+// Flag per language code, used on the spec-UGC cards.
+const FLAG: Record<string, { flag: string; label: string }> = {
+    EN: { flag: '🇬🇧', label: 'English' },
+    ES: { flag: '🇪🇸 🇲🇽', label: 'Spanish' },
+    DK: { flag: '🇩🇰', label: 'Danish' },
+};
+
+// Headline analytics (last 30 days), pulled from her Instagram dashboard.
+const stats = [
+    { value: '582K+', label: 'Accounts reached' },
+    { value: '1.1M+', label: 'Views' },
+    { value: '28K', label: 'Content interactions' },
+    { value: '🇬🇧 🇪🇸 🇲🇽 🇩🇰', label: 'English · Spanish · Danish' },
+];
+
+// "How I show up" — organic reels (personal brand). Hooks taken from the reels.
+const reels = [
+    { hook: 'I quit teaching a year ago… this is what burnout actually looked like for me.', tag: 'Finding myself after burnout' },
+    { hook: "Signs you're not a bad person — even if you've been snapping at everyone you love.", tag: 'Snapping at everyone you love' },
+    { hook: 'I stayed in this pose for three minutes… and felt my whole nervous system drop.', tag: 'Nervous system reel' },
+    { hook: 'A teacher stress reset you can do in the five minutes before the bell.', tag: 'Teacher stress reset' },
+    { hook: 'The somatic practice I reach for when my body is holding onto the whole day.', tag: 'Somatic tutorial' },
+    { hook: "An honest, emotional look at leaving a career that was quietly breaking me.", tag: 'Emotional narrative' },
+];
+
+// "Spec UGC · ad-ready" — concept work shot in three languages.
+const specWork = [
+    { hook: '10 years, same mat. Still my favourite.', type: 'Lifestyle testimonial', lang: 'EN' },
+    { hook: 'Lo primero antes de mirar el móvil.', type: 'Morning ritual', lang: 'ES' },
+    { hook: 'Min daglige kefir — sådan starter jeg dagen.', type: 'Food & health', lang: 'DK' },
+    { hook: 'The serum that finally calmed my reactive skin.', type: 'Skincare testimonial', lang: 'EN' },
+    { hook: 'Mi rutina de noche en 30 segundos.', type: 'Skincare demo', lang: 'ES' },
+    { hook: 'Min morgenflow derhjemme.', type: 'Lifestyle · yoga', lang: 'DK' },
+];
+
+// Niches she creates for (text list — replaces the third-party brand-logo wall).
+const niches = [
+    'Skincare & beauty', 'Wellness & mindfulness', 'Lifestyle', 'Fashion',
+    'Food & beverage', 'Travel & hospitality', 'Health & autoimmune',
+    'Plant-based', 'Nervous-system recovery',
+];
+
+// Photography — hot-linked from Canva for now (see note above).
+const photography = [
+    { file: '867011bb5ed745b0d4a36ae51dc3b2df.jpg', alt: 'Lifestyle photograph — dog playing in the grass', span: 'row-span-2' },
+    { file: '24772a4d9af8e44a2a8b452e99a4f8d9.jpg', alt: 'Food photograph — pistachio cannoli on a ceramic plate', span: '' },
+    { file: 'ca6fcc9917b99d965ea3d04f0f0852b3.jpg', alt: 'Product photograph — skincare bottle and jar', span: '' },
+    { file: '2e0df4d4e189a39fa8e45d288b14064f.jpg', alt: 'Lifestyle product photograph', span: '' },
+    { file: 'a3d96731c504bc656f26e2b1816155f2.jpg', alt: 'Lifestyle photograph', span: '' },
+];
+
+const travel = [
+    { file: '9fb3fa3cf2a6e98c2ec89ea9268a91cd.jpg', alt: 'Travel photograph — ancient temple' },
+    { file: '68ea5af2ab5f6809d91cc6f7510e474b.jpg', alt: 'Travel photograph — stone Buddha statue' },
+    { file: 'c68e20c16382a2926ab6afd9bf0fcdaa.jpg', alt: 'Travel photograph — traditional dancers' },
+    { file: '2d28f907060f3ba96575343a3d41c311.jpg', alt: 'Travel photograph — local festival' },
+];
+
+// Services
+const services = [
+    'UGC Videos (ads & organic)', 'Voiceover Videos', 'UGC Photos',
+    'Product Photography', 'On-Location Content', 'Content Bundles', 'Monthly Retainer',
+];
+const deliverables = [
+    'Vertical format (9:16)', 'Research on branding & concepts', 'Scriptwriting',
+    'Video filming & editing', '2 revisions if needed', 'Delivery in 5–7 business days',
+];
+---
+
+<Layout
+    title="For Brands — Maria Montserrat"
+    description="Trilingual UGC creator based in Denmark — authentic, conversion-focused content in English, Spanish, and Danish for skincare, wellness, lifestyle, food, travel, and health brands."
+>
+    <!-- ============================ HERO ============================ -->
+    <section class="relative overflow-hidden">
+        <div class="absolute inset-0 -z-20 bg-gradient-to-br from-sand-50 via-primary-50 to-secondary-50"></div>
+        <div class="blob float-slow bg-primary-200" style="width: 480px; height: 480px; top: -120px; right: -80px;"></div>
+        <div class="blob float-slower bg-secondary-200" style="width: 360px; height: 360px; bottom: -120px; left: -100px;"></div>
+
+        <!-- Hero content -->
+        <div class="relative z-10 mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-6 pb-24 pt-12 md:grid-cols-12 md:gap-16 md:px-10 md:pb-28 md:pt-20">
+            <div class="md:col-span-6">
+                <p class="fade-up flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">
+                    UGC Creator <Langs class="text-base tracking-normal" />
+                </p>
+                <h1 class="fade-up-delay-1 mt-6 font-display text-5xl leading-[1.05] text-stone-900 sm:text-6xl md:text-7xl">
+                    Trilingual creator. <em class="font-normal text-primary-800">Three markets.</em>
+                </h1>
+                <p class="fade-up-delay-2 mt-8 max-w-xl text-lg leading-relaxed text-stone-800 md:text-xl">
+                    Real content that converts. I'm Maria — a content creator based in Denmark,
+                    making UGC in English, Spanish, and Danish for brands that fit how I
+                    actually live.
+                </p>
+                <p class="fade-up-delay-2 mt-4 max-w-xl text-base leading-relaxed text-stone-600">
+                    Mexican-born, Denmark-based, flexitarian, dog mum (Freja&nbsp;+&nbsp;Macarena),
+                    tennis &amp; padel player, Hashimoto's warrior, secondhand shopper, sun chaser.
+                </p>
+
+                <div class="fade-up-delay-3 mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+                    <a href="#work-together" class="group inline-flex items-center justify-center rounded-full bg-primary-700 px-8 py-4 text-base font-semibold text-white shadow-lg shadow-primary-700/30 transition hover:bg-primary-800">
+                        Let's work together
+                        <svg class="ml-2 h-4 w-4 transition group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 4.293a1 1 0 011.414 0l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414-1.414L13.586 11H4a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                    </a>
+                    <a href="#work" class="inline-flex items-center justify-center rounded-full px-8 py-4 text-base font-semibold text-stone-900 underline-offset-4 transition hover:text-primary-800 hover:underline">
+                        See my work
+                    </a>
+                </div>
+            </div>
+
+            <!-- Portrait -->
+            <div class="fade-up-delay-2 relative md:col-span-6">
+                <div class="relative mx-auto max-w-md md:max-w-none">
+                    <div class="absolute -inset-4 -z-10 bg-primary-200/70 blur-sm" style="border-radius: 62% 38% 56% 44% / 48% 60% 40% 52%;"></div>
+                    <div class="relative overflow-hidden shadow-2xl shadow-primary-900/20" style="border-radius: 62% 38% 56% 44% / 48% 60% 40% 52%;">
+                        <img
+                            src={img('de264b56be8d0a2fb3cae44c2ad3e33c.jpg')}
+                            alt="Maria Montserrat smiling outdoors"
+                            class="h-[520px] w-full object-cover md:h-[620px]"
+                            loading="eager"
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================ ABOUT ============================ -->
+    <section class="relative overflow-hidden bg-white py-24 md:py-32">
+        <div class="blob bg-secondary-100" style="width: 460px; height: 460px; top: -100px; right: -150px; opacity: 0.4;"></div>
+        <div class="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-16 px-6 md:grid-cols-2 md:px-10">
+            <div class="relative order-2 md:order-1">
+                <div class="absolute -inset-3 -z-10 bg-secondary-200/50 blur-sm" style="border-radius: 48% 52% 60% 40% / 56% 44% 56% 44%;"></div>
+                <div class="relative overflow-hidden shadow-xl shadow-primary-900/15" style="border-radius: 48% 52% 60% 40% / 56% 44% 56% 44%;">
+                    <img
+                        src={img('299251c842a4cc0800fb5ed40f0b90c8.jpg')}
+                        alt="Maria Montserrat seated outdoors"
+                        class="h-[460px] w-full object-cover md:h-[560px]"
+                        loading="lazy"
+                    />
+                </div>
+            </div>
+            <div class="order-1 md:order-2">
+                <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">About me</p>
+                <h2 class="mt-4 font-display text-4xl leading-tight text-stone-900 sm:text-5xl">
+                    One creator, <em class="font-normal text-primary-800">three markets</em>.
+                </h2>
+                <p class="mt-6 text-lg leading-relaxed text-stone-700">
+                    In the last 30 days my content has reached 582K+ accounts and generated
+                    1.1M+ views. I create conversion-focused UGC for skincare, wellness,
+                    lifestyle, fashion, food, travel, and health brands — including autoimmune,
+                    plant-based, and nervous-system-recovery niches.
+                </p>
+                <p class="mt-4 leading-relaxed text-stone-600">
+                    My background spans teaching, journalism, yoga &amp; mindfulness instruction,
+                    fashion design, and somatic practice — trained in fashion design,
+                    communications, and pedagogy. My philosophy:
+                    <em class="text-primary-800">give your best, not your all.</em>
+                    I make content that feels real because it is.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================ ANALYTICS ============================ -->
+    <section class="bg-sand-100 py-20 md:py-28">
+        <div class="mx-auto max-w-6xl px-6 md:px-10">
+            <div class="mx-auto max-w-2xl text-center">
+                <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">Analytics</p>
+                <h2 class="mt-4 font-display text-4xl leading-tight text-stone-900 sm:text-5xl">
+                    The numbers, <em class="font-normal text-primary-800">last 30 days</em>.
+                </h2>
+            </div>
+            <div class="mt-14 grid grid-cols-2 gap-5 lg:grid-cols-4">
+                {stats.map((s) => (
+                    <div class="rounded-3xl bg-white p-8 text-center ring-1 ring-stone-900/5 shadow-sm">
+                        <div class="font-display text-4xl text-primary-800 sm:text-5xl">{s.value}</div>
+                        <div class="mt-2 text-sm font-medium text-stone-600">{s.label}</div>
+                    </div>
+                ))}
+            </div>
+            <p class="mt-8 text-center text-sm text-stone-500">
+                Active across Instagram, TikTok, and Facebook —
+                <a href="https://www.instagram.com/mariamontserratmaria/" target="_blank" rel="noopener noreferrer" class="underline underline-offset-4 transition hover:text-primary-800">@mariamontserratmaria</a>.
+            </p>
+        </div>
+    </section>
+
+    <!-- ============================ HOW I SHOW UP (reels) ============================ -->
+    <section id="work" class="relative overflow-hidden bg-white py-24 md:py-32">
+        <div class="blob bg-primary-100" style="width: 420px; height: 420px; bottom: -120px; left: -100px; opacity: 0.45;"></div>
+        <div class="relative mx-auto max-w-6xl px-6 md:px-10">
+            <div class="mx-auto max-w-2xl text-center">
+                <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">How I show up</p>
+                <h2 class="mt-4 font-display text-4xl leading-tight text-stone-900 sm:text-5xl">
+                    Organic reels, <em class="font-normal text-primary-800">real moments</em>.
+                </h2>
+                <p class="mt-6 text-lg leading-relaxed text-stone-700">
+                    Personal-brand storytelling around burnout, the nervous system, and finding
+                    your way back to yourself — the content that builds the trust brands borrow.
+                </p>
+            </div>
+            <div class="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {reels.map((r) => (
+                    <article class="group flex flex-col overflow-hidden rounded-3xl bg-sand-50 ring-1 ring-stone-900/5 transition hover:shadow-lg hover:shadow-primary-900/8">
+                        <div class="relative flex aspect-[9/16] items-center justify-center bg-gradient-to-br from-primary-200 via-primary-100 to-secondary-100 p-6">
+                            <span class="absolute right-4 top-4 inline-flex items-center gap-1 rounded-full bg-white/80 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-primary-800 backdrop-blur-sm">
+                                <svg class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor"><path d="M6 4l10 6-10 6V4z"/></svg> Reel
+                            </span>
+                            <p class="text-center font-display text-2xl leading-snug text-stone-900">{r.hook}</p>
+                        </div>
+                        <div class="px-6 py-4">
+                            <p class="text-sm font-semibold text-stone-800">{r.tag}</p>
+                            <p class="text-xs uppercase tracking-widest text-stone-500">Organic · personal brand</p>
+                        </div>
+                    </article>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================ NICHES (text — replaces logo wall) ============================ -->
+    <section class="bg-primary-700 py-20 md:py-24">
+        <div class="mx-auto max-w-4xl px-6 text-center md:px-10">
+            <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-100">What I create for</p>
+            <h2 class="mt-4 font-display text-4xl leading-tight text-white sm:text-5xl">
+                Niches I know inside out
+            </h2>
+            <p class="mx-auto mt-5 max-w-xl leading-relaxed text-primary-100">
+                The categories where I create authentic, conversion-focused content — drawn from
+                how I actually live.
+            </p>
+            <div class="mt-10 flex flex-wrap justify-center gap-3">
+                {niches.map((n) => (
+                    <span class="rounded-full bg-white/15 px-5 py-2.5 text-sm font-medium text-white ring-1 ring-white/20 backdrop-blur-sm">
+                        {n}
+                    </span>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================ SPEC UGC ============================ -->
+    <section class="relative overflow-hidden bg-sand-50 py-24 md:py-32">
+        <div class="relative mx-auto max-w-6xl px-6 md:px-10">
+            <div class="mx-auto max-w-2xl text-center">
+                <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">Spec UGC · ad-ready</p>
+                <h2 class="mt-4 font-display text-4xl leading-tight text-stone-900 sm:text-5xl">
+                    Concept work, <em class="font-normal text-primary-800">in three languages</em>.
+                </h2>
+            </div>
+            <div class="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {specWork.map((w) => (
+                    <article class="group flex flex-col overflow-hidden rounded-3xl bg-white ring-1 ring-stone-900/5 transition hover:shadow-lg hover:shadow-primary-900/8">
+                        <div class="relative flex aspect-[9/16] items-center justify-center bg-gradient-to-br from-secondary-200 via-secondary-100 to-sand-200 p-6">
+                            <span class="absolute left-3 top-3 inline-flex items-center gap-0.5 rounded-full bg-white/85 px-2.5 py-1.5 text-lg leading-none shadow-sm backdrop-blur-sm" role="img" aria-label={FLAG[w.lang].label} title={FLAG[w.lang].label}>{FLAG[w.lang].flag}</span>
+                            <span class="absolute right-4 top-4 rounded-full bg-white/80 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-stone-700 backdrop-blur-sm">Ad-ready</span>
+                            <p class="text-center font-display text-2xl leading-snug text-stone-900">{w.hook}</p>
+                        </div>
+                        <div class="px-6 py-4">
+                            <p class="text-sm font-semibold text-stone-800">{w.type}</p>
+                            <p class="flex items-center gap-1.5 text-xs uppercase tracking-widest text-stone-500">
+                                Spec UGC <span role="img" aria-label={FLAG[w.lang].label} title={FLAG[w.lang].label} class="text-sm">{FLAG[w.lang].flag}</span>
+                            </p>
+                        </div>
+                    </article>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================ PHOTOGRAPHY ============================ -->
+    <section class="bg-white py-24 md:py-32">
+        <div class="mx-auto max-w-6xl px-6 md:px-10">
+            <div class="mx-auto max-w-2xl text-center">
+                <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">Photography</p>
+                <h2 class="mt-4 font-display text-4xl leading-tight text-stone-900 sm:text-5xl">
+                    Product &amp; lifestyle
+                </h2>
+            </div>
+            <div class="mt-14 grid auto-rows-[220px] grid-cols-2 gap-4 md:grid-cols-3">
+                {photography.map((p) => (
+                    <div class={`overflow-hidden rounded-2xl bg-sand-200 ${p.span}`}>
+                        <img src={img(p.file)} alt={p.alt} class="h-full w-full object-cover transition duration-500 hover:scale-105" loading="lazy" />
+                    </div>
+                ))}
+            </div>
+
+            <h3 class="mt-20 text-center font-display text-3xl text-stone-900 sm:text-4xl">Travel</h3>
+            <div class="mt-10 grid grid-cols-2 gap-4 md:grid-cols-4">
+                {travel.map((t) => (
+                    <div class="aspect-[4/3] overflow-hidden rounded-2xl bg-sand-200">
+                        <img src={img(t.file)} alt={t.alt} class="h-full w-full object-cover transition duration-500 hover:scale-105" loading="lazy" />
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================ SERVICES ============================ -->
+    <section class="bg-sand-100 py-24 md:py-32">
+        <div class="mx-auto max-w-6xl px-6 md:px-10">
+            <div class="mx-auto max-w-2xl text-center">
+                <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">My services</p>
+                <h2 class="mt-4 font-display text-4xl leading-tight text-stone-900 sm:text-5xl">
+                    What I offer
+                </h2>
+            </div>
+            <div class="mt-14 grid grid-cols-1 gap-10 lg:grid-cols-2">
+                <div class="rounded-3xl bg-white p-8 ring-1 ring-stone-900/5 md:p-10">
+                    <h3 class="font-display text-2xl text-stone-900">Services</h3>
+                    <ul class="mt-6 space-y-3">
+                        {services.map((s) => (
+                            <li class="flex items-center gap-3 text-stone-700">
+                                <svg class="h-5 w-5 shrink-0 text-primary-700" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                {s}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                <div class="rounded-3xl bg-primary-700 p-8 text-white md:p-10">
+                    <h3 class="font-display text-2xl">1 UGC video includes</h3>
+                    <ul class="mt-6 space-y-3">
+                        {deliverables.map((d) => (
+                            <li class="flex items-center gap-3 text-primary-50">
+                                <svg class="h-5 w-5 shrink-0 text-white" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                {d}
+                            </li>
+                        ))}
+                    </ul>
+                    <p class="mt-8 rounded-2xl bg-white/15 px-5 py-3 text-center text-sm font-semibold uppercase tracking-widest ring-1 ring-white/20">
+                        Rates available upon request
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================ WORK TOGETHER (contact) ============================ -->
+    <section id="work-together" class="relative overflow-hidden bg-sand-50 py-24 md:py-32">
+        <div class="blob bg-primary-200" style="width: 360px; height: 360px; top: -80px; left: -80px; opacity: 0.5;"></div>
+        <div class="blob bg-secondary-200" style="width: 320px; height: 320px; bottom: -100px; right: -60px; opacity: 0.45;"></div>
+
+        <div class="relative mx-auto max-w-3xl px-6 text-center md:px-10">
+            <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">Let's work together</p>
+            <h2 class="mt-4 font-display text-4xl leading-tight text-stone-900 sm:text-5xl md:text-6xl">
+                Got a brand that fits <em class="font-normal text-primary-800">how I live</em>?
+            </h2>
+            <p class="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-stone-700">
+                Book a discovery call and let's talk about authentic content in English,
+                Spanish, or Danish.
+            </p>
+
+            <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+                <a href="mailto:maria@maria-montserrat.com" class="inline-flex items-center justify-center rounded-full bg-primary-700 px-8 py-4 text-base font-semibold text-white shadow-lg shadow-primary-700/30 transition hover:bg-primary-800">
+                    Book a discovery call
+                </a>
+                <a href={BLOG_URL} target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center rounded-full border border-primary-700 bg-white/80 px-8 py-4 text-base font-semibold text-primary-800 backdrop-blur-sm transition hover:bg-primary-700 hover:text-white">
+                    Read my blog
+                </a>
+            </div>
+
+            <p class="mt-8 text-stone-700">
+                <a href="mailto:maria@maria-montserrat.com" class="font-medium underline underline-offset-4 transition hover:text-primary-800">maria@maria-montserrat.com</a>
+            </p>
+
+            <div class="mt-10">
+                <p class="text-xs font-semibold uppercase tracking-widest text-stone-500">Find me on social media</p>
+                <div class="mt-4 flex items-center justify-center gap-4">
+                    <a href="https://www.instagram.com/mariamontserratmaria/" target="_blank" rel="noopener noreferrer" class="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-stone-800 ring-1 ring-stone-900/5 shadow-sm transition hover:bg-primary-700 hover:text-white">Instagram</a>
+                    <a href="https://www.tiktok.com/@mariamontserratmaria" target="_blank" rel="noopener noreferrer" class="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-stone-800 ring-1 ring-stone-900/5 shadow-sm transition hover:bg-primary-700 hover:text-white">TikTok</a>
+                    <a href="https://www.facebook.com/mariamontserratmaria" target="_blank" rel="noopener noreferrer" class="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-stone-800 ring-1 ring-stone-900/5 shadow-sm transition hover:bg-primary-700 hover:text-white">Facebook</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</Layout>
