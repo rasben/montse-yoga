@@ -44,6 +44,8 @@ const FLAG: Record<string, { flag: string; label: string }> = {
 // platform keeps its own `period` because their dashboards default differently.
 // `newAudience` (0–100, optional) = share of reach from non-followers — the
 // number brands care about most — and drives the little bar on the card.
+// `period` is a FIXED date range (these are captured numbers, not a live rolling
+// window) so the snapshot reads honestly.
 const analyticsUpdated = 'May 2026';
 
 const BRAND: Record<string, { color: string; svg: string }> = {
@@ -58,7 +60,7 @@ const platforms = [
         handle: '@mariamontserratmaria',
         url: 'https://www.instagram.com/mariamontserratmaria/',
         period: '29 Apr – 26 May 2026',
-        headline: { value: '1.1M', label: 'Views', delta: 161.5 },
+        headline: { value: '1.1M', long: '1.1 million', label: 'Views', delta: 161.5 },
         metrics: [
             { value: '576.7K', label: 'Reach', delta: 149.3 },
             { value: '28K', label: 'Interactions', delta: 98.1 },
@@ -69,20 +71,23 @@ const platforms = [
         name: 'TikTok',
         handle: '@mariamontserratmaria',
         url: 'https://www.tiktok.com/@mariamontserratmaria',
-        period: 'Last 7 days',
-        headline: { value: '231.8K', label: 'Video views', delta: 737.1 },
+        period: '19 – 25 May 2026',
+        headline: { value: '231.8K', long: '231,800', label: 'Video views', delta: 737.1 },
         metrics: [
             { value: '5.1K', label: 'Likes', delta: 744.4 },
             { value: '479', label: 'Shares', delta: 197.5 },
         ],
         newAudience: null,
+        // TikTok dashboard doesn't report a follower/non-follower split, so the
+        // card shows this honest virality note instead of the reach gauge.
+        highlight: { stat: '424', text: 'followers — yet a single week reached 231.8K views' },
     },
     {
         name: 'Facebook',
         handle: 'mariamontserratmaria',
         url: 'https://www.facebook.com/mariamontserratmaria',
         period: '29 Apr – 26 May 2026',
-        headline: { value: '28.2K', label: 'Views', delta: 103.6 },
+        headline: { value: '28.2K', long: '28,200', label: 'Views', delta: 103.6 },
         metrics: [
             { value: '16,696', label: 'Viewers', delta: 127 },
             { value: '144', label: 'Interactions', delta: 108.7 },
@@ -90,6 +95,20 @@ const platforms = [
         newAudience: 98.4,
     },
 ];
+
+// Turn a display value like "1.1M", "576.7K" or "16,696" into the attributes the
+// count-up script needs: the numeric target, any K/M suffix, decimal places, and
+// whether to render thousands separators. Lets us animate without duplicating data.
+function countAttrs(value: string) {
+    const m = value.replace(/,/g, '').match(/^([\d.]+)\s*([KM%]?)/);
+    const numStr = m?.[1] ?? '0';
+    return {
+        'data-count-to': numStr,
+        'data-count-suffix': m?.[2] ?? '',
+        'data-count-decimals': String((numStr.split('.')[1] ?? '').length),
+        'data-count-sep': value.includes(',') ? '1' : '0',
+    };
+}
 
 // "How I show up" — organic reels (personal brand). These are the three real
 // organic videos on the Canva site; `video` is each clip's content hash, mapped
@@ -253,59 +272,80 @@ const deliverables = [
                 </p>
             </div>
 
-            <div class="mt-14 grid grid-cols-1 gap-6 md:grid-cols-3">
-                {platforms.map((p) => (
-                    <article class="flex flex-col rounded-3xl bg-white p-7 ring-1 ring-stone-900/5 shadow-sm">
-                        <header class="flex items-center gap-3">
-                            <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full" style={`background:${BRAND[p.name].color}`} set:html={BRAND[p.name].svg}></span>
-                            <div>
-                                <p class="text-sm font-semibold text-stone-900">{p.name}</p>
-                                <p class="text-xs text-stone-500">{p.period}</p>
-                            </div>
-                        </header>
+            <div class="analytics-grid mt-14 grid grid-cols-1 gap-6 md:grid-cols-3" data-analytics>
+                {platforms.map((p) => {
+                    return (
+                        <article class="group flex flex-col overflow-hidden rounded-3xl bg-white p-8 ring-1 ring-stone-900/5 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary-900/10">
+                            <div class="-mx-8 -mt-8 mb-7 h-2" style={`background:${BRAND[p.name].color}`}></div>
 
-                        <div class="mt-7">
-                            <div class="flex flex-wrap items-end gap-x-3 gap-y-1">
-                                <span class="font-display text-5xl leading-none text-primary-800">{p.headline.value}</span>
-                                <span class:list={["mb-1 inline-flex items-center gap-0.5 rounded-full px-2 py-0.5 text-xs font-semibold", p.headline.delta >= 0 ? "bg-emerald-50 text-emerald-700" : "bg-rose-50 text-rose-600"]}>
-                                    <svg width="10" height="10" viewBox="0 0 20 20" fill="currentColor">{p.headline.delta >= 0 ? <path d="M10 4l6 8H4z"/> : <path d="M10 16l-6-8h12z"/>}</svg>
-                                    {Math.abs(p.headline.delta)}%
-                                </span>
-                            </div>
-                            <p class="mt-1.5 text-sm font-medium text-stone-600">{p.headline.label}</p>
-                        </div>
+                            <header class="flex items-center justify-between gap-3">
+                                <div class="flex items-center gap-2.5">
+                                    <span class="grid h-9 w-9 shrink-0 place-items-center rounded-full" style={`background:${BRAND[p.name].color}`} set:html={BRAND[p.name].svg}></span>
+                                    <p class="text-sm font-semibold text-stone-900">{p.name}</p>
+                                </div>
+                                <span class="rounded-full bg-sand-100 px-2.5 py-1 text-[11px] font-medium text-stone-500">{p.period}</span>
+                            </header>
 
-                        <div class="mt-6 grid grid-cols-2 gap-4">
-                            {p.metrics.map((m) => (
-                                <div class="rounded-2xl bg-sand-50 p-4">
-                                    <span class="font-display text-2xl text-stone-900">{m.value}</span>
-                                    <p class="text-xs text-stone-500">{m.label}</p>
-                                    <span class:list={["mt-1.5 inline-flex items-center gap-0.5 text-[11px] font-semibold", m.delta >= 0 ? "text-emerald-700" : "text-rose-600"]}>
-                                        <svg width="9" height="9" viewBox="0 0 20 20" fill="currentColor">{m.delta >= 0 ? <path d="M10 4l6 8H4z"/> : <path d="M10 16l-6-8h12z"/>}</svg>
-                                        {Math.abs(m.delta)}%
+                            <div class="mt-8">
+                                <span class="stat-count font-display text-6xl leading-none text-primary-800" {...countAttrs(p.headline.value)}>{p.headline.value}</span>
+                                <div class="mt-3 flex items-center gap-2">
+                                    <p class="text-sm font-medium text-stone-700">{p.headline.label}</p>
+                                    <span class:list={["inline-flex items-center gap-0.5 rounded-full px-2 py-0.5 text-xs font-semibold", p.headline.delta >= 0 ? "bg-emerald-50 text-emerald-700" : "bg-rose-50 text-rose-600"]}>
+                                        <svg width="10" height="10" viewBox="0 0 20 20" fill="currentColor">{p.headline.delta >= 0 ? <path d="M10 4l6 8H4z"/> : <path d="M10 16l-6-8h12z"/>}</svg>
+                                        {Math.abs(p.headline.delta)}%
                                     </span>
                                 </div>
-                            ))}
-                        </div>
-
-                        {p.newAudience != null && (
-                            <div class="mt-6">
-                                <div class="flex items-center justify-between text-xs">
-                                    <span class="text-stone-500">Reach from new audiences</span>
-                                    <span class="font-semibold text-primary-800">{p.newAudience}%</span>
-                                </div>
-                                <div class="mt-2 h-2 overflow-hidden rounded-full bg-sand-200">
-                                    <div class="h-full rounded-full bg-primary-600" style={`width:${p.newAudience}%`}></div>
-                                </div>
+                                <p class="mt-1.5 text-xs text-stone-400">= {p.headline.long} {p.headline.label.toLowerCase()}</p>
                             </div>
-                        )}
 
-                        <a href={p.url} target="_blank" rel="noopener noreferrer" class="mt-6 inline-flex items-center gap-1 text-sm font-medium text-stone-700 underline-offset-4 transition hover:text-primary-800 hover:underline">
-                            {p.handle}
-                            <svg class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 4.293a1 1 0 011.414 0l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414-1.414L13.586 11H4a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-                        </a>
-                    </article>
-                ))}
+                            <hr class="mt-7 border-stone-100" />
+
+                            <dl class="mt-5 grid grid-cols-2 gap-x-4 gap-y-5">
+                                {p.metrics.map((m) => (
+                                    <div>
+                                        <dt class="text-xs text-stone-500">{m.label}</dt>
+                                        <dd class="mt-1 flex items-baseline gap-1.5">
+                                            <span class="stat-count font-display text-2xl text-stone-900" {...countAttrs(m.value)}>{m.value}</span>
+                                            <span class:list={["inline-flex items-center text-[11px] font-semibold", m.delta >= 0 ? "text-emerald-700" : "text-rose-600"]}>
+                                                <svg width="9" height="9" viewBox="0 0 20 20" fill="currentColor">{m.delta >= 0 ? <path d="M10 4l6 8H4z"/> : <path d="M10 16l-6-8h12z"/>}</svg>
+                                                {Math.abs(m.delta)}%
+                                            </span>
+                                        </dd>
+                                    </div>
+                                ))}
+                            </dl>
+
+                            {p.newAudience != null && (
+                                <div class="mt-7 flex items-center gap-4">
+                                    <div class="relative h-20 w-20 shrink-0">
+                                        <svg viewBox="0 0 40 40" class="h-20 w-20 -rotate-90">
+                                            <circle cx="20" cy="20" r="16" fill="none" stroke-width="3.5" style="stroke: var(--color-sand-300)" />
+                                            <circle class="gauge-fill" cx="20" cy="20" r="16" fill="none" stroke-width="3.5" stroke-linecap="butt" pathLength="100" stroke-dasharray="100" stroke-dashoffset={100 - p.newAudience} data-gauge-off={100 - p.newAudience} style="stroke: var(--color-primary-600)" />
+                                        </svg>
+                                        <div class="absolute inset-0 flex items-center justify-center">
+                                            <span class="stat-count text-sm font-semibold leading-none text-primary-800" {...countAttrs(`${p.newAudience}%`)}>{p.newAudience}%</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-sm leading-snug text-stone-600">
+                                        of reach comes from <span class="font-semibold text-stone-800">people who don't follow her yet</span>
+                                    </p>
+                                </div>
+                            )}
+
+                            {p.highlight && (
+                                <div class="mt-7 flex items-center gap-4 rounded-2xl bg-sand-50 p-4">
+                                    <span class="stat-count font-display text-4xl leading-none text-primary-800" {...countAttrs(p.highlight.stat)}>{p.highlight.stat}</span>
+                                    <p class="text-sm leading-snug text-stone-600">{p.highlight.text}</p>
+                                </div>
+                            )}
+
+                            <a href={p.url} target="_blank" rel="noopener noreferrer" class="mt-auto inline-flex items-center gap-1 pt-7 text-sm font-medium text-stone-700 underline-offset-4 transition hover:text-primary-800 hover:underline">
+                                {p.handle}
+                                <svg class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 4.293a1 1 0 011.414 0l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414-1.414L13.586 11H4a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+                            </a>
+                        </article>
+                    );
+                })}
             </div>
 
             <p class="mt-8 text-center text-xs text-stone-400">
@@ -516,10 +556,7 @@ const deliverables = [
 
             <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
                 <a href="mailto:maria@maria-montserrat.com" class="inline-flex items-center justify-center rounded-full bg-primary-700 px-8 py-4 text-base font-semibold text-white shadow-lg shadow-primary-700/30 transition hover:bg-primary-800">
-                    Book a discovery call
-                </a>
-                <a href={BLOG_URL} target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center rounded-full border border-primary-700 bg-white/80 px-8 py-4 text-base font-semibold text-primary-800 backdrop-blur-sm transition hover:bg-primary-700 hover:text-white">
-                    Read my blog
+                    Email me
                 </a>
             </div>
 
@@ -603,4 +640,107 @@ const deliverables = [
         syncPlay();
         syncMute();
     });
+</script>
+
+<script>
+    // Scroll-triggered animation for the analytics cards — runs once, when the
+    // section enters view. Everything is driven from JS (the gauge included, via
+    // inline stroke-dashoffset) so it doesn't depend on scoped CSS reaching the
+    // SVG. Honours prefers-reduced-motion. Without JS, the markup already shows
+    // its finished state (real numbers, filled gauges), so it degrades cleanly.
+    const grid = document.querySelector<HTMLElement>('[data-analytics]');
+    if (grid) {
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        // Calm easing: gentle start, the bigger leaps land in the middle, soft finish.
+        const easeInOut = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+
+        const fmt = (n: number, dec: number, suffix: string, sep: boolean) => {
+            const rounded = dec > 0 ? Number(n.toFixed(dec)) : Math.round(n);
+            const base = sep
+                ? rounded.toLocaleString('en-US')
+                : dec > 0
+                  ? rounded.toFixed(dec)
+                  : String(rounded);
+            return base + suffix;
+        };
+
+        const read = (el: HTMLElement) => ({
+            to: parseFloat(el.dataset.countTo || '0'),
+            dec: parseInt(el.dataset.countDecimals || '0', 10),
+            suffix: el.dataset.countSuffix || '',
+            sep: el.dataset.countSep === '1',
+        });
+
+        const counts = [...grid.querySelectorAll<HTMLElement>('.stat-count')];
+        const gauges = [...grid.querySelectorAll<SVGCircleElement>('.gauge-fill')];
+
+        if (!reduce) {
+            // Arm: zero the numbers and empty the gauges so they have room to fill.
+            counts.forEach((el) => {
+                const c = read(el);
+                el.textContent = fmt(0, c.dec, c.suffix, c.sep);
+            });
+            gauges.forEach((el) => {
+                el.style.strokeDashoffset = '100';
+            });
+        }
+
+        // Stepped count-up: ~16 discrete leaps over 2s reads calmer than a smooth
+        // 60fps blur, and lets the eased middle steps take the bigger jumps.
+        const animateCount = (el: HTMLElement, delay: number) => {
+            const c = read(el);
+            const steps = 16;
+            const stepMs = 125;
+            let step = 0;
+            window.setTimeout(() => {
+                const tick = () => {
+                    step += 1;
+                    const eased = easeInOut(step / steps);
+                    el.textContent = fmt(c.to * eased, c.dec, c.suffix, c.sep);
+                    if (step < steps) window.setTimeout(tick, stepMs);
+                    else el.textContent = fmt(c.to, c.dec, c.suffix, c.sep);
+                };
+                tick();
+            }, delay);
+        };
+
+        // Gauge sweep: animate the ring's stroke-dashoffset from empty (100) to its
+        // target (100 − percent) so the arc visibly draws around the circle.
+        const animateGauge = (el: SVGCircleElement, delay: number) => {
+            const target = parseFloat(el.dataset.gaugeOff || '0');
+            const duration = 1700;
+            window.setTimeout(() => {
+                const start = performance.now();
+                const tick = (now: number) => {
+                    const t = Math.min(1, (now - start) / duration);
+                    el.style.strokeDashoffset = String(100 + (target - 100) * easeInOut(t));
+                    if (t < 1) requestAnimationFrame(tick);
+                    else el.style.strokeDashoffset = String(target);
+                };
+                requestAnimationFrame(tick);
+            }, delay);
+        };
+
+        const run = () => {
+            if (reduce) return;
+            [...grid.querySelectorAll('article')].forEach((article, i) => {
+                const delay = i * 160;
+                article.querySelectorAll<HTMLElement>('.stat-count').forEach((el) => animateCount(el, delay));
+                article.querySelectorAll<SVGCircleElement>('.gauge-fill').forEach((el) => animateGauge(el, delay));
+            });
+        };
+
+        const io = new IntersectionObserver(
+            (entries, obs) => {
+                for (const entry of entries) {
+                    if (entry.isIntersecting) {
+                        run();
+                        obs.disconnect();
+                    }
+                }
+            },
+            { threshold: 0.2 },
+        );
+        io.observe(grid);
+    }
 </script>
