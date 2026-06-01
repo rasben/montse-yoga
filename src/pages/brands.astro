@@ -18,6 +18,15 @@ import Langs from '../components/Langs.astro';
 const CANVA = 'https://brands.maria-montserrat.com/_assets/media';
 const img = (file: string) => `${CANVA}/${file}`;
 
+// VIDEOS — hot-linked from Maria's Canva site, same as the images above.
+// These are immutable, content-hashed static files (cache-control: immutable,
+// range-supported), so the URLs are stable and safe to hot-link — but they're
+// still served by Canva, so we pay their bandwidth on each view. Swap to local
+// files in public/videos/ + a `/videos/...` src once Maria exports the
+// originals, if we want to drop the Canva dependency entirely.
+const CANVA_VIDEO = 'https://brands.maria-montserrat.com/_assets/video';
+const vid = (hash: string) => `${CANVA_VIDEO}/${hash}.mp4`;
+
 const BLOG_URL = 'https://mariamontserratmaria.substack.com/';
 
 // Flag per language code, used on the spec-UGC cards.
@@ -30,29 +39,31 @@ const FLAG: Record<string, { flag: string; label: string }> = {
 // Headline analytics (last 30 days), pulled from her Instagram dashboard.
 const stats = [
     { value: '582K+', label: 'Accounts reached' },
-    { value: '1.1M+', label: 'Views' },
+    { value: '1.1M', label: 'Views' },
     { value: '28K', label: 'Content interactions' },
-    { value: '🇬🇧 🇪🇸 🇲🇽 🇩🇰', label: 'English · Spanish · Danish' },
+    { value: '🇬🇧 🇪🇸 🇩🇰', label: 'English · Spanish · Danish' },
 ];
 
-// "How I show up" — organic reels (personal brand). Hooks taken from the reels.
+// "How I show up" — organic reels (personal brand). These are the three real
+// organic videos on the Canva site; `video` is each clip's content hash, mapped
+// confidently from each video's own caption (aria-label) on the source page.
 const reels = [
-    { hook: 'I quit teaching a year ago… this is what burnout actually looked like for me.', tag: 'Finding myself after burnout' },
-    { hook: "Signs you're not a bad person — even if you've been snapping at everyone you love.", tag: 'Snapping at everyone you love' },
-    { hook: 'I stayed in this pose for three minutes… and felt my whole nervous system drop.', tag: 'Nervous system reel' },
-    { hook: 'A teacher stress reset you can do in the five minutes before the bell.', tag: 'Teacher stress reset' },
-    { hook: 'The somatic practice I reach for when my body is holding onto the whole day.', tag: 'Somatic tutorial' },
-    { hook: "An honest, emotional look at leaving a career that was quietly breaking me.", tag: 'Emotional narrative' },
+    { title: 'Finding myself after burnout', tags: 'Emotional narrative · organic', video: '09d9617a6e0b7f73635171dcf4493806' },
+    { title: 'Snapping at everyone you love', tags: 'Nervous system reel · organic', video: 'ea57e8a8be5dd671e5cd2e90abd0b601' },
+    { title: 'Teacher Stress Reset', tags: 'Somatic tutorial · organic', video: '19ca814b78e3b5f398c8f0e2c82cad68' },
 ];
 
-// "Spec UGC · ad-ready" — concept work shot in three languages.
+// "Spec UGC · ad-ready" — concept work shot in three languages. `video` is each
+// clip's content hash. NOTE: the Canva markup made it impossible to pair each
+// spec clip to its label with certainty, so these are attached in the source
+// DOM order — eyeball the six clips and reorder the hashes if any label is off.
 const specWork = [
-    { hook: '10 years, same mat. Still my favourite.', type: 'Lifestyle testimonial', lang: 'EN' },
-    { hook: 'Lo primero antes de mirar el móvil.', type: 'Morning ritual', lang: 'ES' },
-    { hook: 'Min daglige kefir — sådan starter jeg dagen.', type: 'Food & health', lang: 'DK' },
-    { hook: 'The serum that finally calmed my reactive skin.', type: 'Skincare testimonial', lang: 'EN' },
-    { hook: 'Mi rutina de noche en 30 segundos.', type: 'Skincare demo', lang: 'ES' },
-    { hook: 'Min morgenflow derhjemme.', type: 'Lifestyle · yoga', lang: 'DK' },
+    { hook: '10 years, same mat. Still my favourite.', type: 'Lifestyle testimonial', lang: 'EN', video: '90f1f16670ed5e36bf9ecb487ae572ed' },
+    { hook: 'Lo primero antes de mirar el móvil.', type: 'Morning ritual', lang: 'ES', video: 'f9422c4ffcdb553b0cf4dc9473eaf053' },
+    { hook: 'Min daglige kefir — sådan starter jeg dagen.', type: 'Food & health', lang: 'DK', video: '6787f00efb5f22019a059acbf6585404' },
+    { hook: 'The serum that finally calmed my reactive skin.', type: 'Skincare testimonial', lang: 'EN', video: '8f50e2a7cec1afcffa95f33946373d60' },
+    { hook: 'Mi rutina de noche en 30 segundos.', type: 'Skincare demo', lang: 'ES', video: 'f56f080685e4c0149194f247e30809b8' },
+    { hook: 'Min morgenflow derhjemme.', type: 'Lifestyle · yoga', lang: 'DK', video: '1b171679299c6d0a1406b10aa4b9ec10' },
 ];
 
 // Niches she creates for (text list — replaces the third-party brand-logo wall).
@@ -64,11 +75,12 @@ const niches = [
 
 // Photography — hot-linked from Canva for now (see note above).
 const photography = [
-    { file: '867011bb5ed745b0d4a36ae51dc3b2df.jpg', alt: 'Lifestyle photograph — dog playing in the grass', span: 'row-span-2' },
-    { file: '24772a4d9af8e44a2a8b452e99a4f8d9.jpg', alt: 'Food photograph — pistachio cannoli on a ceramic plate', span: '' },
-    { file: 'ca6fcc9917b99d965ea3d04f0f0852b3.jpg', alt: 'Product photograph — skincare bottle and jar', span: '' },
-    { file: '2e0df4d4e189a39fa8e45d288b14064f.jpg', alt: 'Lifestyle product photograph', span: '' },
-    { file: 'a3d96731c504bc656f26e2b1816155f2.jpg', alt: 'Lifestyle photograph', span: '' },
+    { file: '867011bb5ed745b0d4a36ae51dc3b2df.jpg', alt: 'Lifestyle photograph — dog playing in the grass' },
+    { file: '24772a4d9af8e44a2a8b452e99a4f8d9.jpg', alt: 'Food photograph — pistachio cannoli on a ceramic plate' },
+    { file: 'ca6fcc9917b99d965ea3d04f0f0852b3.jpg', alt: 'Product photograph — skincare bottle and jar' },
+    { file: '2e0df4d4e189a39fa8e45d288b14064f.jpg', alt: 'Lifestyle product photograph' },
+    { file: 'a3d96731c504bc656f26e2b1816155f2.jpg', alt: 'Lifestyle photograph' },
+    { file: '9d384f234a5cfac4ab2becceca767ef4.jpg', alt: 'Product & lifestyle photograph' },
 ];
 
 const travel = [
@@ -220,15 +232,34 @@ const deliverables = [
             <div class="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {reels.map((r) => (
                     <article class="group flex flex-col overflow-hidden rounded-3xl bg-sand-50 ring-1 ring-stone-900/5 transition hover:shadow-lg hover:shadow-primary-900/8">
-                        <div class="relative flex aspect-[9/16] items-center justify-center bg-primary-500 p-6">
-                            <span class="absolute right-4 top-4 inline-flex items-center gap-1 rounded-full bg-white/80 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-primary-800 backdrop-blur-sm">
+                        <div class="bv group/video relative aspect-[9/16] bg-primary-500">
+                            <video
+                                src={vid(r.video)}
+                                class="bv-video h-full w-full object-cover"
+                                autoplay
+                                muted
+                                loop
+                                playsinline
+                                preload="metadata"
+                                aria-label={r.title}
+                            ></video>
+                            <div class="bv-controls absolute bottom-3 left-3 z-10 flex gap-2 opacity-0 transition focus-within:opacity-100 group-hover/video:opacity-100">
+                                <button type="button" class="bv-toggle grid h-10 w-10 place-items-center rounded-full bg-stone-900/45 text-white backdrop-blur-sm transition hover:bg-stone-900/65" aria-label="Play or pause video">
+                                    <svg class="bv-icon-play hidden h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M6 4l10 6-10 6V4z"/></svg>
+                                    <svg class="bv-icon-pause h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M6 4h3v12H6zM11 4h3v12h-3z"/></svg>
+                                </button>
+                                <button type="button" class="bv-mute grid h-10 w-10 place-items-center rounded-full bg-stone-900/45 text-white backdrop-blur-sm transition hover:bg-stone-900/65" aria-label="Mute or unmute video">
+                                    <svg class="bv-icon-muted h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+                                    <svg class="bv-icon-unmuted hidden h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 4.5a9 9 0 0 1 0 15"/></svg>
+                                </button>
+                            </div>
+                            <span class="pointer-events-none absolute right-4 top-4 inline-flex items-center gap-1 rounded-full bg-white/80 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-primary-800 backdrop-blur-sm">
                                 <svg class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor"><path d="M6 4l10 6-10 6V4z"/></svg> Reel
                             </span>
-                            <p class="text-center font-display text-2xl leading-snug text-stone-900">{r.hook}</p>
                         </div>
                         <div class="px-6 py-4">
-                            <p class="text-sm font-semibold text-stone-800">{r.tag}</p>
-                            <p class="text-xs uppercase tracking-widest text-stone-500">Organic · personal brand</p>
+                            <p class="text-sm font-semibold text-stone-800">{r.title}</p>
+                            <p class="text-xs uppercase tracking-widest text-stone-500">{r.tags}</p>
                         </div>
                     </article>
                 ))}
@@ -269,10 +300,29 @@ const deliverables = [
             <div class="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {specWork.map((w) => (
                     <article class="group flex flex-col overflow-hidden rounded-3xl bg-white ring-1 ring-stone-900/5 transition hover:shadow-lg hover:shadow-primary-900/8">
-                        <div class="relative flex aspect-[9/16] items-center justify-center bg-secondary-500 p-6">
-                            <span class="absolute left-3 top-3 inline-flex items-center gap-0.5 rounded-full bg-white/85 px-2.5 py-1.5 text-lg leading-none shadow-sm backdrop-blur-sm" role="img" aria-label={FLAG[w.lang].label} title={FLAG[w.lang].label}>{FLAG[w.lang].flag}</span>
-                            <span class="absolute right-4 top-4 rounded-full bg-white/80 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-stone-700 backdrop-blur-sm">Ad-ready</span>
-                            <p class="text-center font-display text-2xl leading-snug text-stone-900">{w.hook}</p>
+                        <div class="bv group/video relative aspect-[9/16] bg-secondary-500">
+                            <video
+                                src={vid(w.video)}
+                                class="bv-video h-full w-full object-cover"
+                                autoplay
+                                muted
+                                loop
+                                playsinline
+                                preload="metadata"
+                                aria-label={`${w.type} — ${w.hook}`}
+                            ></video>
+                            <div class="bv-controls absolute bottom-3 left-3 z-10 flex gap-2 opacity-0 transition focus-within:opacity-100 group-hover/video:opacity-100">
+                                <button type="button" class="bv-toggle grid h-10 w-10 place-items-center rounded-full bg-stone-900/45 text-white backdrop-blur-sm transition hover:bg-stone-900/65" aria-label="Play or pause video">
+                                    <svg class="bv-icon-play hidden h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M6 4l10 6-10 6V4z"/></svg>
+                                    <svg class="bv-icon-pause h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M6 4h3v12H6zM11 4h3v12h-3z"/></svg>
+                                </button>
+                                <button type="button" class="bv-mute grid h-10 w-10 place-items-center rounded-full bg-stone-900/45 text-white backdrop-blur-sm transition hover:bg-stone-900/65" aria-label="Mute or unmute video">
+                                    <svg class="bv-icon-muted h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+                                    <svg class="bv-icon-unmuted hidden h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 4.5a9 9 0 0 1 0 15"/></svg>
+                                </button>
+                            </div>
+                            <span class="pointer-events-none absolute left-3 top-3 inline-flex items-center gap-0.5 rounded-full bg-white/85 px-2.5 py-1.5 text-lg leading-none shadow-sm backdrop-blur-sm" role="img" aria-label={FLAG[w.lang].label} title={FLAG[w.lang].label}>{FLAG[w.lang].flag}</span>
+                            <span class="pointer-events-none absolute right-4 top-4 rounded-full bg-white/80 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-stone-700 backdrop-blur-sm">Ad-ready</span>
                         </div>
                         <div class="px-6 py-4">
                             <p class="text-sm font-semibold text-stone-800">{w.type}</p>
@@ -295,9 +345,9 @@ const deliverables = [
                     Product &amp; lifestyle
                 </h2>
             </div>
-            <div class="mt-14 grid auto-rows-[220px] grid-cols-2 gap-4 md:grid-cols-3">
+            <div class="mt-14 grid grid-cols-2 gap-4 md:grid-cols-3">
                 {photography.map((p) => (
-                    <div class={`overflow-hidden rounded-2xl bg-sand-200 ${p.span}`}>
+                    <div class="aspect-[4/5] overflow-hidden rounded-2xl bg-sand-200">
                         <img src={img(p.file)} alt={p.alt} class="h-full w-full object-cover transition duration-500 hover:scale-105" loading="lazy" />
                     </div>
                 ))}
@@ -390,3 +440,69 @@ const deliverables = [
         </div>
     </section>
 </Layout>
+
+<script>
+    // Controls for the autoplaying, muted brand videos. Each clip:
+    //  - autoplays muted + looped, but only while it's on screen (saves the
+    //    browser from decoding all nine at once) via an IntersectionObserver;
+    //  - has a play/pause toggle (clicking the video works too). A manual pause
+    //    is remembered, so scrolling away and back won't auto-resume it;
+    //  - has a mute/unmute toggle. Icons stay in sync with the real state.
+    document.querySelectorAll<HTMLVideoElement>('video.bv-video').forEach((video) => {
+        const wrap = video.closest('.bv');
+        if (!wrap) return;
+        const toggleBtn = wrap.querySelector('.bv-toggle');
+        const muteBtn = wrap.querySelector('.bv-mute');
+        const iconPlay = wrap.querySelector('.bv-icon-play');
+        const iconPause = wrap.querySelector('.bv-icon-pause');
+        const iconMuted = wrap.querySelector('.bv-icon-muted');
+        const iconUnmuted = wrap.querySelector('.bv-icon-unmuted');
+
+        let userPaused = false;
+
+        const syncPlay = () => {
+            const playing = !video.paused && !video.ended;
+            iconPlay?.classList.toggle('hidden', playing);
+            iconPause?.classList.toggle('hidden', !playing);
+        };
+        const syncMute = () => {
+            iconMuted?.classList.toggle('hidden', !video.muted);
+            iconUnmuted?.classList.toggle('hidden', video.muted);
+        };
+
+        toggleBtn?.addEventListener('click', () => {
+            if (video.paused) {
+                userPaused = false;
+                video.play().catch(() => {});
+            } else {
+                userPaused = true;
+                video.pause();
+            }
+        });
+        video.addEventListener('click', () => toggleBtn?.dispatchEvent(new Event('click')));
+        muteBtn?.addEventListener('click', () => {
+            video.muted = !video.muted;
+            syncMute();
+        });
+        video.addEventListener('play', syncPlay);
+        video.addEventListener('pause', syncPlay);
+
+        // Only play while a meaningful part of the clip is in view; pause otherwise.
+        const io = new IntersectionObserver(
+            (entries) => {
+                for (const entry of entries) {
+                    if (entry.isIntersecting) {
+                        if (!userPaused) video.play().catch(() => {});
+                    } else {
+                        video.pause();
+                    }
+                }
+            },
+            { threshold: 0.25 },
+        );
+        io.observe(video);
+
+        syncPlay();
+        syncMute();
+    });
+</script>
