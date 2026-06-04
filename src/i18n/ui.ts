@@ -1,0 +1,1371 @@
+// All translated copy for the site, grouped by page/component.
+//
+// Editing tips for non-developers
+// ──────────────────────────────────────────────────────────────
+// • Three top-level keys: `en`, `es`, `da` — English, Spanish, Danish.
+// • Keep the structure identical across the three. If you add a string
+//   to one, add it to the others too. Missing keys fall back to English
+//   so the site doesn't break, but you'll see English text in the wrong
+//   place.
+// • HTML is allowed in some strings — most commonly the `<em class="…">`
+//   tag that paints a word in the magenta highlight colour in headlines.
+//   You can change the *text inside* the tag freely. Don't change or
+//   remove the surrounding `<em class="…">…</em>` markup, or the colour
+//   will go away.
+// • The Spanish translations were drafted in Latin-American-leaning
+//   neutral Spanish ("tú" form) and the Danish in casual "du" form.
+//   Maria can adjust freely — this file is the only place to edit copy.
+//
+// Adding a new string in code
+// ──────────────────────────────────────────────────────────────
+// 1. Add it under each language here (e.g. `myPage.newThing`).
+// 2. In your .astro file: `const t = useTranslations(asLang(Astro.currentLocale));`
+//    and call `t('myPage.newThing')`.
+
+export const ui = {
+    en: {
+        common: {
+            siteName: 'Maria Montserrat',
+            tagline: 'Yoga & breathwork for burnout, and trilingual UGC content creation.',
+            location: 'Copenhagen',
+            nav: {
+                forTeachers: 'For teachers',
+                forBrands: 'For brands',
+                forReaders: 'For readers',
+                home: 'Home',
+                courses: 'Online Courses',
+                yourCalling: '1:1 Coaching',
+                blog: 'Blog',
+            },
+            footer: {
+                explore: 'Explore',
+                getInTouch: 'Get in touch',
+                social: 'Social',
+                copyright: 'Copenhagen, Denmark',
+            },
+            langSwitcher: {
+                label: 'Language',
+                inEnglish: 'In English',
+                inSpanish: 'En español',
+                inDanish: 'På dansk',
+            },
+        },
+        home: {
+            meta: {
+                title: 'Maria Montserrat — Yoga Teacher & Content Creator',
+                description: "Hey, I'm Maria — a yoga & breathwork teacher for burnout and a trilingual UGC content creator (EN · ES · DK), based in Copenhagen. Find the path that fits you.",
+            },
+            hero: {
+                eyebrow: 'Copenhagen',
+                headline: `Hey, I'm <em class="font-normal text-primary-800">Maria</em>.`,
+                body: "Mexican-born, Denmark-based. I'm a yoga & breathwork teacher and a trilingual content creator. My classes are calm, creative, and unhurried — a place to slow down and breathe when you're worn out. I also make honest content for brands that fit the way I actually live.",
+                cue: 'Pick the path that fits you ↓',
+                photoAlt: 'Maria Montserrat seated in lotus pose on the grass',
+            },
+            universes: {
+                title: 'Three ways to find me',
+                subtitle: "Whoever you are, there's a door for you.",
+                items: [
+                    {
+                        label: 'For teachers',
+                        title: 'Yoga & breathwork',
+                        body: 'Yin, breathwork, and somatic movement for burnout — classes in Copenhagen and self-paced courses for people who spend their days looking after everyone else.',
+                        cta: 'Practice with me',
+                    },
+                    {
+                        label: 'For brands',
+                        title: 'UGC & content creation',
+                        body: 'Authentic, conversion-focused content in English, Spanish, and Danish — skincare, wellness, lifestyle, food, travel, and health. 582K+ accounts reached in a single month.',
+                        cta: 'See my work',
+                    },
+                    {
+                        label: 'For blog readers',
+                        title: 'Essays & reflections',
+                        body: 'Honest writing on burnout, the nervous system, leaving a career that was quietly breaking me, and finding the way back to myself.',
+                        cta: 'Read the blog',
+                    },
+                ],
+            },
+            reguler: {
+                eyebrow: 'A collaboration with Michala Storm',
+                title: 'Regulér',
+                body: "A co-regulation programme for early-years educators — because you can't regulate others if you can't regulate yourself.",
+                cta: 'See the programme',
+                flagLabel: 'In Danish',
+            },
+        },
+        teacherYoga: {
+            meta: {
+                title: 'Yoga for Teachers & Carers — Maria Montserrat',
+                description: 'Yoga and breathwork for burnout — with Maria Montserrat. Specialising in teachers, child carers, and helping professionals. Classes in Copenhagen and online courses worldwide.',
+            },
+            hero: {
+                eyebrow: 'For teachers · Carers · Anyone running on empty',
+                headline: `Move beyond <em class="font-normal text-primary-800">burnout</em>.`,
+                body: "If you spend your days looking after other people — teaching, caring, giving — this is time set aside for you. Yoga and breathwork that calms your nervous system, not just your mind. Without pressure. Without perfection.",
+                ctaPrimary: 'Practice with me',
+                ctaSecondary: 'Explore online courses',
+                where: 'Copenhagen, Denmark · classes online worldwide',
+                quote: 'Yoga is the journey of the self, through the self, to the self.',
+                quoteAttribution: 'Bhagavad Gita',
+                scrollCue: 'Explore',
+                photoAlt: 'Maria Montserrat seated in lotus pose on the grass',
+            },
+            offerings: {
+                eyebrow: 'This is for you',
+                title: `You give a lot. <em class="font-normal text-primary-800">This gives back</em>.`,
+                intro: `Maria works especially with teachers, child carers, and people in helping professions — people who are used to looking after everyone else. The practices below are chosen because they work <em class="font-normal text-primary-800">with</em> a depleted nervous system, not against it.`,
+                audienceChips: [
+                    'School teachers',
+                    'Early years educators',
+                    'Child carers',
+                    'Healthcare workers',
+                    'Social workers',
+                    'Anyone in burnout',
+                ],
+                cards: [
+                    {
+                        title: 'Yin Yoga',
+                        body: 'Long, passive holds that invite the body to soften rather than perform. Particularly effective for chronic stress and burnout — it works directly with the nervous system, not just the muscles.',
+                    },
+                    {
+                        title: 'Breathwork',
+                        body: 'Pranayama and conscious breathing techniques that down-regulate the stress response and bring you back into your body. One of the most immediate tools for people running on overdrive.',
+                    },
+                    {
+                        title: 'Somatic Movement',
+                        body: 'Body-awareness practices that draw on creative, intuitive movement. A way of discharging stored tension and reconnecting with yourself — without needing to "do it right."',
+                    },
+                    {
+                        title: 'Hatha & Vinyasa',
+                        body: 'Breath-led movement that builds gentle strength and fluidity. A grounding practice for days when you need to feel capable in your body again — calm and creative, never competitive.',
+                    },
+                    {
+                        title: 'Kundalini',
+                        body: "Mantra, pranayama, and kriyas that work with the body's energy system. Deeply restorative in a different way — often described as transformational by people who felt \"stuck\" before.",
+                    },
+                ],
+                onlineCourses: {
+                    title: 'Online Courses',
+                    body: 'Self-paced programmes built especially for educators and carers — practice on your own schedule, wherever you are in the world.',
+                    cta: 'Browse courses',
+                },
+                background: "Maria's practice spans nearly two decades. Trained in yin yoga, breathwork, and somatic movement — with additional studies in Chinese medicine — she brings a nervous-system-aware approach that goes beyond poses.",
+            },
+            coursesTeaser: {
+                eyebrow: 'Online courses',
+                title: `Take the practice <em class="font-normal text-primary-800">with you</em>.`,
+                bodyWithCount: '{count} self-paced courses for teachers, carers, and anyone ready to move beyond burnout — practice anywhere, at your own pace.',
+                bodyWithCountSingular: '{count} self-paced course for teachers, carers, and anyone ready to move beyond burnout — practice anywhere, at your own pace.',
+                bodyEmpty: 'Self-paced courses for teachers, carers, and anyone ready to move beyond burnout — practice anywhere, at your own pace.',
+                cta: 'Browse all courses',
+            },
+            contact: {
+                eyebrow: "Let's talk",
+                title: `Whenever you're ready, <em class="font-normal text-primary-800">I'm here</em>.`,
+                body: "Whether you're curious about a class in Copenhagen, an online course for educators, or you just want to ask a question — reach out. I read every message myself, and there is no pressure to commit to anything.",
+                emailLabel: 'Email',
+                phoneLabel: 'Phone',
+                instagramLabel: 'Instagram',
+                facebookLabel: 'Facebook',
+                namaste: 'namasté — the light in me honours the light in you',
+                photoAlt: 'Maria Montserrat in namaste, eyes closed in a moment of quiet',
+            },
+        },
+        courses: {
+            meta: {
+                title: 'Online Courses — Maria Montserrat',
+                description: 'Self-paced yoga and mindfulness courses for teachers, carers, and anyone moving beyond burnout. Practice anywhere, at your own pace.',
+            },
+            hero: {
+                eyebrow: 'For teachers · Carers · Helping professionals',
+                headline: `Practice on <em class="font-normal text-primary-800">your schedule</em>.`,
+                body: "Self-paced courses built for people who give a lot to others. Work through them at home, at your own pace — no mat required for most, no prior yoga experience needed.",
+            },
+            list: {
+                viewCourse: 'View course',
+                comingSoon: 'Courses coming soon — check back shortly.',
+                note: 'Courses are taught in English.',
+            },
+            contact: {
+                title: 'Not sure which course is right for you?',
+                body: 'Reach out — Maria reads every message herself and is happy to point you in the right direction.',
+                cta: 'Send a message',
+                or: 'Or',
+                returnHome: 'return to the home page',
+            },
+        },
+        brands: {
+            meta: {
+                title: 'For Brands — Maria Montserrat',
+                description: 'Trilingual UGC creator based in Denmark — authentic, conversion-focused content in English, Spanish, and Danish for skincare, wellness, lifestyle, food, travel, and health brands.',
+            },
+            hero: {
+                eyebrow: 'UGC Creator',
+                headline: `Trilingual creator. <em class="font-normal text-primary-800">Three markets.</em>`,
+                body: "Real content that converts. I'm Maria — a content creator based in Denmark, making UGC in English, Spanish, and Danish for brands that fit how I actually live.",
+                tagline: "Mexican-born, Denmark-based, flexitarian, dog mum (Freja + Macarena), tennis & padel player, Hashimoto's warrior, secondhand shopper, sun chaser.",
+                ctaPrimary: "Let's work together",
+                ctaSecondary: 'See my work',
+                photoAlt: 'Maria Montserrat smiling outdoors',
+            },
+            about: {
+                eyebrow: 'About me',
+                title: `One creator, <em class="font-normal text-primary-800">three markets</em>.`,
+                body: 'In the last 30 days my content has reached 582K+ accounts and generated 1.1M+ views. I create conversion-focused UGC for skincare, wellness, lifestyle, fashion, food, travel, and health brands — including autoimmune, plant-based, and nervous-system-recovery niches.',
+                body2: `My background spans teaching, journalism, yoga & mindfulness instruction, fashion design, and somatic practice — trained in fashion design, communications, and pedagogy. My philosophy: <em class="font-normal text-primary-800">give your best, not your all.</em> I make content that feels real because it is.`,
+                photoAlt: 'Maria Montserrat seated outdoors',
+            },
+            analytics: {
+                eyebrow: 'Analytics',
+                title: `The numbers, <em class="font-normal text-primary-800">across three platforms</em>.`,
+                body: "Reach that travels well beyond my own followers — the kind of organic distribution brands are really paying for.",
+                instagram: {
+                    headlineLabel: 'Views',
+                    metric1: 'Reach',
+                    metric2: 'Interactions',
+                },
+                tiktok: {
+                    headlineLabel: 'Video views',
+                    metric1: 'Likes',
+                    metric2: 'Shares',
+                    highlightText: 'followers — yet a single week reached 231.8K views',
+                },
+                facebook: {
+                    headlineLabel: 'Views',
+                    metric1: 'Viewers',
+                    metric2: 'Interactions',
+                },
+                newAudience: "of reach comes from <strong>people who don't follow her yet</strong>",
+                footnote: "Self-reported figures from each platform's own analytics · snapshot {date}",
+            },
+            reels: {
+                eyebrow: 'How I show up',
+                title: `Organic reels, <em class="font-normal text-primary-800">real moments</em>.`,
+                body: 'Personal-brand storytelling around burnout, the nervous system, and finding your way back to yourself — the content that builds the trust brands borrow.',
+                items: [
+                    { title: 'Finding myself after burnout', tags: 'Emotional narrative · organic' },
+                    { title: 'Snapping at everyone you love', tags: 'Nervous system reel · organic' },
+                    { title: 'Teacher Stress Reset', tags: 'Somatic tutorial · organic' },
+                ],
+                badge: 'Reel',
+            },
+            niches: {
+                eyebrow: 'What I create for',
+                title: 'Niches I know inside out',
+                body: 'The categories where I create authentic, conversion-focused content — drawn from how I actually live.',
+                items: [
+                    'Skincare & beauty',
+                    'Wellness & mindfulness',
+                    'Lifestyle',
+                    'Fashion',
+                    'Food & beverage',
+                    'Travel & hospitality',
+                    'Health & autoimmune',
+                    'Plant-based',
+                    'Nervous-system recovery',
+                ],
+            },
+            spec: {
+                eyebrow: 'Spec UGC · ad-ready',
+                title: `Concept work, <em class="font-normal text-primary-800">in three languages</em>.`,
+                items: [
+                    { hook: '10 years, same mat. Still my favourite.', type: 'Lifestyle testimonial' },
+                    { hook: 'Lo primero antes de mirar el móvil.', type: 'Morning ritual' },
+                    { hook: 'Min daglige kefir — sådan starter jeg dagen.', type: 'Food & health' },
+                    { hook: 'The serum that finally calmed my reactive skin.', type: 'Skincare testimonial' },
+                    { hook: 'Mi rutina de noche en 30 segundos.', type: 'Skincare demo' },
+                    { hook: 'Min morgenflow derhjemme.', type: 'Lifestyle · yoga' },
+                ],
+                badge: 'Ad-ready',
+                specUgcLabel: 'Spec UGC',
+            },
+            photography: {
+                eyebrow: 'Photography',
+                title: 'Product & lifestyle',
+                travelTitle: 'Travel',
+            },
+            services: {
+                eyebrow: 'My services',
+                title: 'What I offer',
+                servicesTitle: 'Services',
+                deliverablesTitle: '1 UGC video includes',
+                services: [
+                    'UGC Videos (ads & organic)',
+                    'Voiceover Videos',
+                    'UGC Photos',
+                    'Product Photography',
+                    'On-Location Content',
+                    'Content Bundles',
+                    'Monthly Retainer',
+                ],
+                deliverables: [
+                    'Vertical format (9:16)',
+                    'Research on branding & concepts',
+                    'Scriptwriting',
+                    'Video filming & editing',
+                    '2 revisions if needed',
+                    'Delivery in 5–7 business days',
+                ],
+                rates: 'Rates available upon request',
+            },
+            workTogether: {
+                eyebrow: "Let's work together",
+                title: `Got a brand that fits <em class="font-normal text-primary-800">how I live</em>?`,
+                body: "Book a discovery call and let's talk about authentic content in English, Spanish, or Danish.",
+                cta: 'Email me',
+                socialLabel: 'Find me on social media',
+            },
+        },
+        yourCalling: {
+            meta: {
+                title: "You're Your Calling — 1:1 Coaching for Teachers | Maria Montserrat",
+                description: 'A 6-week 1:1 coaching programme for burned-out teachers. Yoga, somatic work, and transformational coaching that goes to the root — with Maria Montserrat.',
+            },
+            hero: {
+                eyebrow: 'A 6-Week 1:1 Programme · For Teachers',
+                headline: `You're <em class="font-normal text-primary-800">your calling</em>.`,
+                body: "You've been giving everything. And somewhere along the way, you stopped recognising yourself. This is six weeks of 1:1 work — yoga, somatics, and transformational coaching — to go to the root of it and come back to yourself.",
+                ctaPrimary: 'Apply for a spot',
+                ctaSecondary: "See what's included",
+                pricing: 'Only <strong>3 spots</strong> · Founding price <strong>€497</strong> · Begins with a free discovery call',
+                photoAlt: 'Maria Montserrat holding a hand-written sign that reads HELP!',
+            },
+            story: {
+                eyebrow: "If you're reading this",
+                title: `You've been giving everything — and it has made you invisible, <em class="font-normal text-primary-800">even to yourself</em>.`,
+                p1: "You became a teacher because you cared. You stayed because you believed in it. And somewhere between the marking, the parents' emails, and the meetings that could have been a message, you stopped recognising yourself.",
+                p2: "You're exhausted in a way sleep doesn't fix. You go through the motions. You feel guilty for wanting something different. And a quiet part of you wonders: is this just what being a grown-up feels like?",
+                p3: "It isn't. And it isn't your fault.",
+            },
+            arc: {
+                eyebrow: 'The shape of the work',
+                title: `Two halves. <em class="font-normal text-primary-800">One path back to yourself</em>.`,
+                firstHalfWeeks: 'Weeks 1–3',
+                firstHalfTitle: "Name what's actually happening.",
+                firstHalfBody: "We go to the root of it. What teaching has cost you, what it gave you, and what was never yours to carry. You'll feel the difference between depletion and identity — and start to hear yourself again.",
+                secondHalfWeeks: 'Weeks 4–6',
+                secondHalfTitle: 'Build a life that actually belongs to you.',
+                secondHalfBody: "Clarity becomes direction. Through somatic practices, values work, and coaching, insight turns into action — so you leave knowing who you are and what you want, not just that you're exhausted.",
+                pullQuote: '"I finally see — from my own eyes, not from fear."',
+                pullQuoteAttribution: 'The promise of Week 6',
+            },
+            different: {
+                eyebrow: 'Built differently',
+                title: `Teacher burnout isn't fixed by <em class="font-normal text-primary-800">more productivity tips</em>.`,
+                body: "This isn't a course. It's six weeks of 1:1 work — yoga, somatics, mindfulness, and transformational coaching — built around you.",
+                cards: [
+                    {
+                        title: 'Body-led, not just talked through',
+                        body: "You won't only analyse your burnout — you'll feel your way through it. Each week includes breathwork, somatic inquiry, and movement, because the body holds what the mind hasn't processed yet.",
+                    },
+                    {
+                        title: 'Coaching that asks, not tells',
+                        body: "I don't hand you a plan. I ask the questions that help you hear yourself again. Grounded in values work, identity coaching, and yoga philosophy — designed for lasting change, not temporary relief.",
+                    },
+                    {
+                        title: 'Clarity that leads somewhere',
+                        body: "Every session ends with one small, real move. Not homework — a step toward the life that actually fits, whether that's still teaching or something completely different. Both are valid outcomes.",
+                    },
+                ],
+            },
+            testimonials: {
+                eyebrow: 'From early clients',
+                title: `Real words from teachers who've <em class="font-normal text-primary-800">been where you are</em>.`,
+                items: [
+                    {
+                        quote: '"I felt heard for the first time in years. Maria doesn\'t just coach — she creates a space where you can actually breathe again."',
+                        attribution: 'Primary school teacher',
+                    },
+                    {
+                        quote: '"I came in thinking I needed a career plan. I left knowing who I was outside of teaching. That\'s worth more than any plan."',
+                        attribution: 'Secondary teacher, nine years in',
+                    },
+                ],
+                pullQuote: '"I stopped dreading Sunday evenings. Not because I found a better job — because I found myself again."',
+                pullQuoteAttribution: 'Year 4 teacher',
+                starsAria: 'Five stars',
+            },
+            about: {
+                eyebrow: 'Your guide',
+                title: `I know what it's like to pour yourself into a role until you forget who you are <em class="font-normal text-primary-800">outside it</em>.`,
+                p1: "I'm Maria Montserrat — yoga teacher, mindfulness practitioner, and transformational coach. After years of working with burned-out educators, I built You're Your Calling because I kept seeing the same pattern: smart, caring people who gave everything to their students and had nothing left for themselves.",
+                p2: 'This programme combines yoga, somatics, mindfulness, and coaching — not as separate tools, but as one integrated journey back to yourself.',
+            },
+            weeks: {
+                eyebrow: 'The six weeks',
+                title: `Week by <em class="font-normal text-primary-800">week</em>.`,
+                body: '90-minute weekly calls · between-session practice recordings · WhatsApp support',
+                weekLabel: 'Week',
+                items: [
+                    { title: 'It was never just you.', body: "We start where the depletion actually began. Not with a fix — with the truth that the system wasn't built for you, and that it's not your fault." },
+                    { title: 'Listening to your body again.', body: 'Your nervous system has been signalling for months, maybe years. We learn to read those signals — exhaustion, tension, numbness — instead of overriding them.' },
+                    { title: 'Who you are outside the role.', body: 'Values, identity, the things that light you up that have nothing to do with a classroom. The version of you that existed before the teacher took over.' },
+                    { title: 'Changing the filter.', body: "The stories that keep you stuck — about duty, sacrifice, what a 'good' teacher does — where they came from, and how to gently put them down." },
+                    { title: 'A vision that actually fits.', body: "Not 'what should I do' — what do you actually want. We build a direction from your real values, not from what's expected of you." },
+                    { title: 'Seeing from your own eyes.', body: 'You leave with clarity, one concrete next step, and the felt sense of being a whole person again — whether you stay in teaching or choose something new.' },
+                ],
+            },
+            included: {
+                eyebrow: 'Everything included',
+                title: `Your decision. Your pace. <em class="font-normal text-primary-800">Your calling</em>.`,
+                cardTitle: 'The 6-Week 1:1 Programme',
+                includesLabel: 'Includes',
+                items: [
+                    'Six live 90-minute 1:1 sessions',
+                    'Somatic and yoga practices tailored to you',
+                    'Between-session WhatsApp support',
+                    'Values mapping and identity work',
+                    'A post-programme integration session',
+                    'Free 30-minute discovery call before you commit',
+                ],
+                priceEyebrow: 'Founding price',
+                priceTotal: 'total',
+                priceOriginal: '€847',
+                priceDiscount: '41% off the standard price',
+                priceBullets: [
+                    'Only 3 spots available',
+                    'Free discovery call first',
+                    "Full refund after Week 1 if it isn't right",
+                ],
+                cta: 'Apply for a spot',
+                footnote: "You're not betting on yourself — you're making a clear-eyed decision. If something feels off on the discovery call, we don't proceed. No awkwardness, no invoice.",
+            },
+            faq: {
+                eyebrow: 'Still wondering?',
+                title: `Your questions, <em class="font-normal text-primary-800">answered</em>.`,
+                items: [
+                    {
+                        q: "Is this right for me if I'm completely exhausted?",
+                        a: "Yes — especially then. The programme is designed for teachers running on empty. We start where you are, not where you think you should be.",
+                    },
+                    {
+                        q: "What if I can't commit to set sessions every week?",
+                        a: "We schedule around your life. You're a teacher; your week isn't 9-to-5. Flexibility is built in from the start.",
+                    },
+                    {
+                        q: "What if I start and it isn't for me?",
+                        a: "That's exactly what the free discovery call is for — we both check it's a good fit before any commitment. And if after Week 1 it isn't what you expected, you'll get a full refund.",
+                    },
+                    {
+                        q: 'What does the application process look like?',
+                        a: "Send a short email and I'll reach out to book your free 30-minute discovery call. No pressure, no sales pitch — just a real conversation. Applications close when the three spots are filled.",
+                    },
+                ],
+            },
+            finalCta: {
+                eyebrow: 'Only 3 spots available',
+                title: `Ready to find out who you actually <em class="font-normal text-accent-300">are</em>?`,
+                body: 'It starts with a free 30-minute discovery call. No pressure, no commitment — just a real conversation about whether this is right for you.',
+                ctaPrimary: 'Apply for a spot',
+                ctaSecondary: "Or browse Maria's other offerings",
+            },
+        },
+        flyer: {
+            meta: {
+                title: 'Maria Montserrat',
+                description: "Redirecting you to Maria's events page.",
+            },
+            fallback: 'Click here if nothing happens',
+            loading: 'Loading..',
+        },
+    },
+
+    es: {
+        common: {
+            siteName: 'Maria Montserrat',
+            tagline: 'Yoga y respiración para el burnout, y creación de contenido UGC trilingüe.',
+            location: 'Copenhague',
+            nav: {
+                forTeachers: 'Para docentes',
+                forBrands: 'Para marcas',
+                forReaders: 'Para lectores',
+                home: 'Inicio',
+                courses: 'Cursos en línea',
+                yourCalling: 'Coaching 1:1',
+                blog: 'Blog',
+            },
+            footer: {
+                explore: 'Explora',
+                getInTouch: 'En contacto',
+                social: 'Social',
+                copyright: 'Copenhague, Dinamarca',
+            },
+            langSwitcher: {
+                label: 'Idioma',
+                inEnglish: 'In English',
+                inSpanish: 'En español',
+                inDanish: 'På dansk',
+            },
+        },
+        home: {
+            meta: {
+                title: 'Maria Montserrat — Profesora de yoga y creadora de contenido',
+                description: 'Hola, soy Maria — profesora de yoga y respiración para el burnout, y creadora de contenido UGC trilingüe (EN · ES · DK), con base en Copenhague. Encuentra el camino que te encaje.',
+            },
+            hero: {
+                eyebrow: 'Copenhague',
+                headline: `Hola, soy <em class="font-normal text-primary-800">Maria</em>.`,
+                body: 'Nacida en México, basada en Dinamarca. Soy profesora de yoga y respiración, y creadora de contenido trilingüe. Mis clases son tranquilas, creativas y sin prisas — un lugar donde frenar y respirar cuando estás agotada. También hago contenido honesto para marcas que encajan con mi forma de vivir.',
+                cue: 'Elige el camino que te encaje ↓',
+                photoAlt: 'Maria Montserrat sentada en postura de loto sobre el césped',
+            },
+            universes: {
+                title: 'Tres formas de encontrarme',
+                subtitle: 'Quien quiera que seas, hay una puerta para ti.',
+                items: [
+                    {
+                        label: 'Para docentes',
+                        title: 'Yoga y respiración',
+                        body: 'Yin, respiración y movimiento somático para el burnout — clases en Copenhague y cursos a tu ritmo para personas que se pasan el día cuidando a los demás.',
+                        cta: 'Practica conmigo',
+                    },
+                    {
+                        label: 'Para marcas',
+                        title: 'UGC y creación de contenido',
+                        body: 'Contenido auténtico y orientado a conversión en inglés, español y danés — skincare, wellness, lifestyle, comida, viajes y salud. Más de 582K cuentas alcanzadas en un solo mes.',
+                        cta: 'Mira mi trabajo',
+                    },
+                    {
+                        label: 'Para lectores',
+                        title: 'Ensayos y reflexiones',
+                        body: 'Escritos honestos sobre el burnout, el sistema nervioso, dejar una carrera que me estaba rompiendo en silencio, y el camino de vuelta a mí misma.',
+                        cta: 'Lee el blog',
+                    },
+                ],
+            },
+            reguler: {
+                eyebrow: 'Una colaboración con Michala Storm',
+                title: 'Regulér',
+                body: 'Un programa de co-regulación para educadores de primera infancia — porque no puedes regular a otros si no puedes regularte a ti mismo.',
+                cta: 'Ver el programa',
+                flagLabel: 'En danés',
+            },
+        },
+        teacherYoga: {
+            meta: {
+                title: 'Yoga para docentes y cuidadores — Maria Montserrat',
+                description: 'Yoga y respiración para el burnout — con Maria Montserrat. Especializada en docentes, cuidadores de menores y profesionales del cuidado. Clases en Copenhague y cursos en línea desde cualquier lugar.',
+            },
+            hero: {
+                eyebrow: 'Para docentes · Cuidadores · Personas que están al límite',
+                headline: `Más allá del <em class="font-normal text-primary-800">burnout</em>.`,
+                body: 'Si te pasas el día cuidando a otras personas — enseñando, cuidando, dando — este es tiempo reservado para ti. Yoga y respiración que calman tu sistema nervioso, no solo tu mente. Sin presión. Sin perfección.',
+                ctaPrimary: 'Practica conmigo',
+                ctaSecondary: 'Ver cursos en línea',
+                where: 'Copenhague, Dinamarca · clases online en todo el mundo',
+                quote: 'El yoga es el viaje del ser, a través del ser, hacia el ser.',
+                quoteAttribution: 'Bhagavad Gita',
+                scrollCue: 'Explora',
+                photoAlt: 'Maria Montserrat sentada en postura de loto sobre el césped',
+            },
+            offerings: {
+                eyebrow: 'Esto es para ti',
+                title: `Tú das mucho. <em class="font-normal text-primary-800">Esto te devuelve</em>.`,
+                intro: `Maria trabaja especialmente con docentes, cuidadores de menores y profesionales del cuidado — personas acostumbradas a ocuparse de todos los demás. Las prácticas de abajo están elegidas porque trabajan <em class="font-normal text-primary-800">con</em> un sistema nervioso agotado, no contra él.`,
+                audienceChips: [
+                    'Profesores',
+                    'Educadores de primera infancia',
+                    'Cuidadores de menores',
+                    'Personal sanitario',
+                    'Trabajadores sociales',
+                    'Cualquiera en burnout',
+                ],
+                cards: [
+                    {
+                        title: 'Yin Yoga',
+                        body: 'Posturas largas y pasivas que invitan al cuerpo a ablandarse en vez de rendir. Muy eficaz para el estrés crónico y el burnout — trabaja directamente con el sistema nervioso, no solo con los músculos.',
+                    },
+                    {
+                        title: 'Respiración',
+                        body: 'Pranayama y técnicas de respiración consciente que regulan la respuesta de estrés y te devuelven al cuerpo. Una de las herramientas más inmediatas para quien vive en sobremarcha.',
+                    },
+                    {
+                        title: 'Movimiento somático',
+                        body: 'Prácticas de conciencia corporal basadas en el movimiento creativo e intuitivo. Una forma de liberar tensión acumulada y reconectar contigo misma — sin necesidad de "hacerlo bien".',
+                    },
+                    {
+                        title: 'Hatha y Vinyasa',
+                        body: 'Movimiento guiado por la respiración que construye fuerza y fluidez con suavidad. Una práctica que te aterriza los días en los que necesitas volver a sentirte capaz en tu cuerpo — tranquila y creativa, nunca competitiva.',
+                    },
+                    {
+                        title: 'Kundalini',
+                        body: 'Mantra, pranayama y kriyas que trabajan con el sistema energético del cuerpo. Profundamente restaurador de otra manera — muchos lo describen como transformador después de haberse sentido "atascados".',
+                    },
+                ],
+                onlineCourses: {
+                    title: 'Cursos en línea',
+                    body: 'Programas a tu ritmo creados especialmente para docentes y cuidadores — practica desde donde estés, en tu propio horario.',
+                    cta: 'Ver cursos',
+                },
+                background: 'La práctica de Maria abarca casi dos décadas. Formada en yin yoga, respiración y movimiento somático — con estudios adicionales en medicina china — aporta un enfoque consciente del sistema nervioso que va más allá de las posturas.',
+            },
+            coursesTeaser: {
+                eyebrow: 'Cursos en línea',
+                title: `Llévate la práctica <em class="font-normal text-primary-800">contigo</em>.`,
+                bodyWithCount: '{count} cursos a tu ritmo para docentes, cuidadores y cualquiera que quiera salir del burnout — practica donde estés, a tu propio paso.',
+                bodyWithCountSingular: '{count} curso a tu ritmo para docentes, cuidadores y cualquiera que quiera salir del burnout — practica donde estés, a tu propio paso.',
+                bodyEmpty: 'Cursos a tu ritmo para docentes, cuidadores y cualquiera que quiera salir del burnout — practica donde estés, a tu propio paso.',
+                cta: 'Ver todos los cursos',
+            },
+            contact: {
+                eyebrow: 'Hablemos',
+                title: `Cuando estés lista, <em class="font-normal text-primary-800">aquí estoy</em>.`,
+                body: 'Si tienes curiosidad por una clase en Copenhague, un curso en línea para docentes, o simplemente quieres hacer una pregunta — escríbeme. Yo leo cada mensaje en persona, y no hay ningún compromiso.',
+                emailLabel: 'Correo',
+                phoneLabel: 'Teléfono',
+                instagramLabel: 'Instagram',
+                facebookLabel: 'Facebook',
+                namaste: 'namasté — la luz en mí honra la luz en ti',
+                photoAlt: 'Maria Montserrat en namasté, con los ojos cerrados en un momento de calma',
+            },
+        },
+        courses: {
+            meta: {
+                title: 'Cursos en línea — Maria Montserrat',
+                description: 'Cursos de yoga y mindfulness a tu ritmo para docentes, cuidadores y cualquiera en proceso de salir del burnout. Practica desde donde estés, a tu propio paso.',
+            },
+            hero: {
+                eyebrow: 'Para docentes · Cuidadores · Profesionales del cuidado',
+                headline: `Practica a <em class="font-normal text-primary-800">tu ritmo</em>.`,
+                body: 'Cursos a tu propio paso pensados para personas que dan mucho a los demás. Trabájalos en casa, sin prisas — la mayoría no requieren esterilla, ni experiencia previa de yoga.',
+            },
+            list: {
+                viewCourse: 'Ver curso',
+                comingSoon: 'Cursos en camino — vuelve pronto a echar un vistazo.',
+                note: 'Los cursos se imparten en inglés.',
+            },
+            contact: {
+                title: '¿No sabes qué curso es para ti?',
+                body: 'Escríbeme — Maria lee cada mensaje en persona y con gusto te orienta hacia el más adecuado.',
+                cta: 'Envía un mensaje',
+                or: 'O',
+                returnHome: 'vuelve a la página de inicio',
+            },
+        },
+        brands: {
+            meta: {
+                title: 'Para marcas — Maria Montserrat',
+                description: 'Creadora UGC trilingüe basada en Dinamarca — contenido auténtico y orientado a conversión en inglés, español y danés para marcas de skincare, wellness, lifestyle, comida, viajes y salud.',
+            },
+            hero: {
+                eyebrow: 'Creadora UGC',
+                headline: `Creadora trilingüe. <em class="font-normal text-primary-800">Tres mercados.</em>`,
+                body: 'Contenido real que convierte. Soy Maria — creadora de contenido basada en Dinamarca, hago UGC en inglés, español y danés para marcas que encajan con mi forma real de vivir.',
+                tagline: 'Nacida en México, basada en Dinamarca, flexitariana, mamá de perros (Freja + Macarena), jugadora de tenis y pádel, guerrera con Hashimoto, compradora de segunda mano, buscadora del sol.',
+                ctaPrimary: 'Trabajemos juntos',
+                ctaSecondary: 'Mira mi trabajo',
+                photoAlt: 'Maria Montserrat sonriendo al aire libre',
+            },
+            about: {
+                eyebrow: 'Sobre mí',
+                title: `Una creadora, <em class="font-normal text-primary-800">tres mercados</em>.`,
+                body: 'En los últimos 30 días mi contenido ha alcanzado más de 582K cuentas y ha generado más de 1.1M de visualizaciones. Creo UGC orientado a conversión para marcas de skincare, wellness, lifestyle, moda, comida, viajes y salud — incluyendo nichos autoinmunes, plant-based y de recuperación del sistema nervioso.',
+                body2: `Mi trayectoria abarca docencia, periodismo, instrucción de yoga y mindfulness, diseño de moda y práctica somática — con formación en diseño de moda, comunicación y pedagogía. Mi filosofía: <em class="font-normal text-primary-800">da lo mejor de ti, no todo de ti.</em> Hago contenido que se siente real porque lo es.`,
+                photoAlt: 'Maria Montserrat sentada al aire libre',
+            },
+            analytics: {
+                eyebrow: 'Analítica',
+                title: `Los números, <em class="font-normal text-primary-800">en tres plataformas</em>.`,
+                body: 'Alcance que va mucho más allá de mis propios seguidores — el tipo de distribución orgánica por la que realmente pagan las marcas.',
+                instagram: {
+                    headlineLabel: 'Visualizaciones',
+                    metric1: 'Alcance',
+                    metric2: 'Interacciones',
+                },
+                tiktok: {
+                    headlineLabel: 'Visualizaciones',
+                    metric1: 'Likes',
+                    metric2: 'Compartidos',
+                    highlightText: 'seguidores — y aun así una sola semana alcanzó 231,8K visualizaciones',
+                },
+                facebook: {
+                    headlineLabel: 'Visualizaciones',
+                    metric1: 'Espectadores',
+                    metric2: 'Interacciones',
+                },
+                newAudience: 'del alcance viene de <strong>personas que aún no la siguen</strong>',
+                footnote: 'Cifras auto-reportadas desde la analítica de cada plataforma · datos de {date}',
+            },
+            reels: {
+                eyebrow: 'Cómo aparezco',
+                title: `Reels orgánicos, <em class="font-normal text-primary-800">momentos reales</em>.`,
+                body: 'Narrativa de marca personal en torno al burnout, el sistema nervioso y el camino de vuelta a una misma — el contenido que construye la confianza que las marcas piden prestada.',
+                items: [
+                    { title: 'Encontrarme después del burnout', tags: 'Narrativa emocional · orgánico' },
+                    { title: 'Saltar con la gente que amas', tags: 'Reel sobre sistema nervioso · orgánico' },
+                    { title: 'Reset de estrés para docentes', tags: 'Tutorial somático · orgánico' },
+                ],
+                badge: 'Reel',
+            },
+            niches: {
+                eyebrow: 'Para qué creo contenido',
+                title: 'Nichos que conozco a fondo',
+                body: 'Las categorías en las que creo contenido auténtico y orientado a conversión — desde mi forma real de vivir.',
+                items: [
+                    'Skincare y belleza',
+                    'Wellness y mindfulness',
+                    'Lifestyle',
+                    'Moda',
+                    'Comida y bebida',
+                    'Viajes y hospitalidad',
+                    'Salud y autoinmunidad',
+                    'Plant-based',
+                    'Recuperación del sistema nervioso',
+                ],
+            },
+            spec: {
+                eyebrow: 'UGC spec · listo para anuncios',
+                title: `Trabajo conceptual, <em class="font-normal text-primary-800">en tres idiomas</em>.`,
+                items: [
+                    { hook: '10 years, same mat. Still my favourite.', type: 'Testimonio lifestyle' },
+                    { hook: 'Lo primero antes de mirar el móvil.', type: 'Ritual matutino' },
+                    { hook: 'Min daglige kefir — sådan starter jeg dagen.', type: 'Comida y salud' },
+                    { hook: 'The serum that finally calmed my reactive skin.', type: 'Testimonio skincare' },
+                    { hook: 'Mi rutina de noche en 30 segundos.', type: 'Demo skincare' },
+                    { hook: 'Min morgenflow derhjemme.', type: 'Lifestyle · yoga' },
+                ],
+                badge: 'Listo para anuncios',
+                specUgcLabel: 'UGC spec',
+            },
+            photography: {
+                eyebrow: 'Fotografía',
+                title: 'Producto y lifestyle',
+                travelTitle: 'Viajes',
+            },
+            services: {
+                eyebrow: 'Mis servicios',
+                title: 'Lo que ofrezco',
+                servicesTitle: 'Servicios',
+                deliverablesTitle: '1 vídeo UGC incluye',
+                services: [
+                    'Vídeos UGC (anuncios y orgánico)',
+                    'Vídeos con locución',
+                    'Fotos UGC',
+                    'Fotografía de producto',
+                    'Contenido en localización',
+                    'Packs de contenido',
+                    'Iguala mensual',
+                ],
+                deliverables: [
+                    'Formato vertical (9:16)',
+                    'Investigación de marca y conceptos',
+                    'Guion',
+                    'Grabación y edición de vídeo',
+                    '2 revisiones si hace falta',
+                    'Entrega en 5–7 días laborables',
+                ],
+                rates: 'Tarifas a petición',
+            },
+            workTogether: {
+                eyebrow: 'Trabajemos juntos',
+                title: `¿Tienes una marca que encaje con <em class="font-normal text-primary-800">mi forma de vivir</em>?`,
+                body: 'Reserva una llamada de descubrimiento y hablemos de contenido auténtico en inglés, español o danés.',
+                cta: 'Escríbeme',
+                socialLabel: 'Encuéntrame en redes',
+            },
+        },
+        yourCalling: {
+            meta: {
+                title: 'Tú eres tu llamada — Coaching 1:1 para docentes | Maria Montserrat',
+                description: 'Un programa de coaching 1:1 de 6 semanas para docentes en burnout. Yoga, trabajo somático y coaching transformacional que va a la raíz — con Maria Montserrat.',
+            },
+            hero: {
+                eyebrow: 'Un programa 1:1 de 6 semanas · Para docentes',
+                headline: `Tú eres <em class="font-normal text-primary-800">tu llamada</em>.`,
+                body: 'Has estado dándolo todo. Y en algún momento del camino dejaste de reconocerte. Esto son seis semanas de trabajo 1:1 — yoga, somática y coaching transformacional — para ir a la raíz y volver a ti.',
+                ctaPrimary: 'Solicita una plaza',
+                ctaSecondary: 'Ver qué incluye',
+                pricing: 'Solo <strong>3 plazas</strong> · Precio fundador <strong>€497</strong> · Empieza con una llamada de descubrimiento gratuita',
+                photoAlt: 'Maria Montserrat sosteniendo un cartel escrito a mano que dice ¡AYUDA!',
+            },
+            story: {
+                eyebrow: 'Si estás leyendo esto',
+                title: `Lo has estado dando todo — y eso te ha vuelto invisible, <em class="font-normal text-primary-800">incluso para ti misma</em>.`,
+                p1: 'Te hiciste docente porque te importaba. Te quedaste porque creías en ello. Y en algún punto entre las correcciones, los correos de los padres y las reuniones que podían haber sido un mensaje, dejaste de reconocerte.',
+                p2: 'Estás agotada de una manera que el sueño no arregla. Vas en automático. Te sientes culpable por querer algo distinto. Y una parte tranquila de ti se pregunta: ¿esto es lo que significa ser adulta?',
+                p3: 'No lo es. Y no es tu culpa.',
+            },
+            arc: {
+                eyebrow: 'La forma del trabajo',
+                title: `Dos mitades. <em class="font-normal text-primary-800">Un camino de vuelta a ti</em>.`,
+                firstHalfWeeks: 'Semanas 1–3',
+                firstHalfTitle: 'Nombrar lo que está pasando de verdad.',
+                firstHalfBody: 'Vamos a la raíz. Lo que la docencia te ha costado, lo que te dio, y lo que nunca fue tuyo para cargar. Vas a sentir la diferencia entre el agotamiento y la identidad — y a empezar a escucharte de nuevo.',
+                secondHalfWeeks: 'Semanas 4–6',
+                secondHalfTitle: 'Construir una vida que sea realmente tuya.',
+                secondHalfBody: 'La claridad se vuelve dirección. A través de prácticas somáticas, trabajo de valores y coaching, la comprensión se convierte en acción — así sales sabiendo quién eres y qué quieres, no solo que estás agotada.',
+                pullQuote: '"Por fin veo — desde mis propios ojos, no desde el miedo."',
+                pullQuoteAttribution: 'La promesa de la semana 6',
+            },
+            different: {
+                eyebrow: 'Construido de otra manera',
+                title: `El burnout docente no se arregla con <em class="font-normal text-primary-800">más consejos de productividad</em>.`,
+                body: 'Esto no es un curso. Son seis semanas de trabajo 1:1 — yoga, somática, mindfulness y coaching transformacional — construido en torno a ti.',
+                cards: [
+                    {
+                        title: 'Desde el cuerpo, no solo hablado',
+                        body: 'No solo vas a analizar tu burnout — vas a sentirte a través de él. Cada semana incluye respiración, indagación somática y movimiento, porque el cuerpo guarda lo que la mente aún no ha procesado.',
+                    },
+                    {
+                        title: 'Coaching que pregunta, no dicta',
+                        body: 'No te entrego un plan. Te hago las preguntas que te ayudan a escucharte otra vez. Anclado en trabajo de valores, coaching de identidad y filosofía del yoga — diseñado para un cambio que dure, no para alivio temporal.',
+                    },
+                    {
+                        title: 'Claridad que lleva a algún sitio',
+                        body: 'Cada sesión termina con un paso pequeño y real. No deberes — un paso hacia la vida que de verdad te encaja, ya siga siendo la docencia o algo completamente distinto. Ambos son resultados válidos.',
+                    },
+                ],
+            },
+            testimonials: {
+                eyebrow: 'De clientes iniciales',
+                title: `Palabras reales de docentes que <em class="font-normal text-primary-800">han estado donde tú estás</em>.`,
+                items: [
+                    {
+                        quote: '"Por primera vez en años me sentí escuchada. Maria no solo hace coaching — crea un espacio donde de verdad puedes volver a respirar."',
+                        attribution: 'Profesora de primaria',
+                    },
+                    {
+                        quote: '"Entré pensando que necesitaba un plan de carrera. Salí sabiendo quién era fuera de la docencia. Eso vale más que cualquier plan."',
+                        attribution: 'Profesora de secundaria, nueve años',
+                    },
+                ],
+                pullQuote: '"Dejé de temer los domingos por la noche. No porque encontrara un trabajo mejor — porque me encontré a mí misma otra vez."',
+                pullQuoteAttribution: 'Profesora de 4º de primaria',
+                starsAria: 'Cinco estrellas',
+            },
+            about: {
+                eyebrow: 'Tu guía',
+                title: `Sé lo que es volcarte en un rol hasta olvidar quién eres <em class="font-normal text-primary-800">fuera de él</em>.`,
+                p1: 'Soy Maria Montserrat — profesora de yoga, practicante de mindfulness y coach transformacional. Tras años trabajando con educadores en burnout, creé "Tú eres tu llamada" porque seguía viendo el mismo patrón: personas inteligentes y comprometidas que daban todo a sus alumnos y no les quedaba nada para sí mismas.',
+                p2: 'Este programa combina yoga, somática, mindfulness y coaching — no como herramientas separadas, sino como un viaje integrado de vuelta a ti.',
+            },
+            weeks: {
+                eyebrow: 'Las seis semanas',
+                title: `Semana a <em class="font-normal text-primary-800">semana</em>.`,
+                body: 'Sesiones semanales de 90 minutos · grabaciones de práctica entre sesiones · soporte por WhatsApp',
+                weekLabel: 'Semana',
+                items: [
+                    { title: 'Nunca fuiste solo tú.', body: 'Empezamos donde realmente comenzó el agotamiento. No con un remedio — con la verdad de que el sistema no fue construido para ti, y que no es tu culpa.' },
+                    { title: 'Volver a escuchar a tu cuerpo.', body: 'Tu sistema nervioso lleva meses, quizá años, haciendo señales. Aprendemos a leerlas — agotamiento, tensión, entumecimiento — en vez de ignorarlas.' },
+                    { title: 'Quién eres fuera del rol.', body: 'Valores, identidad, las cosas que te iluminan que no tienen nada que ver con un aula. La versión de ti que existía antes de que la docente lo cubriera todo.' },
+                    { title: 'Cambiar el filtro.', body: 'Las historias que te mantienen atascada — sobre el deber, el sacrificio, lo que hace una "buena" docente — de dónde vienen, y cómo soltarlas con suavidad.' },
+                    { title: 'Una visión que de verdad encaja.', body: 'No "qué debería hacer" — qué quieres tú de verdad. Construimos una dirección desde tus valores reales, no desde lo que se espera de ti.' },
+                    { title: 'Ver con tus propios ojos.', body: 'Sales con claridad, un siguiente paso concreto, y la sensación corporal de volver a ser una persona entera — tanto si sigues en la docencia como si eliges algo nuevo.' },
+                ],
+            },
+            included: {
+                eyebrow: 'Todo lo que incluye',
+                title: `Tu decisión. Tu ritmo. <em class="font-normal text-primary-800">Tu llamada</em>.`,
+                cardTitle: 'El programa 1:1 de 6 semanas',
+                includesLabel: 'Incluye',
+                items: [
+                    'Seis sesiones 1:1 en directo de 90 minutos',
+                    'Prácticas somáticas y de yoga personalizadas',
+                    'Soporte por WhatsApp entre sesiones',
+                    'Mapeo de valores y trabajo de identidad',
+                    'Una sesión de integración al final del programa',
+                    'Llamada de descubrimiento gratuita de 30 minutos antes de comprometerte',
+                ],
+                priceEyebrow: 'Precio fundador',
+                priceTotal: 'en total',
+                priceOriginal: '€847',
+                priceDiscount: '41% de descuento sobre el precio estándar',
+                priceBullets: [
+                    'Solo 3 plazas disponibles',
+                    'Llamada de descubrimiento gratuita primero',
+                    'Reembolso total después de la semana 1 si no encaja',
+                ],
+                cta: 'Solicita una plaza',
+                footnote: 'No estás apostando por ti — estás tomando una decisión con los ojos abiertos. Si en la llamada algo no encaja, no seguimos. Sin incomodidad, sin factura.',
+            },
+            faq: {
+                eyebrow: '¿Aún con dudas?',
+                title: `Tus preguntas, <em class="font-normal text-primary-800">respondidas</em>.`,
+                items: [
+                    {
+                        q: '¿Es para mí si estoy completamente agotada?',
+                        a: 'Sí — especialmente entonces. El programa está pensado para docentes que están al límite. Empezamos donde estás, no donde crees que deberías estar.',
+                    },
+                    {
+                        q: '¿Y si no puedo comprometerme a sesiones fijas cada semana?',
+                        a: 'Programamos en torno a tu vida. Eres docente; tu semana no es de 9 a 5. La flexibilidad está integrada desde el principio.',
+                    },
+                    {
+                        q: '¿Y si empiezo y veo que no es para mí?',
+                        a: 'Exactamente para eso está la llamada de descubrimiento gratuita — ambas comprobamos que encaja antes de cualquier compromiso. Y si después de la semana 1 no es lo que esperabas, recibes un reembolso completo.',
+                    },
+                    {
+                        q: '¿Cómo es el proceso de solicitud?',
+                        a: 'Envía un correo breve y te contacto para reservar tu llamada de descubrimiento gratuita de 30 minutos. Sin presión, sin venta — solo una conversación real. Las solicitudes cierran cuando las tres plazas están llenas.',
+                    },
+                ],
+            },
+            finalCta: {
+                eyebrow: 'Solo 3 plazas disponibles',
+                title: `¿Lista para descubrir quién <em class="font-normal text-accent-300">eres</em> de verdad?`,
+                body: 'Empieza con una llamada de descubrimiento gratuita de 30 minutos. Sin presión, sin compromiso — solo una conversación real sobre si esto es para ti.',
+                ctaPrimary: 'Solicita una plaza',
+                ctaSecondary: 'O explora las otras propuestas de Maria',
+            },
+        },
+        flyer: {
+            meta: {
+                title: 'Maria Montserrat',
+                description: 'Redirigiéndote a la página de eventos de Maria.',
+            },
+            fallback: 'Haz clic aquí si no pasa nada',
+            loading: 'Cargando..',
+        },
+    },
+
+    da: {
+        common: {
+            siteName: 'Maria Montserrat',
+            tagline: 'Yoga og åndedræt mod stress, og tresproget UGC-indholdsproduktion.',
+            location: 'København',
+            nav: {
+                forTeachers: 'For lærere',
+                forBrands: 'For brands',
+                forReaders: 'For læsere',
+                home: 'Forside',
+                courses: 'Onlinekurser',
+                yourCalling: '1:1 coaching',
+                blog: 'Blog',
+            },
+            footer: {
+                explore: 'Udforsk',
+                getInTouch: 'Kontakt',
+                social: 'Sociale medier',
+                copyright: 'København, Danmark',
+            },
+            langSwitcher: {
+                label: 'Sprog',
+                inEnglish: 'In English',
+                inSpanish: 'En español',
+                inDanish: 'På dansk',
+            },
+        },
+        home: {
+            meta: {
+                title: 'Maria Montserrat — Yogalærer og indholdsskaber',
+                description: 'Hej, jeg er Maria — yoga- og åndedrætslærer for udbrændthed, og tresproget UGC-indholdsskaber (EN · ES · DK), baseret i København. Find den vej, der passer til dig.',
+            },
+            hero: {
+                eyebrow: 'København',
+                headline: `Hej, jeg er <em class="font-normal text-primary-800">Maria</em>.`,
+                body: 'Født i Mexico, bosat i Danmark. Jeg er yoga- og åndedrætslærer og tresproget indholdsskaber. Mine timer er rolige, kreative og uden hastværk — et sted at sætte tempoet ned og trække vejret, når du er kørt træt. Jeg laver også ærligt indhold for brands, der passer til den måde, jeg faktisk lever på.',
+                cue: 'Vælg den vej, der passer til dig ↓',
+                photoAlt: 'Maria Montserrat siddende i lotusstilling på græsset',
+            },
+            universes: {
+                title: 'Tre måder at finde mig på',
+                subtitle: 'Hvem du end er, er der en dør til dig.',
+                items: [
+                    {
+                        label: 'For lærere',
+                        title: 'Yoga og åndedræt',
+                        body: 'Yin, åndedræt og somatisk bevægelse mod udbrændthed — hold i København og kurser i eget tempo til folk, der bruger dagene på at passe på alle andre.',
+                        cta: 'Træn med mig',
+                    },
+                    {
+                        label: 'For brands',
+                        title: 'UGC og indholdsproduktion',
+                        body: 'Autentisk, konverteringsorienteret indhold på engelsk, spansk og dansk — skincare, wellness, lifestyle, mad, rejser og sundhed. Mere end 582K konti nået på en enkelt måned.',
+                        cta: 'Se mit arbejde',
+                    },
+                    {
+                        label: 'For læsere',
+                        title: 'Essays og refleksioner',
+                        body: 'Ærlige tekster om udbrændthed, nervesystemet, om at forlade en karriere, der stille knækkede mig, og om vejen tilbage til mig selv.',
+                        cta: 'Læs bloggen',
+                    },
+                ],
+            },
+            reguler: {
+                eyebrow: 'Et samarbejde med Michala Storm',
+                title: 'Regulér',
+                body: 'Et ko-reguleringsforløb for pædagoger — fordi du ikke kan regulere andre, hvis du ikke kan regulere dig selv.',
+                cta: 'Se forløbet',
+                flagLabel: 'På dansk',
+            },
+        },
+        teacherYoga: {
+            meta: {
+                title: 'Yoga for lærere og pædagoger — Maria Montserrat',
+                description: 'Yoga og åndedræt mod udbrændthed — med Maria Montserrat. Specialiseret i lærere, pædagoger og folk i omsorgsprofessioner. Hold i København og onlinekurser over hele verden.',
+            },
+            hero: {
+                eyebrow: 'For lærere · Pædagoger · Alle der kører på pumperne',
+                headline: `Videre fra <em class="font-normal text-primary-800">udbrændthed</em>.`,
+                body: 'Hvis du bruger dine dage på at passe på andre — undervise, drage omsorg, give — er det her tid, der er sat af til dig. Yoga og åndedræt, der falder ro over dit nervesystem, ikke kun dit sind. Uden pres. Uden krav om perfektion.',
+                ctaPrimary: 'Træn med mig',
+                ctaSecondary: 'Se onlinekurser',
+                where: 'København, Danmark · onlinetimer i hele verden',
+                quote: 'Yoga er rejsen fra dig selv, gennem dig selv, til dig selv.',
+                quoteAttribution: 'Bhagavad Gita',
+                scrollCue: 'Udforsk',
+                photoAlt: 'Maria Montserrat siddende i lotusstilling på græsset',
+            },
+            offerings: {
+                eyebrow: 'Det her er til dig',
+                title: `Du giver meget. <em class="font-normal text-primary-800">Det her giver tilbage</em>.`,
+                intro: `Maria arbejder især med lærere, pædagoger og folk i omsorgsprofessioner — folk, der er vant til at tage sig af alle andre. Praksisserne nedenfor er valgt, fordi de arbejder <em class="font-normal text-primary-800">med</em> et udmattet nervesystem, ikke imod det.`,
+                audienceChips: [
+                    'Skolelærere',
+                    'Pædagoger',
+                    'Børnepassere',
+                    'Sundhedspersonale',
+                    'Socialrådgivere',
+                    'Alle i udbrændthed',
+                ],
+                cards: [
+                    {
+                        title: 'Yin Yoga',
+                        body: 'Lange, passive stillinger, der inviterer kroppen til at slippe i stedet for at præstere. Særligt virksomt mod kronisk stress og udbrændthed — det arbejder direkte med nervesystemet, ikke kun musklerne.',
+                    },
+                    {
+                        title: 'Åndedræt',
+                        body: 'Pranayama og bevidste vejrtrækningsteknikker, der ned-regulerer stressresponset og bringer dig tilbage i kroppen. Et af de mest umiddelbare værktøjer for folk i overgear.',
+                    },
+                    {
+                        title: 'Somatisk bevægelse',
+                        body: 'Kropsbevidsthedspraksis bygget på kreativ, intuitiv bevægelse. En måde at slippe oplagret spænding og finde tilbage til dig selv på — uden at skulle "gøre det rigtigt".',
+                    },
+                    {
+                        title: 'Hatha og Vinyasa',
+                        body: 'Åndedrætsledet bevægelse, der bygger blid styrke og flow. En jordnær praksis til de dage, hvor du har brug for at føle dig kapabel i din krop igen — rolig og kreativ, aldrig konkurrencepræget.',
+                    },
+                    {
+                        title: 'Kundalini',
+                        body: 'Mantra, pranayama og kriyas, der arbejder med kroppens energisystem. Dybt restituerende på en anden måde — ofte beskrevet som transformerende af folk, der følte sig "fastlåste".',
+                    },
+                ],
+                onlineCourses: {
+                    title: 'Onlinekurser',
+                    body: 'Selvstudiekurser bygget særligt til lærere og pædagoger — træn i dit eget tempo, uanset hvor i verden du er.',
+                    cta: 'Se kurser',
+                },
+                background: 'Marias praksis spænder næsten to årtier. Uddannet i yin yoga, åndedræt og somatisk bevægelse — med yderligere studier i kinesisk medicin — bringer hun en nervesystem-bevidst tilgang, der rækker ud over stillingerne.',
+            },
+            coursesTeaser: {
+                eyebrow: 'Onlinekurser',
+                title: `Tag praksissen <em class="font-normal text-primary-800">med dig</em>.`,
+                bodyWithCount: '{count} selvstudiekurser til lærere, pædagoger og alle, der er klar til at komme videre fra udbrændthed — træn hvor som helst, i dit eget tempo.',
+                bodyWithCountSingular: '{count} selvstudiekursus til lærere, pædagoger og alle, der er klar til at komme videre fra udbrændthed — træn hvor som helst, i dit eget tempo.',
+                bodyEmpty: 'Selvstudiekurser til lærere, pædagoger og alle, der er klar til at komme videre fra udbrændthed — træn hvor som helst, i dit eget tempo.',
+                cta: 'Se alle kurser',
+            },
+            contact: {
+                eyebrow: 'Lad os tale sammen',
+                title: `Når du er klar, <em class="font-normal text-primary-800">er jeg her</em>.`,
+                body: 'Hvad enten du er nysgerrig på en time i København, et onlinekursus for lærere, eller bare vil stille et spørgsmål — så skriv. Jeg læser hver besked selv, og der er intet pres for at binde sig til noget.',
+                emailLabel: 'E-mail',
+                phoneLabel: 'Telefon',
+                instagramLabel: 'Instagram',
+                facebookLabel: 'Facebook',
+                namaste: 'namasté — lyset i mig hilser lyset i dig',
+                photoAlt: 'Maria Montserrat i namasté, med lukkede øjne i et stille øjeblik',
+            },
+        },
+        courses: {
+            meta: {
+                title: 'Onlinekurser — Maria Montserrat',
+                description: 'Yoga- og mindfulnesskurser i eget tempo til lærere, pædagoger og alle, der er ved at komme videre fra udbrændthed. Træn hvor som helst, i dit eget tempo.',
+            },
+            hero: {
+                eyebrow: 'For lærere · Pædagoger · Omsorgsprofessioner',
+                headline: `Træn i <em class="font-normal text-primary-800">dit eget tempo</em>.`,
+                body: 'Selvstudiekurser bygget til folk, der giver meget til andre. Arbejd dig igennem dem hjemmefra, i dit eget tempo — de fleste kræver hverken måtte eller forudgående yogaerfaring.',
+            },
+            list: {
+                viewCourse: 'Se kursus',
+                comingSoon: 'Kurser på vej — kig forbi snart.',
+                note: 'Kurserne foregår på engelsk.',
+            },
+            contact: {
+                title: 'I tvivl om, hvilket kursus der passer til dig?',
+                body: 'Skriv til mig — Maria læser hver besked selv og hjælper dig gerne videre.',
+                cta: 'Send en besked',
+                or: 'Eller',
+                returnHome: 'gå tilbage til forsiden',
+            },
+        },
+        brands: {
+            meta: {
+                title: 'For brands — Maria Montserrat',
+                description: 'Tresproget UGC-skaber baseret i Danmark — autentisk, konverteringsorienteret indhold på engelsk, spansk og dansk til skincare-, wellness-, lifestyle-, mad-, rejse- og sundhedsbrands.',
+            },
+            hero: {
+                eyebrow: 'UGC-skaber',
+                headline: `Tresproget skaber. <em class="font-normal text-primary-800">Tre markeder.</em>`,
+                body: 'Ægte indhold, der konverterer. Jeg er Maria — indholdsskaber bosat i Danmark, der laver UGC på engelsk, spansk og dansk for brands, der passer til den måde, jeg faktisk lever på.',
+                tagline: 'Født i Mexico, bosat i Danmark, flexitar, hundemor (Freja + Macarena), tennis- og padelspiller, Hashimotos-kriger, genbrugshandler, soljæger.',
+                ctaPrimary: 'Lad os arbejde sammen',
+                ctaSecondary: 'Se mit arbejde',
+                photoAlt: 'Maria Montserrat smilende udendørs',
+            },
+            about: {
+                eyebrow: 'Om mig',
+                title: `Én skaber, <em class="font-normal text-primary-800">tre markeder</em>.`,
+                body: 'De seneste 30 dage har mit indhold nået mere end 582K konti og genereret over 1.1M visninger. Jeg laver konverteringsorienteret UGC til brands inden for skincare, wellness, lifestyle, mode, mad, rejser og sundhed — også til nicher som autoimmun, plantebaseret og nervesystem-genopretning.',
+                body2: `Min baggrund spænder undervisning, journalistik, yoga- og mindfulnessinstruktion, modedesign og somatisk praksis — med uddannelser i modedesign, kommunikation og pædagogik. Min filosofi: <em class="font-normal text-primary-800">giv dit bedste, ikke alt.</em> Jeg laver indhold, der føles ægte, fordi det er det.`,
+                photoAlt: 'Maria Montserrat siddende udendørs',
+            },
+            analytics: {
+                eyebrow: 'Analytics',
+                title: `Tallene, <em class="font-normal text-primary-800">på tværs af tre platforme</em>.`,
+                body: 'Rækkevidde langt ud over mine egne følgere — den organiske distribution, som brands i virkeligheden betaler for.',
+                instagram: {
+                    headlineLabel: 'Visninger',
+                    metric1: 'Rækkevidde',
+                    metric2: 'Interaktioner',
+                },
+                tiktok: {
+                    headlineLabel: 'Videovisninger',
+                    metric1: 'Likes',
+                    metric2: 'Delinger',
+                    highlightText: 'følgere — og alligevel nåede en enkelt uge 231,8K visninger',
+                },
+                facebook: {
+                    headlineLabel: 'Visninger',
+                    metric1: 'Seere',
+                    metric2: 'Interaktioner',
+                },
+                newAudience: 'af rækkevidden kommer fra <strong>folk, der endnu ikke følger hende</strong>',
+                footnote: 'Selvrapporterede tal fra hver platforms egen analytics · snapshot fra {date}',
+            },
+            reels: {
+                eyebrow: 'Sådan viser jeg mig',
+                title: `Organiske reels, <em class="font-normal text-primary-800">ægte øjeblikke</em>.`,
+                body: 'Personlig brand-fortælling om udbrændthed, nervesystemet og vejen tilbage til dig selv — det indhold, der bygger den tillid, som brands låner.',
+                items: [
+                    { title: 'At finde mig selv igen efter udbrændthed', tags: 'Følelsesfortælling · organisk' },
+                    { title: 'Når du snerrer ad dem, du elsker', tags: 'Nervesystem-reel · organisk' },
+                    { title: 'Stress-reset for lærere', tags: 'Somatisk tutorial · organisk' },
+                ],
+                badge: 'Reel',
+            },
+            niches: {
+                eyebrow: 'Det jeg laver indhold til',
+                title: 'Nicher jeg kender til bunds',
+                body: 'De kategorier, hvor jeg laver autentisk, konverteringsorienteret indhold — taget fra den måde, jeg faktisk lever på.',
+                items: [
+                    'Skincare og beauty',
+                    'Wellness og mindfulness',
+                    'Lifestyle',
+                    'Mode',
+                    'Mad og drikke',
+                    'Rejser og hospitality',
+                    'Sundhed og autoimmun',
+                    'Plantebaseret',
+                    'Nervesystem-genopretning',
+                ],
+            },
+            spec: {
+                eyebrow: 'Spec UGC · klar til annoncer',
+                title: `Konceptarbejde, <em class="font-normal text-primary-800">på tre sprog</em>.`,
+                items: [
+                    { hook: '10 years, same mat. Still my favourite.', type: 'Lifestyle-anbefaling' },
+                    { hook: 'Lo primero antes de mirar el móvil.', type: 'Morgenritual' },
+                    { hook: 'Min daglige kefir — sådan starter jeg dagen.', type: 'Mad og sundhed' },
+                    { hook: 'The serum that finally calmed my reactive skin.', type: 'Skincare-anbefaling' },
+                    { hook: 'Mi rutina de noche en 30 segundos.', type: 'Skincare-demo' },
+                    { hook: 'Min morgenflow derhjemme.', type: 'Lifestyle · yoga' },
+                ],
+                badge: 'Klar til annoncer',
+                specUgcLabel: 'Spec UGC',
+            },
+            photography: {
+                eyebrow: 'Fotografi',
+                title: 'Produkt og lifestyle',
+                travelTitle: 'Rejser',
+            },
+            services: {
+                eyebrow: 'Mine ydelser',
+                title: 'Hvad jeg tilbyder',
+                servicesTitle: 'Ydelser',
+                deliverablesTitle: '1 UGC-video inkluderer',
+                services: [
+                    'UGC-videoer (annoncer og organisk)',
+                    'Voiceover-videoer',
+                    'UGC-fotos',
+                    'Produktfotografi',
+                    'On-location indhold',
+                    'Indholdspakker',
+                    'Månedligt abonnement',
+                ],
+                deliverables: [
+                    'Lodret format (9:16)',
+                    'Research på branding og koncepter',
+                    'Manuskript',
+                    'Optagelse og redigering',
+                    '2 revisioner ved behov',
+                    'Levering på 5–7 hverdage',
+                ],
+                rates: 'Priser fås på anmodning',
+            },
+            workTogether: {
+                eyebrow: 'Lad os arbejde sammen',
+                title: `Har du et brand, der passer til <em class="font-normal text-primary-800">min måde at leve på</em>?`,
+                body: 'Book en uforpligtende samtale, og lad os tale om autentisk indhold på engelsk, spansk eller dansk.',
+                cta: 'Skriv til mig',
+                socialLabel: 'Find mig på sociale medier',
+            },
+        },
+        yourCalling: {
+            meta: {
+                title: 'You\'re Your Calling — 1:1 coaching for lærere | Maria Montserrat',
+                description: 'Et 6-ugers 1:1 coachingforløb for lærere i udbrændthed. Yoga, somatisk arbejde og transformerende coaching, der går til roden — med Maria Montserrat.',
+            },
+            hero: {
+                eyebrow: 'Et 6-ugers 1:1-forløb · For lærere',
+                headline: `Du er <em class="font-normal text-primary-800">dit kald</em>.`,
+                body: 'Du har givet alt. Og et sted på vejen holdt du op med at kunne genkende dig selv. Det her er seks ugers 1:1-arbejde — yoga, somatik og transformerende coaching — for at gå til roden og finde vej tilbage til dig selv.',
+                ctaPrimary: 'Søg en plads',
+                ctaSecondary: 'Se hvad der er med',
+                pricing: 'Kun <strong>3 pladser</strong> · Founding-pris <strong>€497</strong> · Starter med en gratis afklaringssamtale',
+                photoAlt: 'Maria Montserrat holder et håndskrevet skilt, hvor der står HELP!',
+            },
+            story: {
+                eyebrow: 'Hvis du læser det her',
+                title: `Du har givet alt — og det har gjort dig usynlig, <em class="font-normal text-primary-800">også for dig selv</em>.`,
+                p1: 'Du blev lærer, fordi det betød noget for dig. Du blev, fordi du troede på det. Og et sted mellem rettearbejdet, mailsene fra forældrene og møderne, der kunne have været en besked, holdt du op med at genkende dig selv.',
+                p2: 'Du er træt på en måde, søvn ikke kan reparere. Du går igennem bevægelserne. Du har dårlig samvittighed over at ville noget andet. Og en stille del af dig spørger: er det her bare det at være voksen?',
+                p3: 'Nej. Og det er ikke din skyld.',
+            },
+            arc: {
+                eyebrow: 'Arbejdets form',
+                title: `To halvdele. <em class="font-normal text-primary-800">Én vej tilbage til dig selv</em>.`,
+                firstHalfWeeks: 'Uge 1–3',
+                firstHalfTitle: 'Sæt ord på det, der faktisk sker.',
+                firstHalfBody: 'Vi går til roden. Hvad lærerlivet har kostet dig, hvad det gav dig, og hvad der aldrig var dit at bære. Du kommer til at mærke forskellen mellem udmattelse og identitet — og begynder at høre dig selv igen.',
+                secondHalfWeeks: 'Uge 4–6',
+                secondHalfTitle: 'Byg et liv, der faktisk er dit.',
+                secondHalfBody: 'Klarhed bliver til retning. Gennem somatisk praksis, værdiarbejde og coaching bliver erkendelse til handling — så du går herfra med klarhed over, hvem du er, og hvad du vil, ikke kun over, at du er udmattet.',
+                pullQuote: '"Jeg ser endelig — med mine egne øjne, ikke fra frygt."',
+                pullQuoteAttribution: 'Løftet for uge 6',
+            },
+            different: {
+                eyebrow: 'Bygget anderledes',
+                title: `Lærerudbrændthed bliver ikke løst af <em class="font-normal text-primary-800">flere produktivitetstips</em>.`,
+                body: 'Det her er ikke et kursus. Det er seks ugers 1:1-arbejde — yoga, somatik, mindfulness og transformerende coaching — bygget rundt om dig.',
+                cards: [
+                    {
+                        title: 'Kropsbåret, ikke kun talt igennem',
+                        body: 'Du analyserer ikke kun din udbrændthed — du mærker dig igennem den. Hver uge indeholder åndedræt, somatisk udforskning og bevægelse, fordi kroppen rummer det, sindet endnu ikke har bearbejdet.',
+                    },
+                    {
+                        title: 'Coaching, der spørger — ikke fortæller',
+                        body: 'Jeg giver dig ikke en plan. Jeg stiller de spørgsmål, der hjælper dig med at høre dig selv igen. Forankret i værdiarbejde, identitetscoaching og yogafilosofi — designet til varig forandring, ikke midlertidig lindring.',
+                    },
+                    {
+                        title: 'Klarhed, der fører et sted hen',
+                        body: 'Hver session ender med ét lille, virkeligt skridt. Ikke lektier — et skridt mod det liv, der faktisk passer, hvad enten det stadig er lærerlivet eller noget helt andet. Begge udfald er gyldige.',
+                    },
+                ],
+            },
+            testimonials: {
+                eyebrow: 'Fra tidlige klienter',
+                title: `Ægte ord fra lærere, der <em class="font-normal text-primary-800">har stået, hvor du står</em>.`,
+                items: [
+                    {
+                        quote: '"For første gang i årevis følte jeg mig hørt. Maria coacher ikke bare — hun skaber et rum, hvor man faktisk kan trække vejret igen."',
+                        attribution: 'Folkeskolelærer',
+                    },
+                    {
+                        quote: '"Jeg kom ind og troede, jeg havde brug for en karriereplan. Jeg gik ud og vidste, hvem jeg var uden for lærerrollen. Det er mere værd end nogen plan."',
+                        attribution: 'Gymnasielærer, ni år i faget',
+                    },
+                ],
+                pullQuote: '"Jeg holdt op med at frygte søndag aften. Ikke fordi jeg fandt et bedre job — fordi jeg fandt mig selv igen."',
+                pullQuoteAttribution: 'Lærer, 4. klasse',
+                starsAria: 'Fem stjerner',
+            },
+            about: {
+                eyebrow: 'Din guide',
+                title: `Jeg ved, hvordan det er at hælde sig selv ind i en rolle, indtil man glemmer, hvem man er <em class="font-normal text-primary-800">uden for den</em>.`,
+                p1: 'Jeg er Maria Montserrat — yogalærer, mindfulness-praktiker og transformerende coach. Efter mange år med udbrændte lærere byggede jeg "You\'re Your Calling", fordi jeg så det samme mønster igen og igen: kloge, omsorgsfulde mennesker, der gav alt til deres elever og intet havde tilbage til sig selv.',
+                p2: 'Forløbet kombinerer yoga, somatik, mindfulness og coaching — ikke som adskilte værktøjer, men som én integreret rejse tilbage til dig selv.',
+            },
+            weeks: {
+                eyebrow: 'De seks uger',
+                title: `Uge for <em class="font-normal text-primary-800">uge</em>.`,
+                body: '90-minutters ugentlige sessions · øvelsesoptagelser mellem sessions · WhatsApp-support',
+                weekLabel: 'Uge',
+                items: [
+                    { title: 'Det var aldrig kun dig.', body: 'Vi starter, der hvor udmattelsen faktisk begyndte. Ikke med en løsning — med sandheden om, at systemet ikke var bygget til dig, og at det ikke er din skyld.' },
+                    { title: 'Lytte til kroppen igen.', body: 'Dit nervesystem har signaleret i månedsvis, måske år. Vi lærer at læse de signaler — udmattelse, spænding, følelsesløshed — i stedet for at overdøve dem.' },
+                    { title: 'Hvem du er uden for rollen.', body: 'Værdier, identitet, det der får dig til at lyse op, og som intet har med et klasselokale at gøre. Den udgave af dig, der fandtes, før læreren tog over.' },
+                    { title: 'Skift filteret.', body: 'De fortællinger, der holder dig fast — om pligt, opofrelse, hvad en "god" lærer gør — hvor de kommer fra, og hvordan du blidt kan lægge dem fra dig.' },
+                    { title: 'En vision, der faktisk passer.', body: 'Ikke "hvad burde jeg gøre" — hvad vil du faktisk. Vi bygger en retning ud fra dine egentlige værdier, ikke ud fra hvad der forventes af dig.' },
+                    { title: 'Se med dine egne øjne.', body: 'Du går herfra med klarhed, ét konkret næste skridt, og fornemmelsen af at være et helt menneske igen — uanset om du bliver i lærerlivet eller vælger noget nyt.' },
+                ],
+            },
+            included: {
+                eyebrow: 'Alt, der er med',
+                title: `Din beslutning. Dit tempo. <em class="font-normal text-primary-800">Dit kald</em>.`,
+                cardTitle: 'Det 6-ugers 1:1-forløb',
+                includesLabel: 'Inkluderer',
+                items: [
+                    'Seks live 90-minutters 1:1-sessions',
+                    'Somatisk- og yogapraksis tilpasset dig',
+                    'WhatsApp-support mellem sessions',
+                    'Værdikortlægning og identitetsarbejde',
+                    'En integrationssession efter forløbet',
+                    'Gratis 30-minutters afklaringssamtale før du binder dig',
+                ],
+                priceEyebrow: 'Founding-pris',
+                priceTotal: 'i alt',
+                priceOriginal: '€847',
+                priceDiscount: '41% under standardprisen',
+                priceBullets: [
+                    'Kun 3 pladser tilgængelige',
+                    'Gratis afklaringssamtale først',
+                    'Fuld refundering efter uge 1, hvis det ikke passer',
+                ],
+                cta: 'Søg en plads',
+                footnote: 'Du satser ikke på dig selv — du tager en klartænkt beslutning. Hvis noget føles forkert i afklaringssamtalen, går vi ikke videre. Ingen akavethed, ingen faktura.',
+            },
+            faq: {
+                eyebrow: 'Stadig i tvivl?',
+                title: `Dine spørgsmål, <em class="font-normal text-primary-800">besvaret</em>.`,
+                items: [
+                    {
+                        q: 'Er det her for mig, hvis jeg er helt udmattet?',
+                        a: 'Ja — særligt så. Forløbet er designet til lærere, der kører på pumperne. Vi starter, hvor du er, ikke hvor du tror, du burde være.',
+                    },
+                    {
+                        q: 'Hvad nu, hvis jeg ikke kan binde mig til faste sessioner hver uge?',
+                        a: 'Vi planlægger rundt om dit liv. Du er lærer; din uge er ikke 9-til-17. Fleksibilitet er bygget ind fra start.',
+                    },
+                    {
+                        q: 'Hvad nu, hvis jeg starter, og det ikke er for mig?',
+                        a: 'Det er præcis det, den gratis afklaringssamtale er til — vi tjekker begge to, at det passer, før du binder dig til noget. Og hvis det efter uge 1 ikke er det, du forventede, får du fuld refundering.',
+                    },
+                    {
+                        q: 'Hvordan ser ansøgningsprocessen ud?',
+                        a: 'Send en kort mail, så vender jeg tilbage og booker din gratis 30-minutters afklaringssamtale. Intet pres, intet salgspitch — bare en ægte samtale. Ansøgninger lukker, når de tre pladser er fyldt.',
+                    },
+                ],
+            },
+            finalCta: {
+                eyebrow: 'Kun 3 pladser tilgængelige',
+                title: `Klar til at finde ud af, hvem du faktisk <em class="font-normal text-accent-300">er</em>?`,
+                body: 'Det starter med en gratis 30-minutters afklaringssamtale. Intet pres, ingen forpligtelse — bare en ægte samtale om, hvorvidt det her er noget for dig.',
+                ctaPrimary: 'Søg en plads',
+                ctaSecondary: 'Eller se Marias andre tilbud',
+            },
+        },
+        flyer: {
+            meta: {
+                title: 'Maria Montserrat',
+                description: 'Sender dig videre til Marias eventside.',
+            },
+            fallback: 'Klik her, hvis intet sker',
+            loading: 'Indlæser..',
+        },
+    },
+} as const;
+
+export type Lang = 'en' | 'es' | 'da';

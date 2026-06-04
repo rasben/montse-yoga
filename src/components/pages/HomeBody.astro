@@ -1,0 +1,132 @@
+---
+// Homepage body — used by /, /es/, and /da/ via thin page wrappers.
+// Reads its locale from Astro.currentLocale and pulls copy from src/i18n/ui.ts.
+import Langs from '../Langs.astro';
+import maria from '../../assets/maria-grass-seated.jpg';
+import { Image } from 'astro:assets';
+import { asLang, useTranslations, useList, localizedPath } from '../../i18n/utils';
+
+const lang = asLang(Astro.currentLocale);
+const t = useTranslations(lang);
+const list = useList(lang);
+
+const BLOG_URL = 'https://mariamontserratmaria.substack.com/';
+
+const universeItems = list<{ label: string; title: string; body: string; cta: string }>('home.universes.items');
+
+// Visual / link config for the three universe cards — kept in code (not the
+// dictionary) because it's structure, not content. Index matches the order
+// of `home.universes.items` in src/i18n/ui.ts.
+const universeMeta = [
+    { href: '/teacher-yoga', external: false, accent: 'bg-primary-500', icon: '🌙' },
+    { href: '/brands', external: false, accent: 'bg-secondary-500', icon: '🎬' },
+    { href: BLOG_URL, external: true, accent: 'bg-accent-500', icon: '✍️' },
+];
+
+const universes = universeItems.map((it, i) => ({ ...it, ...universeMeta[i] }));
+---
+
+<!-- ============================ INTRO ============================ -->
+<section class="relative overflow-hidden">
+    <div class="absolute inset-0 -z-20 bg-primary-100"></div>
+
+    <div class="relative z-10 mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-6 py-16 md:grid-cols-12 md:gap-16 md:px-10 md:py-24">
+        <!-- Copy -->
+        <div class="md:col-span-7">
+            <p class="fade-up flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">
+                {t('home.hero.eyebrow')} <Langs class="text-base tracking-normal" />
+            </p>
+            <h1 class="fade-up-delay-1 mt-6 font-display text-5xl leading-[1.05] text-stone-900 sm:text-6xl md:text-7xl" set:html={t('home.hero.headline')}>
+            </h1>
+            <p class="fade-up-delay-2 mt-8 max-w-xl text-lg leading-relaxed text-stone-800 md:text-xl">
+                {t('home.hero.body')}
+            </p>
+            <p class="fade-up-delay-3 mt-6 text-sm font-semibold uppercase tracking-widest text-stone-600">
+                {t('home.hero.cue')}
+            </p>
+        </div>
+
+        <!-- Photo -->
+        <div class="fade-up-delay-2 relative md:col-span-5">
+            <div class="relative mx-auto max-w-sm md:max-w-none">
+                <div class="absolute -inset-4 -z-10 bg-accent-500" style="border-radius: 62% 38% 56% 44% / 48% 60% 40% 52%;"></div>
+                <div class="relative overflow-hidden shadow-2xl shadow-primary-900/20" style="border-radius: 62% 38% 56% 44% / 48% 60% 40% 52%;">
+                    <Image
+                        src={maria}
+                        alt={t('home.hero.photoAlt')}
+                        widths={[420, 640, 820]}
+                        sizes="(min-width: 768px) 40vw, 85vw"
+                        class="h-[420px] w-full object-cover md:h-[520px]"
+                        loading="eager"
+                    />
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================ THREE UNIVERSES ============================ -->
+<section class="relative overflow-hidden bg-secondary-100 py-20 md:py-28">
+    <div class="relative mx-auto max-w-6xl px-6 md:px-10">
+        <div class="mx-auto max-w-2xl text-center">
+            <h2 class="font-display text-3xl leading-tight text-stone-900 sm:text-4xl">
+                {t('home.universes.title')}
+            </h2>
+            <p class="mt-4 leading-relaxed text-stone-600">
+                {t('home.universes.subtitle')}
+            </p>
+        </div>
+
+        <div class="mt-14 grid grid-cols-1 gap-6 md:grid-cols-3">
+            {universes.map((u) => (
+                <a
+                    href={u.external ? u.href : localizedPath(u.href, lang)}
+                    {...(u.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                    class="group flex flex-col overflow-hidden rounded-3xl bg-sand-50 ring-1 ring-stone-900/5 shadow-sm transition hover:-translate-y-1 hover:shadow-xl hover:shadow-primary-900/10"
+                >
+                    <div class={`flex items-center justify-center px-8 py-10 ${u.accent}`}>
+                        <span class="flex h-16 w-16 items-center justify-center rounded-2xl bg-white/90 text-3xl">{u.icon}</span>
+                    </div>
+                    <div class="flex flex-1 flex-col p-8">
+                        <p class="text-xs font-semibold uppercase tracking-[0.3em] text-primary-800">{u.label}</p>
+                        <h3 class="mt-3 font-display text-2xl text-stone-900">{u.title}</h3>
+                        <p class="mt-3 flex-1 leading-relaxed text-stone-600">{u.body}</p>
+                        <span class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary-700 transition group-hover:text-primary-800">
+                            {u.cta}
+                            <svg class="h-4 w-4 transition group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 4.293a1 1 0 011.414 0l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414-1.414L13.586 11H4a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+                        </span>
+                    </div>
+                </a>
+            ))}
+        </div>
+
+        <!-- Collaboration — deliberately a different kind of box from the three
+             core "universes": this one is a joint project with another person,
+             and intentionally NOT in the global header. -->
+        <div class="mt-10 overflow-hidden rounded-3xl bg-secondary-800 shadow-lg ring-1 ring-secondary-900/20">
+            <div class="flex flex-col gap-6 p-8 md:flex-row md:items-center md:justify-between md:p-10">
+                <div class="max-w-xl">
+                    <p class="inline-flex items-center rounded-full bg-white/15 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-white ring-1 ring-white/20">
+                        {t('home.reguler.eyebrow')}
+                    </p>
+                    <h3 class="mt-4 flex items-center gap-2 font-display text-3xl text-white">
+                        {t('home.reguler.title')}
+                        <span class="text-xl" role="img" aria-label={t('home.reguler.flagLabel')} title={t('home.reguler.flagLabel')}>🇩🇰</span>
+                    </h3>
+                    <p class="mt-3 leading-relaxed text-secondary-100">
+                        {t('home.reguler.body')}
+                    </p>
+                </div>
+                <a
+                    href="https://maria-montserrat.my.canva.site/reguler/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="group inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-secondary-900 shadow-sm transition hover:bg-secondary-50"
+                >
+                    {t('home.reguler.cta')}
+                    <svg class="h-4 w-4 transition group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 4.293a1 1 0 011.414 0l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414-1.414L13.586 11H4a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

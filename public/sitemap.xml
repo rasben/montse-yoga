@@ -1,27 +1,107 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <!-- Home -->
   <url>
     <loc>https://maria-montserrat.com/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://maria-montserrat.com/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://maria-montserrat.com/es/" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://maria-montserrat.com/da/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maria-montserrat.com/" />
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://maria-montserrat.com/es/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://maria-montserrat.com/da/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Teacher yoga -->
+  <url>
     <loc>https://maria-montserrat.com/teacher-yoga</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://maria-montserrat.com/teacher-yoga" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://maria-montserrat.com/es/teacher-yoga" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://maria-montserrat.com/da/teacher-yoga" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maria-montserrat.com/teacher-yoga" />
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
+  <url>
+    <loc>https://maria-montserrat.com/es/teacher-yoga</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://maria-montserrat.com/da/teacher-yoga</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Brands -->
   <url>
     <loc>https://maria-montserrat.com/brands</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://maria-montserrat.com/brands" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://maria-montserrat.com/es/brands" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://maria-montserrat.com/da/brands" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maria-montserrat.com/brands" />
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://maria-montserrat.com/es/brands</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://maria-montserrat.com/da/brands</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Courses -->
+  <url>
     <loc>https://maria-montserrat.com/courses</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://maria-montserrat.com/courses" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://maria-montserrat.com/es/courses" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://maria-montserrat.com/da/courses" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maria-montserrat.com/courses" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://maria-montserrat.com/es/courses</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://maria-montserrat.com/da/courses</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Your calling -->
+  <url>
     <loc>https://maria-montserrat.com/your-calling</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://maria-montserrat.com/your-calling" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://maria-montserrat.com/es/your-calling" />
+    <xhtml:link rel="alternate" hreflang="da" href="https://maria-montserrat.com/da/your-calling" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maria-montserrat.com/your-calling" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://maria-montserrat.com/es/your-calling</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://maria-montserrat.com/da/your-calling</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

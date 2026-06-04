@@ -1,0 +1,663 @@
+---
+// "Brands" body — Maria's UGC / content-creator page.
+// Used by /brands, /es/brands, /da/brands.
+//
+// IMAGES — TEMPORARY: the photos below are hot-linked straight from Maria's
+// Canva site so we can preview the layout. They should be replaced with
+// optimized local assets (drop files into src/assets/brands/ and switch
+// to `astro:assets` <Image>) once Maria uploads the originals.
+import Langs from '../Langs.astro';
+import { asLang, useTranslations, useList } from '../../i18n/utils';
+
+const lang = asLang(Astro.currentLocale);
+const t = useTranslations(lang);
+const list = useList(lang);
+
+const CANVA = 'https://brands.maria-montserrat.com/_assets/media';
+const img = (file: string) => `${CANVA}/${file}`;
+
+const CANVA_VIDEO = 'https://brands.maria-montserrat.com/_assets/video';
+const vid = (hash: string) => `${CANVA_VIDEO}/${hash}.mp4`;
+
+// Flag per language code, used on the spec-UGC cards.
+const FLAG: Record<string, { flag: string; label: string }> = {
+    EN: { flag: '🇬🇧', label: 'English' },
+    ES: { flag: '🇪🇸 🇲🇽', label: 'Spanish' },
+    DK: { flag: '🇩🇰', label: 'Danish' },
+};
+
+// Analytics — MANUAL SNAPSHOT (not live). Refresh by copying the headline
+// numbers + growth % from each platform's analytics into src/i18n/ui.ts
+// (labels) and the data here (numbers).
+const analyticsUpdated = 'May 2026';
+
+const BRAND: Record<string, { color: string; svg: string }> = {
+    Instagram: { color: '#E1306C', svg: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.3" fill="white" stroke="none"/></svg>' },
+    TikTok: { color: '#111111', svg: '<svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M16 3c.3 2.2 1.8 3.9 4 4.2v2.6c-1.5 0-2.9-.5-4-1.3v5.9A5.7 5.7 0 1 1 10.3 8.7c.3 0 .6 0 .9.1v2.7a3 3 0 1 0 2.1 2.9V3H16z"/></svg>' },
+    Facebook: { color: '#1877F2', svg: '<svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M14 9h2.5V6H14c-2 0-3.2 1.2-3.2 3.2V11H8.5v3h2.3v7h3v-7h2.3l.4-3h-2.7V9.5c0-.4.3-.5.6-.5z"/></svg>' },
+};
+
+const platforms = [
+    {
+        name: 'Instagram',
+        handle: '@mariamontserratmaria',
+        url: 'https://www.instagram.com/mariamontserratmaria/',
+        period: '29 Apr – 26 May 2026',
+        headline: { value: '1.1M', long: '1.1 million', label: t('brands.analytics.instagram.headlineLabel'), delta: 161.5 },
+        metrics: [
+            { value: '576.7K', label: t('brands.analytics.instagram.metric1'), delta: 149.3 },
+            { value: '28K', label: t('brands.analytics.instagram.metric2'), delta: 98.1 },
+        ],
+        newAudience: 98.3,
+        highlight: null as null | { stat: string; text: string },
+    },
+    {
+        name: 'TikTok',
+        handle: '@mariamontserratmaria',
+        url: 'https://www.tiktok.com/@mariamontserratmaria',
+        period: '19 – 25 May 2026',
+        headline: { value: '231.8K', long: '231,800', label: t('brands.analytics.tiktok.headlineLabel'), delta: 737.1 },
+        metrics: [
+            { value: '5.1K', label: t('brands.analytics.tiktok.metric1'), delta: 744.4 },
+            { value: '479', label: t('brands.analytics.tiktok.metric2'), delta: 197.5 },
+        ],
+        newAudience: null as null | number,
+        highlight: { stat: '424', text: t('brands.analytics.tiktok.highlightText') },
+    },
+    {
+        name: 'Facebook',
+        handle: 'mariamontserratmaria',
+        url: 'https://www.facebook.com/mariamontserratmaria',
+        period: '29 Apr – 26 May 2026',
+        headline: { value: '28.2K', long: '28,200', label: t('brands.analytics.facebook.headlineLabel'), delta: 103.6 },
+        metrics: [
+            { value: '16,696', label: t('brands.analytics.facebook.metric1'), delta: 127 },
+            { value: '144', label: t('brands.analytics.facebook.metric2'), delta: 108.7 },
+        ],
+        newAudience: 98.4,
+        highlight: null as null | { stat: string; text: string },
+    },
+];
+
+function countAttrs(value: string) {
+    const m = value.replace(/,/g, '').match(/^([\d.]+)\s*([KM%]?)/);
+    const numStr = m?.[1] ?? '0';
+    return {
+        'data-count-to': numStr,
+        'data-count-suffix': m?.[2] ?? '',
+        'data-count-decimals': String((numStr.split('.')[1] ?? '').length),
+        'data-count-sep': value.includes(',') ? '1' : '0',
+    };
+}
+
+// "How I show up" — organic reels (personal brand). Video hashes are stable.
+const reelVideos = ['09d9617a6e0b7f73635171dcf4493806', 'ea57e8a8be5dd671e5cd2e90abd0b601', '19ca814b78e3b5f398c8f0e2c82cad68'];
+const reelItems = list<{ title: string; tags: string }>('brands.reels.items');
+const reels = reelItems.map((it, i) => ({ ...it, video: reelVideos[i] }));
+
+// "Spec UGC · ad-ready" — concept work shot in three languages. The hooks
+// themselves are kept in the language they're spoken in, so they don't get
+// translated — but the surrounding `type` label is localized.
+const specVideos = ['90f1f16670ed5e36bf9ecb487ae572ed', 'f9422c4ffcdb553b0cf4dc9473eaf053', '6787f00efb5f22019a059acbf6585404', '8f50e2a7cec1afcffa95f33946373d60', '1b171679299c6d0a1406b10aa4b9ec10', 'f56f080685e4c0149194f247e30809b8'];
+const specLangs = ['EN', 'ES', 'DK', 'EN', 'ES', 'DK'];
+const specItems = list<{ hook: string; type: string }>('brands.spec.items');
+const specWork = specItems.map((it, i) => ({ ...it, lang: specLangs[i], video: specVideos[i] }));
+
+const niches = list<string>('brands.niches.items');
+
+const photography = [
+    { file: '867011bb5ed745b0d4a36ae51dc3b2df.jpg', alt: 'Lifestyle photograph — dog playing in the grass' },
+    { file: '24772a4d9af8e44a2a8b452e99a4f8d9.jpg', alt: 'Food photograph — pistachio cannoli on a ceramic plate' },
+    { file: 'ca6fcc9917b99d965ea3d04f0f0852b3.jpg', alt: 'Product photograph — skincare bottle and jar' },
+    { file: '2e0df4d4e189a39fa8e45d288b14064f.jpg', alt: 'Lifestyle product photograph' },
+    { file: 'a3d96731c504bc656f26e2b1816155f2.jpg', alt: 'Lifestyle photograph' },
+    { file: '9d384f234a5cfac4ab2becceca767ef4.jpg', alt: 'Product & lifestyle photograph' },
+];
+
+const travel = [
+    { file: '9fb3fa3cf2a6e98c2ec89ea9268a91cd.jpg', alt: 'Travel photograph — ancient temple' },
+    { file: '68ea5af2ab5f6809d91cc6f7510e474b.jpg', alt: 'Travel photograph — stone Buddha statue' },
+    { file: 'c68e20c16382a2926ab6afd9bf0fcdaa.jpg', alt: 'Travel photograph — traditional dancers' },
+    { file: '2d28f907060f3ba96575343a3d41c311.jpg', alt: 'Travel photograph — local festival' },
+];
+
+const services = list<string>('brands.services.services');
+const deliverables = list<string>('brands.services.deliverables');
+---
+
+<!-- ============================ HERO ============================ -->
+<section class="relative overflow-hidden">
+    <div class="absolute inset-0 -z-20 bg-sand-50"></div>
+
+    <div class="relative z-10 mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-6 pb-24 pt-12 md:grid-cols-12 md:gap-16 md:px-10 md:pb-28 md:pt-20">
+        <div class="md:col-span-6">
+            <p class="fade-up flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">
+                {t('brands.hero.eyebrow')} <Langs class="text-base tracking-normal" />
+            </p>
+            <h1 class="fade-up-delay-1 mt-6 font-display text-5xl leading-[1.05] text-stone-900 sm:text-6xl md:text-7xl" set:html={t('brands.hero.headline')}>
+            </h1>
+            <p class="fade-up-delay-2 mt-8 max-w-xl text-lg leading-relaxed text-stone-800 md:text-xl">
+                {t('brands.hero.body')}
+            </p>
+            <p class="fade-up-delay-2 mt-4 max-w-xl text-base leading-relaxed text-stone-600">
+                {t('brands.hero.tagline')}
+            </p>
+
+            <div class="fade-up-delay-3 mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+                <a href="#work-together" class="group inline-flex items-center justify-center rounded-full bg-primary-700 px-8 py-4 text-base font-semibold text-white shadow-lg shadow-primary-700/30 transition hover:bg-primary-800">
+                    {t('brands.hero.ctaPrimary')}
+                    <svg class="ml-2 h-4 w-4 transition group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 4.293a1 1 0 011.414 0l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414-1.414L13.586 11H4a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                </a>
+                <a href="#work" class="inline-flex items-center justify-center rounded-full px-8 py-4 text-base font-semibold text-stone-900 underline-offset-4 transition hover:text-primary-800 hover:underline">
+                    {t('brands.hero.ctaSecondary')}
+                </a>
+            </div>
+        </div>
+
+        <!-- Portrait -->
+        <div class="fade-up-delay-2 relative md:col-span-6">
+            <div class="relative mx-auto max-w-md md:max-w-none">
+                <div class="absolute -inset-4 -z-10 bg-secondary-500" style="border-radius: 62% 38% 56% 44% / 48% 60% 40% 52%;"></div>
+                <div class="relative overflow-hidden shadow-2xl shadow-primary-900/20" style="border-radius: 62% 38% 56% 44% / 48% 60% 40% 52%;">
+                    <img
+                        src={img('de264b56be8d0a2fb3cae44c2ad3e33c.jpg')}
+                        alt={t('brands.hero.photoAlt')}
+                        class="h-[520px] w-full object-cover md:h-[620px]"
+                        loading="eager"
+                    />
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================ ABOUT ============================ -->
+<section class="relative overflow-hidden bg-white py-24 md:py-32">
+    <div class="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-16 px-6 md:grid-cols-2 md:px-10">
+        <div class="relative order-2 md:order-1">
+            <div class="absolute -inset-3 -z-10 bg-primary-500" style="border-radius: 48% 52% 60% 40% / 56% 44% 56% 44%;"></div>
+            <div class="relative overflow-hidden shadow-xl shadow-primary-900/15" style="border-radius: 48% 52% 60% 40% / 56% 44% 56% 44%;">
+                <img
+                    src={img('299251c842a4cc0800fb5ed40f0b90c8.jpg')}
+                    alt={t('brands.about.photoAlt')}
+                    class="h-[460px] w-full object-cover md:h-[560px]"
+                    loading="lazy"
+                />
+            </div>
+        </div>
+        <div class="order-1 md:order-2">
+            <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">{t('brands.about.eyebrow')}</p>
+            <h2 class="mt-4 font-display text-4xl leading-tight text-stone-900 sm:text-5xl" set:html={t('brands.about.title')}>
+            </h2>
+            <p class="mt-6 text-lg leading-relaxed text-stone-700">
+                {t('brands.about.body')}
+            </p>
+            <p class="mt-4 leading-relaxed text-stone-600" set:html={t('brands.about.body2')}>
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- ============================ ANALYTICS ============================ -->
+<section class="bg-sand-100 py-20 md:py-28">
+    <div class="mx-auto max-w-6xl px-6 md:px-10">
+        <div class="mx-auto max-w-2xl text-center">
+            <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">{t('brands.analytics.eyebrow')}</p>
+            <h2 class="mt-4 font-display text-4xl leading-tight text-stone-900 sm:text-5xl" set:html={t('brands.analytics.title')}>
+            </h2>
+            <p class="mt-5 text-base leading-relaxed text-stone-600">
+                {t('brands.analytics.body')}
+            </p>
+        </div>
+
+        <div class="analytics-grid mt-14 grid grid-cols-1 gap-6 md:grid-cols-3" data-analytics>
+            {platforms.map((p) => (
+                <article class="group flex flex-col overflow-hidden rounded-3xl bg-white p-8 ring-1 ring-stone-900/5 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary-900/10">
+                    <div class="-mx-8 -mt-8 mb-7 h-2" style={`background:${BRAND[p.name].color}`}></div>
+
+                    <header class="flex items-center justify-between gap-3">
+                        <div class="flex items-center gap-2.5">
+                            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-full" style={`background:${BRAND[p.name].color}`} set:html={BRAND[p.name].svg}></span>
+                            <p class="text-sm font-semibold text-stone-900">{p.name}</p>
+                        </div>
+                        <span class="rounded-full bg-sand-100 px-2.5 py-1 text-[11px] font-medium text-stone-500">{p.period}</span>
+                    </header>
+
+                    <div class="mt-8">
+                        <span class="stat-count font-display text-6xl leading-none text-primary-800" {...countAttrs(p.headline.value)}>{p.headline.value}</span>
+                        <div class="mt-3 flex items-center gap-2">
+                            <p class="text-sm font-medium text-stone-700">{p.headline.label}</p>
+                            <span class:list={["inline-flex items-center gap-0.5 rounded-full px-2 py-0.5 text-xs font-semibold", p.headline.delta >= 0 ? "bg-emerald-50 text-emerald-700" : "bg-rose-50 text-rose-600"]}>
+                                <svg width="10" height="10" viewBox="0 0 20 20" fill="currentColor">{p.headline.delta >= 0 ? <path d="M10 4l6 8H4z"/> : <path d="M10 16l-6-8h12z"/>}</svg>
+                                {Math.abs(p.headline.delta)}%
+                            </span>
+                        </div>
+                        <p class="mt-1.5 text-xs text-stone-400">= {p.headline.long} {p.headline.label.toLowerCase()}</p>
+                    </div>
+
+                    <hr class="mt-7 border-stone-100" />
+
+                    <dl class="mt-5 grid grid-cols-2 gap-x-4 gap-y-5">
+                        {p.metrics.map((m) => (
+                            <div>
+                                <dt class="text-xs text-stone-500">{m.label}</dt>
+                                <dd class="mt-1 flex items-baseline gap-1.5">
+                                    <span class="stat-count font-display text-2xl text-stone-900" {...countAttrs(m.value)}>{m.value}</span>
+                                    <span class:list={["inline-flex items-center text-[11px] font-semibold", m.delta >= 0 ? "text-emerald-700" : "text-rose-600"]}>
+                                        <svg width="9" height="9" viewBox="0 0 20 20" fill="currentColor">{m.delta >= 0 ? <path d="M10 4l6 8H4z"/> : <path d="M10 16l-6-8h12z"/>}</svg>
+                                        {Math.abs(m.delta)}%
+                                    </span>
+                                </dd>
+                            </div>
+                        ))}
+                    </dl>
+
+                    {p.newAudience != null && (
+                        <div class="mt-7 flex items-center gap-4">
+                            <div class="relative h-20 w-20 shrink-0">
+                                <svg viewBox="0 0 40 40" class="h-20 w-20 -rotate-90">
+                                    <circle cx="20" cy="20" r="16" fill="none" stroke-width="3.5" style="stroke: var(--color-sand-300)" />
+                                    <circle class="gauge-fill" cx="20" cy="20" r="16" fill="none" stroke-width="3.5" stroke-linecap="butt" pathLength="100" stroke-dasharray="100" stroke-dashoffset={100 - p.newAudience} data-gauge-off={100 - p.newAudience} style="stroke: var(--color-primary-600)" />
+                                </svg>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <span class="stat-count text-sm font-semibold leading-none text-primary-800" {...countAttrs(`${p.newAudience}%`)}>{p.newAudience}%</span>
+                                </div>
+                            </div>
+                            <p class="text-sm leading-snug text-stone-600" set:html={t('brands.analytics.newAudience')}>
+                            </p>
+                        </div>
+                    )}
+
+                    {p.highlight && (
+                        <div class="mt-7 flex items-center gap-4 rounded-2xl bg-sand-50 p-4">
+                            <span class="stat-count font-display text-4xl leading-none text-primary-800" {...countAttrs(p.highlight.stat)}>{p.highlight.stat}</span>
+                            <p class="text-sm leading-snug text-stone-600">{p.highlight.text}</p>
+                        </div>
+                    )}
+
+                    <a href={p.url} target="_blank" rel="noopener noreferrer" class="mt-auto inline-flex items-center gap-1 pt-7 text-sm font-medium text-stone-700 underline-offset-4 transition hover:text-primary-800 hover:underline">
+                        {p.handle}
+                        <svg class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 4.293a1 1 0 011.414 0l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414-1.414L13.586 11H4a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+                    </a>
+                </article>
+            ))}
+        </div>
+
+        <p class="mt-8 text-center text-xs text-stone-400">
+            {t('brands.analytics.footnote').replace('{date}', analyticsUpdated)}
+        </p>
+    </div>
+</section>
+
+<!-- ============================ HOW I SHOW UP (reels) ============================ -->
+<section id="work" class="relative overflow-hidden bg-white py-24 md:py-32">
+    <div class="relative mx-auto max-w-6xl px-6 md:px-10">
+        <div class="mx-auto max-w-2xl text-center">
+            <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">{t('brands.reels.eyebrow')}</p>
+            <h2 class="mt-4 font-display text-4xl leading-tight text-stone-900 sm:text-5xl" set:html={t('brands.reels.title')}>
+            </h2>
+            <p class="mt-6 text-lg leading-relaxed text-stone-700">
+                {t('brands.reels.body')}
+            </p>
+        </div>
+        <div class="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {reels.map((r) => (
+                <article class="group flex flex-col overflow-hidden rounded-3xl bg-sand-50 ring-1 ring-stone-900/5 transition hover:shadow-lg hover:shadow-primary-900/8">
+                    <div class="bv group/video relative aspect-[9/16] bg-primary-500">
+                        <video
+                            src={vid(r.video)}
+                            class="bv-video h-full w-full object-cover"
+                            autoplay
+                            muted
+                            loop
+                            playsinline
+                            preload="metadata"
+                            aria-label={r.title}
+                        ></video>
+                        <div class="bv-controls absolute bottom-3 left-3 z-10 flex gap-2 opacity-0 transition focus-within:opacity-100 group-hover/video:opacity-100">
+                            <button type="button" class="bv-toggle grid h-10 w-10 place-items-center rounded-full bg-stone-900/45 text-white backdrop-blur-sm transition hover:bg-stone-900/65" aria-label="Play or pause video">
+                                <svg class="bv-icon-play hidden h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M6 4l10 6-10 6V4z"/></svg>
+                                <svg class="bv-icon-pause h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M6 4h3v12H6zM11 4h3v12h-3z"/></svg>
+                            </button>
+                            <button type="button" class="bv-mute grid h-10 w-10 place-items-center rounded-full bg-stone-900/45 text-white backdrop-blur-sm transition hover:bg-stone-900/65" aria-label="Mute or unmute video">
+                                <svg class="bv-icon-muted h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+                                <svg class="bv-icon-unmuted hidden h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 4.5a9 9 0 0 1 0 15"/></svg>
+                            </button>
+                        </div>
+                        <span class="pointer-events-none absolute right-4 top-4 inline-flex items-center gap-1 rounded-full bg-white/80 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-primary-800 backdrop-blur-sm">
+                            <svg class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor"><path d="M6 4l10 6-10 6V4z"/></svg> {t('brands.reels.badge')}
+                        </span>
+                    </div>
+                    <div class="px-6 py-4">
+                        <p class="text-sm font-semibold text-stone-800">{r.title}</p>
+                        <p class="text-xs uppercase tracking-widest text-stone-500">{r.tags}</p>
+                    </div>
+                </article>
+            ))}
+        </div>
+    </div>
+</section>
+
+<!-- ============================ NICHES (text — replaces logo wall) ============================ -->
+<section class="bg-primary-700 py-20 md:py-24">
+    <div class="mx-auto max-w-4xl px-6 text-center md:px-10">
+        <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-100">{t('brands.niches.eyebrow')}</p>
+        <h2 class="mt-4 font-display text-4xl leading-tight text-white sm:text-5xl">
+            {t('brands.niches.title')}
+        </h2>
+        <p class="mx-auto mt-5 max-w-xl leading-relaxed text-primary-100">
+            {t('brands.niches.body')}
+        </p>
+        <div class="mt-10 flex flex-wrap justify-center gap-3">
+            {niches.map((n) => (
+                <span class="rounded-full bg-white/15 px-5 py-2.5 text-sm font-medium text-white ring-1 ring-white/20 backdrop-blur-sm">
+                    {n}
+                </span>
+            ))}
+        </div>
+    </div>
+</section>
+
+<!-- ============================ SPEC UGC ============================ -->
+<section class="relative overflow-hidden bg-sand-50 py-24 md:py-32">
+    <div class="relative mx-auto max-w-6xl px-6 md:px-10">
+        <div class="mx-auto max-w-2xl text-center">
+            <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">{t('brands.spec.eyebrow')}</p>
+            <h2 class="mt-4 font-display text-4xl leading-tight text-stone-900 sm:text-5xl" set:html={t('brands.spec.title')}>
+            </h2>
+        </div>
+        <div class="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {specWork.map((w) => (
+                <article class="group flex flex-col overflow-hidden rounded-3xl bg-white ring-1 ring-stone-900/5 transition hover:shadow-lg hover:shadow-primary-900/8">
+                    <div class="bv group/video relative aspect-[9/16] bg-secondary-500">
+                        <video
+                            src={vid(w.video)}
+                            class="bv-video h-full w-full object-cover"
+                            autoplay
+                            muted
+                            loop
+                            playsinline
+                            preload="metadata"
+                            aria-label={`${w.type} — ${w.hook}`}
+                        ></video>
+                        <div class="bv-controls absolute bottom-3 left-3 z-10 flex gap-2 opacity-0 transition focus-within:opacity-100 group-hover/video:opacity-100">
+                            <button type="button" class="bv-toggle grid h-10 w-10 place-items-center rounded-full bg-stone-900/45 text-white backdrop-blur-sm transition hover:bg-stone-900/65" aria-label="Play or pause video">
+                                <svg class="bv-icon-play hidden h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M6 4l10 6-10 6V4z"/></svg>
+                                <svg class="bv-icon-pause h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M6 4h3v12H6zM11 4h3v12h-3z"/></svg>
+                            </button>
+                            <button type="button" class="bv-mute grid h-10 w-10 place-items-center rounded-full bg-stone-900/45 text-white backdrop-blur-sm transition hover:bg-stone-900/65" aria-label="Mute or unmute video">
+                                <svg class="bv-icon-muted h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+                                <svg class="bv-icon-unmuted hidden h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 4.5a9 9 0 0 1 0 15"/></svg>
+                            </button>
+                        </div>
+                        <span class="pointer-events-none absolute left-3 top-3 inline-flex items-center gap-0.5 rounded-full bg-white/85 px-2.5 py-1.5 text-lg leading-none shadow-sm backdrop-blur-sm" role="img" aria-label={FLAG[w.lang].label} title={FLAG[w.lang].label}>{FLAG[w.lang].flag}</span>
+                        <span class="pointer-events-none absolute right-4 top-4 rounded-full bg-white/80 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-stone-700 backdrop-blur-sm">{t('brands.spec.badge')}</span>
+                    </div>
+                    <div class="px-6 py-4">
+                        <p class="text-sm font-semibold text-stone-800">{w.type}</p>
+                        <p class="flex items-center gap-1.5 text-xs uppercase tracking-widest text-stone-500">
+                            {t('brands.spec.specUgcLabel')} <span role="img" aria-label={FLAG[w.lang].label} title={FLAG[w.lang].label} class="text-sm">{FLAG[w.lang].flag}</span>
+                        </p>
+                    </div>
+                </article>
+            ))}
+        </div>
+    </div>
+</section>
+
+<!-- ============================ PHOTOGRAPHY ============================ -->
+<section class="bg-white py-24 md:py-32">
+    <div class="mx-auto max-w-6xl px-6 md:px-10">
+        <div class="mx-auto max-w-2xl text-center">
+            <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">{t('brands.photography.eyebrow')}</p>
+            <h2 class="mt-4 font-display text-4xl leading-tight text-stone-900 sm:text-5xl">
+                {t('brands.photography.title')}
+            </h2>
+        </div>
+        <div class="mt-14 grid grid-cols-2 gap-4 md:grid-cols-3">
+            {photography.map((p) => (
+                <div class="aspect-[4/5] overflow-hidden rounded-2xl bg-sand-200">
+                    <img src={img(p.file)} alt={p.alt} class="h-full w-full object-cover transition duration-500 hover:scale-105" loading="lazy" />
+                </div>
+            ))}
+        </div>
+
+        <h3 class="mt-20 text-center font-display text-3xl text-stone-900 sm:text-4xl">{t('brands.photography.travelTitle')}</h3>
+        <div class="mt-10 grid grid-cols-2 gap-4 md:grid-cols-4">
+            {travel.map((tv) => (
+                <div class="aspect-[4/3] overflow-hidden rounded-2xl bg-sand-200">
+                    <img src={img(tv.file)} alt={tv.alt} class="h-full w-full object-cover transition duration-500 hover:scale-105" loading="lazy" />
+                </div>
+            ))}
+        </div>
+    </div>
+</section>
+
+<!-- ============================ SERVICES ============================ -->
+<section class="bg-sand-100 py-24 md:py-32">
+    <div class="mx-auto max-w-6xl px-6 md:px-10">
+        <div class="mx-auto max-w-2xl text-center">
+            <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">{t('brands.services.eyebrow')}</p>
+            <h2 class="mt-4 font-display text-4xl leading-tight text-stone-900 sm:text-5xl">
+                {t('brands.services.title')}
+            </h2>
+        </div>
+        <div class="mt-14 grid grid-cols-1 gap-10 lg:grid-cols-2">
+            <div class="rounded-3xl bg-white p-8 ring-1 ring-stone-900/5 md:p-10">
+                <h3 class="font-display text-2xl text-stone-900">{t('brands.services.servicesTitle')}</h3>
+                <ul class="mt-6 space-y-3">
+                    {services.map((s) => (
+                        <li class="flex items-center gap-3 text-stone-700">
+                            <svg class="h-5 w-5 shrink-0 text-primary-700" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            {s}
+                        </li>
+                    ))}
+                </ul>
+            </div>
+            <div class="rounded-3xl bg-primary-700 p-8 text-white md:p-10">
+                <h3 class="font-display text-2xl">{t('brands.services.deliverablesTitle')}</h3>
+                <ul class="mt-6 space-y-3">
+                    {deliverables.map((d) => (
+                        <li class="flex items-center gap-3 text-primary-50">
+                            <svg class="h-5 w-5 shrink-0 text-white" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            {d}
+                        </li>
+                    ))}
+                </ul>
+                <p class="mt-8 rounded-2xl bg-white/15 px-5 py-3 text-center text-sm font-semibold uppercase tracking-widest ring-1 ring-white/20">
+                    {t('brands.services.rates')}
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================ WORK TOGETHER (contact) ============================ -->
+<section id="work-together" class="relative overflow-hidden bg-sand-50 py-24 md:py-32">
+
+    <div class="relative mx-auto max-w-3xl px-6 text-center md:px-10">
+        <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">{t('brands.workTogether.eyebrow')}</p>
+        <h2 class="mt-4 font-display text-4xl leading-tight text-stone-900 sm:text-5xl md:text-6xl" set:html={t('brands.workTogether.title')}>
+        </h2>
+        <p class="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-stone-700">
+            {t('brands.workTogether.body')}
+        </p>
+
+        <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <a href="mailto:maria@maria-montserrat.com" class="inline-flex items-center justify-center rounded-full bg-primary-700 px-8 py-4 text-base font-semibold text-white shadow-lg shadow-primary-700/30 transition hover:bg-primary-800">
+                {t('brands.workTogether.cta')}
+            </a>
+        </div>
+
+        <p class="mt-8 text-stone-700">
+            <a href="mailto:maria@maria-montserrat.com" class="font-medium underline underline-offset-4 transition hover:text-primary-800">maria@maria-montserrat.com</a>
+        </p>
+
+        <div class="mt-10">
+            <p class="text-xs font-semibold uppercase tracking-widest text-stone-500">{t('brands.workTogether.socialLabel')}</p>
+            <div class="mt-4 flex items-center justify-center gap-4">
+                <a href="https://www.instagram.com/mariamontserratmaria/" target="_blank" rel="noopener noreferrer" class="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-stone-800 ring-1 ring-stone-900/5 shadow-sm transition hover:bg-primary-700 hover:text-white">Instagram</a>
+                <a href="https://www.tiktok.com/@mariamontserratmaria" target="_blank" rel="noopener noreferrer" class="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-stone-800 ring-1 ring-stone-900/5 shadow-sm transition hover:bg-primary-700 hover:text-white">TikTok</a>
+                <a href="https://www.facebook.com/mariamontserratmaria" target="_blank" rel="noopener noreferrer" class="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-stone-800 ring-1 ring-stone-900/5 shadow-sm transition hover:bg-primary-700 hover:text-white">Facebook</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Controls for the autoplaying, muted brand videos. Each clip:
+    //  - autoplays muted + looped, but only while it's on screen via IntersectionObserver;
+    //  - has a play/pause toggle (clicking the video works too); manual pause is remembered;
+    //  - has a mute/unmute toggle. Icons stay in sync with the real state.
+    document.querySelectorAll<HTMLVideoElement>('video.bv-video').forEach((video) => {
+        const wrap = video.closest('.bv');
+        if (!wrap) return;
+        const toggleBtn = wrap.querySelector('.bv-toggle');
+        const muteBtn = wrap.querySelector('.bv-mute');
+        const iconPlay = wrap.querySelector('.bv-icon-play');
+        const iconPause = wrap.querySelector('.bv-icon-pause');
+        const iconMuted = wrap.querySelector('.bv-icon-muted');
+        const iconUnmuted = wrap.querySelector('.bv-icon-unmuted');
+
+        let userPaused = false;
+
+        const syncPlay = () => {
+            const playing = !video.paused && !video.ended;
+            iconPlay?.classList.toggle('hidden', playing);
+            iconPause?.classList.toggle('hidden', !playing);
+        };
+        const syncMute = () => {
+            iconMuted?.classList.toggle('hidden', !video.muted);
+            iconUnmuted?.classList.toggle('hidden', video.muted);
+        };
+
+        toggleBtn?.addEventListener('click', () => {
+            if (video.paused) {
+                userPaused = false;
+                video.play().catch(() => {});
+            } else {
+                userPaused = true;
+                video.pause();
+            }
+        });
+        video.addEventListener('click', () => toggleBtn?.dispatchEvent(new Event('click')));
+        muteBtn?.addEventListener('click', () => {
+            video.muted = !video.muted;
+            syncMute();
+        });
+        video.addEventListener('play', syncPlay);
+        video.addEventListener('pause', syncPlay);
+
+        const io = new IntersectionObserver(
+            (entries) => {
+                for (const entry of entries) {
+                    if (entry.isIntersecting) {
+                        if (!userPaused) video.play().catch(() => {});
+                    } else {
+                        video.pause();
+                    }
+                }
+            },
+            { threshold: 0.25 },
+        );
+        io.observe(video);
+
+        syncPlay();
+        syncMute();
+    });
+</script>
+
+<script>
+    // Scroll-triggered animation for the analytics cards — runs once, when the
+    // section enters view. Honours prefers-reduced-motion. Without JS, the
+    // markup already shows its finished state, so it degrades cleanly.
+    const grid = document.querySelector<HTMLElement>('[data-analytics]');
+    if (grid) {
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const easeInOut = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+
+        const fmt = (n: number, dec: number, suffix: string, sep: boolean) => {
+            const rounded = dec > 0 ? Number(n.toFixed(dec)) : Math.round(n);
+            const base = sep
+                ? rounded.toLocaleString('en-US')
+                : dec > 0
+                  ? rounded.toFixed(dec)
+                  : String(rounded);
+            return base + suffix;
+        };
+
+        const read = (el: HTMLElement) => ({
+            to: parseFloat(el.dataset.countTo || '0'),
+            dec: parseInt(el.dataset.countDecimals || '0', 10),
+            suffix: el.dataset.countSuffix || '',
+            sep: el.dataset.countSep === '1',
+        });
+
+        const counts = [...grid.querySelectorAll<HTMLElement>('.stat-count')];
+        const gauges = [...grid.querySelectorAll<SVGCircleElement>('.gauge-fill')];
+
+        if (!reduce) {
+            counts.forEach((el) => {
+                const c = read(el);
+                el.textContent = fmt(0, c.dec, c.suffix, c.sep);
+            });
+            gauges.forEach((el) => {
+                el.style.strokeDashoffset = '100';
+            });
+        }
+
+        const animateCount = (el: HTMLElement, delay: number) => {
+            const c = read(el);
+            const steps = 16;
+            const stepMs = 125;
+            let step = 0;
+            window.setTimeout(() => {
+                const tick = () => {
+                    step += 1;
+                    const eased = easeInOut(step / steps);
+                    el.textContent = fmt(c.to * eased, c.dec, c.suffix, c.sep);
+                    if (step < steps) window.setTimeout(tick, stepMs);
+                    else el.textContent = fmt(c.to, c.dec, c.suffix, c.sep);
+                };
+                tick();
+            }, delay);
+        };
+
+        const animateGauge = (el: SVGCircleElement, delay: number) => {
+            const target = parseFloat(el.dataset.gaugeOff || '0');
+            const duration = 1700;
+            window.setTimeout(() => {
+                const start = performance.now();
+                const tick = (now: number) => {
+                    const t = Math.min(1, (now - start) / duration);
+                    el.style.strokeDashoffset = String(100 + (target - 100) * easeInOut(t));
+                    if (t < 1) requestAnimationFrame(tick);
+                    else el.style.strokeDashoffset = String(target);
+                };
+                requestAnimationFrame(tick);
+            }, delay);
+        };
+
+        const run = () => {
+            if (reduce) return;
+            [...grid.querySelectorAll('article')].forEach((article, i) => {
+                const delay = i * 160;
+                article.querySelectorAll<HTMLElement>('.stat-count').forEach((el) => animateCount(el, delay));
+                article.querySelectorAll<SVGCircleElement>('.gauge-fill').forEach((el) => animateGauge(el, delay));
+            });
+        };
+
+        const io = new IntersectionObserver(
+            (entries, obs) => {
+                for (const entry of entries) {
+                    if (entry.isIntersecting) {
+                        run();
+                        obs.disconnect();
+                    }
+                }
+            },
+            { threshold: 0.2 },
+        );
+        io.observe(grid);
+    }
+</script>

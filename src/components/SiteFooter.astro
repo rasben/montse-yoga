@@ -5,15 +5,19 @@
 // Contact links are duplicated in src/components/Contact.astro and the page
 // hero navs; keep them in sync when any of them change.
 import Langs from './Langs.astro';
+import { asLang, useTranslations, localizedPath } from '../i18n/utils';
+
+const lang = asLang(Astro.currentLocale);
+const t = useTranslations(lang);
 
 const year = new Date().getFullYear();
 
-const nav = [
-    { label: 'Home', href: '/' },
-    { label: 'For Brands', href: '/brands' },
-    { label: 'Teacher Yoga', href: '/teacher-yoga' },
-    { label: 'Online Courses', href: '/courses' },
-    { label: 'Blog', href: 'https://mariamontserratmaria.substack.com/', external: true },
+const nav: Array<{ labelKey: string; href: string; external?: boolean }> = [
+    { labelKey: 'common.nav.home', href: '/' },
+    { labelKey: 'common.nav.forBrands', href: '/brands' },
+    { labelKey: 'common.nav.forTeachers', href: '/teacher-yoga' },
+    { labelKey: 'common.nav.courses', href: '/courses' },
+    { labelKey: 'common.nav.blog', href: 'https://mariamontserratmaria.substack.com/', external: true },
 ];
 
 const socials = [
@@ -27,27 +31,27 @@ const socials = [
     <div class="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-6 py-16 md:grid-cols-3 md:px-10">
         <!-- Brand / tagline -->
         <div>
-            <p class="font-display text-2xl text-white">Maria Montserrat</p>
+            <p class="font-display text-2xl text-white">{t('common.siteName')}</p>
             <p class="mt-3 max-w-xs text-sm leading-relaxed text-stone-400">
-                Yoga &amp; breathwork for burnout, and trilingual UGC content creation.
+                {t('common.tagline')}
             </p>
             <p class="mt-3 flex items-center gap-2 text-sm text-stone-400">
-                Copenhagen <Langs class="text-base" />
+                {t('common.location')} <Langs class="text-base" />
             </p>
         </div>
 
         <!-- Explore -->
         <nav aria-label="Footer">
-            <p class="text-xs font-semibold uppercase tracking-[0.3em] text-stone-500">Explore</p>
+            <p class="text-xs font-semibold uppercase tracking-[0.3em] text-stone-500">{t('common.footer.explore')}</p>
             <ul class="mt-4 space-y-2.5 text-sm">
                 {nav.map((l) => (
                     <li>
                         <a
-                            href={l.href}
+                            href={l.external ? l.href : localizedPath(l.href, lang)}
                             {...(l.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                             class="text-stone-300 transition hover:text-primary-400"
                         >
-                            {l.label}
+                            {t(l.labelKey)}
                         </a>
                     </li>
                 ))}
@@ -56,7 +60,7 @@ const socials = [
 
         <!-- Contact -->
         <div>
-            <p class="text-xs font-semibold uppercase tracking-[0.3em] text-stone-500">Get in touch</p>
+            <p class="text-xs font-semibold uppercase tracking-[0.3em] text-stone-500">{t('common.footer.getInTouch')}</p>
             <ul class="mt-4 space-y-2.5 text-sm">
                 <li>
                     <a href="mailto:maria@maria-montserrat.com" class="text-stone-300 transition hover:text-primary-400">
@@ -65,7 +69,7 @@ const socials = [
                 </li>
             </ul>
 
-            <p class="mt-6 text-xs font-semibold uppercase tracking-[0.3em] text-stone-500">Social</p>
+            <p class="mt-6 text-xs font-semibold uppercase tracking-[0.3em] text-stone-500">{t('common.footer.social')}</p>
             <ul class="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm">
                 {socials.map((s) => (
                     <li>
@@ -80,7 +84,7 @@ const socials = [
 
     <div class="border-t border-white/10">
         <div class="mx-auto max-w-6xl px-6 py-6 text-center text-xs text-stone-500 md:px-10">
-            &copy; {year} Maria Montserrat &middot; Copenhagen, Denmark
+            &copy; {year} {t('common.siteName')} &middot; {t('common.footer.copyright')}
         </div>
     </div>
 </footer>

@@ -1,0 +1,382 @@
+---
+// "You're Your Calling" body — 1:1 coaching programme for burned-out teachers.
+// Used by /your-calling, /es/your-calling, /da/your-calling.
+import maria from '../../assets/maria-help.jpg';
+import { Image } from 'astro:assets';
+import { asLang, useTranslations, useList, localizedPath } from '../../i18n/utils';
+
+const lang = asLang(Astro.currentLocale);
+const t = useTranslations(lang);
+const list = useList(lang);
+
+// Same Google Form used on the legacy impact.me page.
+const APPLY_URL =
+    "https://docs.google.com/forms/d/e/1FAIpQLSc1S_tnpvJjcmSn03STkcoCezeBtUhxqkZXZv0ZRIJamuKQhQ/viewform?usp=sharing&ouid=109118143549177146673";
+
+const weeks = list<{ title: string; body: string }>('yourCalling.weeks.items');
+const included = list<string>('yourCalling.included.items');
+const priceBullets = list<string>('yourCalling.included.priceBullets');
+const faqs = list<{ q: string; a: string }>('yourCalling.faq.items');
+const differentCards = list<{ title: string; body: string }>('yourCalling.different.cards');
+const testimonials = list<{ quote: string; attribution: string }>('yourCalling.testimonials.items');
+
+const differentIcons = ['🌿', '🪷', '🧭'];
+const differentBg = ['bg-primary-200', 'bg-secondary-200', 'bg-accent-200'];
+---
+
+<!-- ============================ HERO ============================ -->
+<section class="relative overflow-hidden">
+    <div class="absolute inset-0 -z-20 bg-primary-100"></div>
+
+    <div class="relative z-10 mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-6 pb-20 pt-14 md:grid-cols-12 md:gap-16 md:px-10 md:pb-28 md:pt-20">
+        <!-- Copy -->
+        <div class="md:col-span-7">
+            <p class="fade-up text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">
+                {t('yourCalling.hero.eyebrow')}
+            </p>
+
+            <h1 class="fade-up-delay-1 mt-6 font-display text-5xl leading-[1.05] text-stone-900 sm:text-6xl md:text-7xl" set:html={t('yourCalling.hero.headline')}>
+            </h1>
+
+            <p class="fade-up-delay-2 mt-8 max-w-xl text-lg leading-relaxed text-stone-800 md:text-xl">
+                {t('yourCalling.hero.body')}
+            </p>
+
+            <div class="fade-up-delay-3 mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+                <a
+                    href={APPLY_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="group inline-flex items-center justify-center rounded-full bg-primary-700 px-8 py-4 text-base font-semibold text-white shadow-lg shadow-primary-700/30 transition hover:bg-primary-800 hover:shadow-primary-800/40"
+                >
+                    {t('yourCalling.hero.ctaPrimary')}
+                    <svg class="ml-2 h-4 w-4 transition group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 4.293a1 1 0 011.414 0l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414-1.414L13.586 11H4a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                </a>
+                <a href="#whats-included" class="inline-flex items-center justify-center rounded-full px-8 py-4 text-base font-semibold text-stone-900 underline-offset-4 transition hover:text-primary-800 hover:underline">
+                    {t('yourCalling.hero.ctaSecondary')}
+                </a>
+            </div>
+
+            <p class="fade-up-delay-3 mt-8 text-sm font-medium text-stone-700" set:html={t('yourCalling.hero.pricing')}>
+            </p>
+        </div>
+
+        <!-- Photo -->
+        <div class="fade-up-delay-2 relative md:col-span-5">
+            <div class="relative mx-auto max-w-md md:max-w-none">
+                <div class="absolute -inset-4 -z-10 bg-accent-500" style="border-radius: 48% 52% 60% 40% / 56% 44% 56% 44%;"></div>
+                <div class="relative overflow-hidden shadow-2xl shadow-primary-900/20" style="border-radius: 48% 52% 60% 40% / 56% 44% 56% 44%;">
+                    <Image
+                        src={maria}
+                        alt={t('yourCalling.hero.photoAlt')}
+                        widths={[480, 720, 960]}
+                        sizes="(min-width: 768px) 45vw, 90vw"
+                        class="aspect-[4/3] w-full object-cover md:aspect-[5/4]"
+                        loading="eager"
+                    />
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================ THE STORY ============================ -->
+<section class="relative bg-sand-50 py-24 md:py-32">
+    <div class="mx-auto max-w-3xl px-6 md:px-10">
+        <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">
+            {t('yourCalling.story.eyebrow')}
+        </p>
+        <h2 class="mt-4 font-display text-4xl leading-tight text-stone-900 sm:text-5xl" set:html={t('yourCalling.story.title')}>
+        </h2>
+        <div class="mt-8 space-y-5 text-lg leading-relaxed text-stone-700">
+            <p>{t('yourCalling.story.p1')}</p>
+            <p>{t('yourCalling.story.p2')}</p>
+            <p class="font-medium text-stone-900">{t('yourCalling.story.p3')}</p>
+        </div>
+    </div>
+</section>
+
+<!-- ============================ TWO-PART ARC ============================ -->
+<section class="relative bg-secondary-100 py-24 md:py-32">
+    <div class="mx-auto max-w-6xl px-6 md:px-10">
+        <div class="mx-auto max-w-2xl text-center">
+            <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">
+                {t('yourCalling.arc.eyebrow')}
+            </p>
+            <h2 class="mt-4 font-display text-4xl leading-tight text-stone-900 sm:text-5xl" set:html={t('yourCalling.arc.title')}>
+            </h2>
+        </div>
+
+        <div class="mt-14 grid grid-cols-1 gap-8 md:grid-cols-2">
+            <article class="rounded-3xl bg-sand-50 p-10 ring-1 ring-stone-900/5 shadow-sm">
+                <p class="text-xs font-semibold uppercase tracking-[0.3em] text-primary-800">{t('yourCalling.arc.firstHalfWeeks')}</p>
+                <h3 class="mt-3 font-display text-3xl text-stone-900">{t('yourCalling.arc.firstHalfTitle')}</h3>
+                <p class="mt-4 leading-relaxed text-stone-700">{t('yourCalling.arc.firstHalfBody')}</p>
+            </article>
+
+            <article class="rounded-3xl bg-sand-50 p-10 ring-1 ring-stone-900/5 shadow-sm">
+                <p class="text-xs font-semibold uppercase tracking-[0.3em] text-primary-800">{t('yourCalling.arc.secondHalfWeeks')}</p>
+                <h3 class="mt-3 font-display text-3xl text-stone-900">{t('yourCalling.arc.secondHalfTitle')}</h3>
+                <p class="mt-4 leading-relaxed text-stone-700">{t('yourCalling.arc.secondHalfBody')}</p>
+            </article>
+        </div>
+
+        <figure class="mx-auto mt-14 max-w-2xl text-center">
+            <blockquote class="font-display text-2xl italic leading-snug text-stone-900 md:text-3xl">
+                {t('yourCalling.arc.pullQuote')}
+            </blockquote>
+            <figcaption class="mt-4 text-xs font-semibold uppercase tracking-widest text-stone-600">
+                {t('yourCalling.arc.pullQuoteAttribution')}
+            </figcaption>
+        </figure>
+    </div>
+</section>
+
+<!-- ============================ WHY IT'S DIFFERENT ============================ -->
+<section class="relative bg-primary-100 py-24 md:py-32">
+    <div class="mx-auto max-w-6xl px-6 md:px-10">
+        <div class="mx-auto max-w-2xl text-center">
+            <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">
+                {t('yourCalling.different.eyebrow')}
+            </p>
+            <h2 class="mt-4 font-display text-4xl leading-tight text-stone-900 sm:text-5xl" set:html={t('yourCalling.different.title')}>
+            </h2>
+            <p class="mt-6 text-lg leading-relaxed text-stone-700">
+                {t('yourCalling.different.body')}
+            </p>
+        </div>
+
+        <div class="mt-16 grid grid-cols-1 gap-6 md:grid-cols-3">
+            {differentCards.map((card, i) => (
+                <article class="rounded-3xl bg-sand-50 p-8 ring-1 ring-stone-900/5 shadow-sm">
+                    <div class={`mb-5 flex h-14 w-14 items-center justify-center rounded-2xl text-2xl ${differentBg[i] ?? 'bg-primary-200'}`}>
+                        {differentIcons[i] ?? '🌿'}
+                    </div>
+                    <h3 class="font-display text-2xl text-stone-900">{card.title}</h3>
+                    <p class="mt-3 leading-relaxed text-stone-700">{card.body}</p>
+                </article>
+            ))}
+        </div>
+    </div>
+</section>
+
+<!-- ============================ TESTIMONIALS ============================ -->
+<section class="relative bg-sand-50 py-24 md:py-32">
+    <div class="mx-auto max-w-5xl px-6 md:px-10">
+        <div class="mx-auto max-w-2xl text-center">
+            <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">
+                {t('yourCalling.testimonials.eyebrow')}
+            </p>
+            <h2 class="mt-4 font-display text-4xl leading-tight text-stone-900 sm:text-5xl" set:html={t('yourCalling.testimonials.title')}>
+            </h2>
+        </div>
+
+        <div class="mt-14 grid grid-cols-1 gap-8 md:grid-cols-2">
+            {testimonials.map((tst) => (
+                <figure class="rounded-3xl bg-white p-10 ring-1 ring-stone-900/5 shadow-sm">
+                    <div class="text-accent-500" aria-label={t('yourCalling.testimonials.starsAria')}>★★★★★</div>
+                    <blockquote class="mt-5 font-display text-2xl italic leading-snug text-stone-900">
+                        {tst.quote}
+                    </blockquote>
+                    <figcaption class="mt-6 text-sm font-semibold uppercase tracking-widest text-stone-600">
+                        {tst.attribution}
+                    </figcaption>
+                </figure>
+            ))}
+        </div>
+
+        <figure class="mx-auto mt-12 max-w-3xl text-center">
+            <blockquote class="font-display text-xl italic leading-snug text-stone-700 md:text-2xl">
+                {t('yourCalling.testimonials.pullQuote')}
+            </blockquote>
+            <figcaption class="mt-3 text-xs font-semibold uppercase tracking-widest text-stone-500">
+                {t('yourCalling.testimonials.pullQuoteAttribution')}
+            </figcaption>
+        </figure>
+    </div>
+</section>
+
+<!-- ============================ ABOUT MARIA ============================ -->
+<section class="relative bg-secondary-100 py-24 md:py-32">
+    <div class="mx-auto max-w-4xl px-6 text-center md:px-10">
+        <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">
+            {t('yourCalling.about.eyebrow')}
+        </p>
+        <h2 class="mt-4 font-display text-4xl leading-tight text-stone-900 sm:text-5xl" set:html={t('yourCalling.about.title')}>
+        </h2>
+        <div class="mx-auto mt-8 max-w-2xl space-y-5 text-lg leading-relaxed text-stone-700">
+            <p>{t('yourCalling.about.p1')}</p>
+            <p>{t('yourCalling.about.p2')}</p>
+        </div>
+    </div>
+</section>
+
+<!-- ============================ WEEK BY WEEK ============================ -->
+<section class="relative bg-primary-100 py-24 md:py-32">
+    <div class="mx-auto max-w-5xl px-6 md:px-10">
+        <div class="mx-auto max-w-2xl text-center">
+            <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">
+                {t('yourCalling.weeks.eyebrow')}
+            </p>
+            <h2 class="mt-4 font-display text-4xl leading-tight text-stone-900 sm:text-5xl" set:html={t('yourCalling.weeks.title')}>
+            </h2>
+            <p class="mt-6 text-base leading-relaxed text-stone-700">
+                {t('yourCalling.weeks.body')}
+            </p>
+        </div>
+
+        <ol class="mt-14 space-y-4">
+            {weeks.map((w, i) => (
+                <li class="group flex flex-col gap-4 rounded-3xl bg-sand-50 p-6 ring-1 ring-stone-900/5 shadow-sm transition hover:shadow-md md:flex-row md:gap-8 md:p-8">
+                    <div class="flex shrink-0 items-start gap-4 md:w-48">
+                        <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-700 font-display text-xl text-white">
+                            {i + 1}
+                        </span>
+                        <span class="self-center text-xs font-semibold uppercase tracking-[0.3em] text-primary-800">
+                            {t('yourCalling.weeks.weekLabel')} {i + 1}
+                        </span>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-display text-xl text-stone-900 md:text-2xl">{w.title}</h3>
+                        <p class="mt-2 leading-relaxed text-stone-700">{w.body}</p>
+                    </div>
+                </li>
+            ))}
+        </ol>
+    </div>
+</section>
+
+<!-- ============================ WHAT'S INCLUDED + PRICING ============================ -->
+<section id="whats-included" class="relative bg-sand-50 py-24 md:py-32">
+    <div class="mx-auto max-w-5xl px-6 md:px-10">
+        <div class="mx-auto max-w-2xl text-center">
+            <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">
+                {t('yourCalling.included.eyebrow')}
+            </p>
+            <h2 class="mt-4 font-display text-4xl leading-tight text-stone-900 sm:text-5xl" set:html={t('yourCalling.included.title')}>
+            </h2>
+        </div>
+
+        <div class="mt-14 grid grid-cols-1 gap-8 md:grid-cols-5">
+            <!-- Included list -->
+            <div class="rounded-3xl bg-white p-8 ring-1 ring-stone-900/5 shadow-sm md:col-span-3">
+                <h3 class="font-display text-2xl text-stone-900">{t('yourCalling.included.cardTitle')}</h3>
+                <p class="mt-2 text-sm font-semibold uppercase tracking-widest text-stone-500">{t('yourCalling.included.includesLabel')}</p>
+                <ul class="mt-6 space-y-3">
+                    {included.map((item) => (
+                        <li class="flex items-start gap-3 text-stone-800">
+                            <svg class="mt-1 h-5 w-5 shrink-0 text-primary-700" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.704 5.296a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.29-7.29a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                            <span>{item}</span>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+
+            <!-- Pricing card -->
+            <aside class="flex flex-col rounded-3xl bg-primary-700 p-8 text-white shadow-lg shadow-primary-700/30 md:col-span-2">
+                <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-100">
+                    {t('yourCalling.included.priceEyebrow')}
+                </p>
+                <div class="mt-6 flex items-baseline gap-3">
+                    <span class="font-display text-6xl leading-none">€497</span>
+                    <span class="text-sm font-medium text-primary-100">{t('yourCalling.included.priceTotal')}</span>
+                </div>
+                <p class="mt-3 text-sm text-primary-100">
+                    <s class="opacity-70">{t('yourCalling.included.priceOriginal')}</s> &middot; {t('yourCalling.included.priceDiscount')}
+                </p>
+
+                <ul class="mt-8 space-y-2 text-sm text-primary-50">
+                    {priceBullets.map((b) => (
+                        <li class="flex items-center gap-2">
+                            <span class="h-1.5 w-1.5 rounded-full bg-accent-500"></span>
+                            {b}
+                        </li>
+                    ))}
+                </ul>
+
+                <a
+                    href={APPLY_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="group mt-8 inline-flex items-center justify-center rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-primary-800 transition hover:bg-primary-50"
+                >
+                    {t('yourCalling.included.cta')}
+                    <svg class="ml-2 h-4 w-4 transition group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 4.293a1 1 0 011.414 0l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414-1.414L13.586 11H4a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                </a>
+            </aside>
+        </div>
+
+        <p class="mx-auto mt-10 max-w-2xl text-center text-sm leading-relaxed text-stone-500">
+            {t('yourCalling.included.footnote')}
+        </p>
+    </div>
+</section>
+
+<!-- ============================ FAQ ============================ -->
+<section class="relative bg-primary-100 py-24 md:py-32">
+    <div class="mx-auto max-w-3xl px-6 md:px-10">
+        <div class="text-center">
+            <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">
+                {t('yourCalling.faq.eyebrow')}
+            </p>
+            <h2 class="mt-4 font-display text-4xl leading-tight text-stone-900 sm:text-5xl" set:html={t('yourCalling.faq.title')}>
+            </h2>
+        </div>
+
+        <div class="mt-14 space-y-4">
+            {faqs.map((f) => (
+                <details class="group rounded-2xl bg-sand-50 p-6 ring-1 ring-stone-900/5 shadow-sm transition open:shadow-md">
+                    <summary class="flex cursor-pointer items-center justify-between gap-4 font-display text-lg text-stone-900 marker:hidden md:text-xl">
+                        <span>{f.q}</span>
+                        <svg class="h-5 w-5 shrink-0 text-primary-700 transition group-open:rotate-45" viewBox="0 0 20 20" fill="currentColor"><path d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"/></svg>
+                    </summary>
+                    <p class="mt-4 leading-relaxed text-stone-700">{f.a}</p>
+                </details>
+            ))}
+        </div>
+    </div>
+</section>
+
+<!-- ============================ FINAL CTA ============================ -->
+<section class="relative overflow-hidden bg-secondary-800 py-24 md:py-32">
+    <div class="absolute inset-0 -z-10 opacity-20" aria-hidden="true">
+        <div class="absolute -left-20 top-10 h-72 w-72 rounded-full bg-accent-500 blur-3xl"></div>
+        <div class="absolute -right-20 bottom-10 h-80 w-80 rounded-full bg-primary-500 blur-3xl"></div>
+    </div>
+
+    <div class="relative mx-auto max-w-3xl px-6 text-center md:px-10">
+        <p class="text-xs font-semibold uppercase tracking-[0.35em] text-accent-300">
+            {t('yourCalling.finalCta.eyebrow')}
+        </p>
+        <h2 class="mt-6 font-display text-4xl leading-tight text-white sm:text-5xl md:text-6xl" set:html={t('yourCalling.finalCta.title')}>
+        </h2>
+        <p class="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-secondary-100">
+            {t('yourCalling.finalCta.body')}
+        </p>
+
+        <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <a
+                href={APPLY_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="group inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-base font-semibold text-secondary-900 shadow-lg transition hover:bg-secondary-50"
+            >
+                {t('yourCalling.finalCta.ctaPrimary')}
+                <svg class="ml-2 h-4 w-4 transition group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 4.293a1 1 0 011.414 0l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414-1.414L13.586 11H4a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+            </a>
+            <a href={localizedPath('/teacher-yoga', lang)} class="text-sm font-semibold uppercase tracking-widest text-secondary-100 underline-offset-4 transition hover:text-white hover:underline">
+                {t('yourCalling.finalCta.ctaSecondary')}
+            </a>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Hide the default summary triangle in browsers that still show it. */
+    details > summary {
+        list-style: none;
+    }
+    details > summary::-webkit-details-marker {
+        display: none;
+    }
+</style>
