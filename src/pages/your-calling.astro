@@ -1,0 +1,539 @@
+---
+// "You're Your Calling" — 1:1 coaching programme for burned-out teachers.
+// Ported from the legacy impact.me page (mariamontserrat.impact.me/yourcalling)
+// and re-styled to match the rest of the site.
+//
+// Route: /your-calling
+import Layout from '../layouts/Layout.astro';
+import maria from '../assets/maria-help.jpg';
+import { Image } from 'astro:assets';
+
+// Same Google Form used on the legacy impact.me page.
+const APPLY_URL =
+    "https://docs.google.com/forms/d/e/1FAIpQLSc1S_tnpvJjcmSn03STkcoCezeBtUhxqkZXZv0ZRIJamuKQhQ/viewform?usp=sharing&ouid=109118143549177146673";
+
+const weeks = [
+    {
+        n: 1,
+        title: "It was never just you.",
+        body: "We start where the depletion actually began. Not with a fix — with the truth that the system wasn't built for you, and that it's not your fault.",
+    },
+    {
+        n: 2,
+        title: "Listening to your body again.",
+        body: "Your nervous system has been signalling for months, maybe years. We learn to read those signals — exhaustion, tension, numbness — instead of overriding them.",
+    },
+    {
+        n: 3,
+        title: "Who you are outside the role.",
+        body: "Values, identity, the things that light you up that have nothing to do with a classroom. The version of you that existed before the teacher took over.",
+    },
+    {
+        n: 4,
+        title: "Changing the filter.",
+        body: "The stories that keep you stuck — about duty, sacrifice, what a 'good' teacher does — where they came from, and how to gently put them down.",
+    },
+    {
+        n: 5,
+        title: "A vision that actually fits.",
+        body: "Not 'what should I do' — what do you actually want. We build a direction from your real values, not from what's expected of you.",
+    },
+    {
+        n: 6,
+        title: "Seeing from your own eyes.",
+        body: "You leave with clarity, one concrete next step, and the felt sense of being a whole person again — whether you stay in teaching or choose something new.",
+    },
+];
+
+const included = [
+    "Six live 90-minute 1:1 sessions",
+    "Somatic and yoga practices tailored to you",
+    "Between-session WhatsApp support",
+    "Values mapping and identity work",
+    "A post-programme integration session",
+    "Free 30-minute discovery call before you commit",
+];
+
+const faqs = [
+    {
+        q: "Is this right for me if I'm completely exhausted?",
+        a: "Yes — especially then. The programme is designed for teachers running on empty. We start where you are, not where you think you should be.",
+    },
+    {
+        q: "What if I can't commit to set sessions every week?",
+        a: "We schedule around your life. You're a teacher; your week isn't 9-to-5. Flexibility is built in from the start.",
+    },
+    {
+        q: "What if I start and it isn't for me?",
+        a: "That's exactly what the free discovery call is for — we both check it's a good fit before any commitment. And if after Week 1 it isn't what you expected, you'll get a full refund.",
+    },
+    {
+        q: "What does the application process look like?",
+        a: "Send a short email and I'll reach out to book your free 30-minute discovery call. No pressure, no sales pitch — just a real conversation. Applications close when the three spots are filled.",
+    },
+];
+---
+
+<Layout
+    title="You're Your Calling — 1:1 Coaching for Teachers | Maria Montserrat"
+    description="A 6-week 1:1 coaching programme for burned-out teachers. Yoga, somatic work, and transformational coaching that goes to the root — with Maria Montserrat."
+>
+    <!-- ============================ HERO ============================ -->
+    <section class="relative overflow-hidden">
+        <div class="absolute inset-0 -z-20 bg-primary-100"></div>
+
+        <div class="relative z-10 mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-6 pb-20 pt-14 md:grid-cols-12 md:gap-16 md:px-10 md:pb-28 md:pt-20">
+            <!-- Copy -->
+            <div class="md:col-span-7">
+                <p class="fade-up text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">
+                    A 6-Week 1:1 Programme &middot; For Teachers
+                </p>
+
+                <h1 class="fade-up-delay-1 mt-6 font-display text-5xl leading-[1.05] text-stone-900 sm:text-6xl md:text-7xl">
+                    You're <em class="font-normal text-primary-800">your calling</em>.
+                </h1>
+
+                <p class="fade-up-delay-2 mt-8 max-w-xl text-lg leading-relaxed text-stone-800 md:text-xl">
+                    You've been giving everything. And somewhere along the way, you
+                    stopped recognising yourself. This is six weeks of 1:1 work —
+                    yoga, somatics, and transformational coaching — to go to the
+                    root of it and come back to yourself.
+                </p>
+
+                <div class="fade-up-delay-3 mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+                    <a
+                        href={APPLY_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="group inline-flex items-center justify-center rounded-full bg-primary-700 px-8 py-4 text-base font-semibold text-white shadow-lg shadow-primary-700/30 transition hover:bg-primary-800 hover:shadow-primary-800/40"
+                    >
+                        Apply for a spot
+                        <svg class="ml-2 h-4 w-4 transition group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 4.293a1 1 0 011.414 0l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414-1.414L13.586 11H4a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                    </a>
+                    <a href="#whats-included" class="inline-flex items-center justify-center rounded-full px-8 py-4 text-base font-semibold text-stone-900 underline-offset-4 transition hover:text-primary-800 hover:underline">
+                        See what's included
+                    </a>
+                </div>
+
+                <p class="fade-up-delay-3 mt-8 text-sm font-medium text-stone-700">
+                    Only <span class="font-semibold text-primary-800">3 spots</span> &middot;
+                    Founding price <span class="font-semibold text-primary-800">€497</span> &middot;
+                    Begins with a free discovery call
+                </p>
+            </div>
+
+            <!-- Photo -->
+            <div class="fade-up-delay-2 relative md:col-span-5">
+                <div class="relative mx-auto max-w-md md:max-w-none">
+                    <div class="absolute -inset-4 -z-10 bg-accent-500" style="border-radius: 48% 52% 60% 40% / 56% 44% 56% 44%;"></div>
+                    <div class="relative overflow-hidden shadow-2xl shadow-primary-900/20" style="border-radius: 48% 52% 60% 40% / 56% 44% 56% 44%;">
+                        <Image
+                            src={maria}
+                            alt="Maria Montserrat holding a hand-written sign that reads HELP!"
+                            widths={[480, 720, 960]}
+                            sizes="(min-width: 768px) 45vw, 90vw"
+                            class="aspect-[4/3] w-full object-cover md:aspect-[5/4]"
+                            loading="eager"
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================ THE STORY ============================ -->
+    <section class="relative bg-sand-50 py-24 md:py-32">
+        <div class="mx-auto max-w-3xl px-6 md:px-10">
+            <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">
+                If you're reading this
+            </p>
+            <h2 class="mt-4 font-display text-4xl leading-tight text-stone-900 sm:text-5xl">
+                You've been giving everything &mdash; and it has made you invisible, <em class="font-normal text-primary-800">even to yourself</em>.
+            </h2>
+            <div class="mt-8 space-y-5 text-lg leading-relaxed text-stone-700">
+                <p>
+                    You became a teacher because you cared. You stayed because you
+                    believed in it. And somewhere between the marking, the parents'
+                    emails, and the meetings that could have been a message, you
+                    stopped recognising yourself.
+                </p>
+                <p>
+                    You're exhausted in a way sleep doesn't fix. You go through the
+                    motions. You feel guilty for wanting something different. And a
+                    quiet part of you wonders: is this just what being a grown-up
+                    feels like?
+                </p>
+                <p class="font-medium text-stone-900">
+                    It isn't. And it isn't your fault.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================ TWO-PART ARC ============================ -->
+    <section class="relative bg-secondary-100 py-24 md:py-32">
+        <div class="mx-auto max-w-6xl px-6 md:px-10">
+            <div class="mx-auto max-w-2xl text-center">
+                <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">
+                    The shape of the work
+                </p>
+                <h2 class="mt-4 font-display text-4xl leading-tight text-stone-900 sm:text-5xl">
+                    Two halves. <em class="font-normal text-primary-800">One path back to yourself</em>.
+                </h2>
+            </div>
+
+            <div class="mt-14 grid grid-cols-1 gap-8 md:grid-cols-2">
+                <article class="rounded-3xl bg-sand-50 p-10 ring-1 ring-stone-900/5 shadow-sm">
+                    <p class="text-xs font-semibold uppercase tracking-[0.3em] text-primary-800">Weeks 1–3</p>
+                    <h3 class="mt-3 font-display text-3xl text-stone-900">Name what's actually happening.</h3>
+                    <p class="mt-4 leading-relaxed text-stone-700">
+                        We go to the root of it. What teaching has cost you, what it
+                        gave you, and what was never yours to carry. You'll feel the
+                        difference between depletion and identity — and start to hear
+                        yourself again.
+                    </p>
+                </article>
+
+                <article class="rounded-3xl bg-sand-50 p-10 ring-1 ring-stone-900/5 shadow-sm">
+                    <p class="text-xs font-semibold uppercase tracking-[0.3em] text-primary-800">Weeks 4–6</p>
+                    <h3 class="mt-3 font-display text-3xl text-stone-900">Build a life that actually belongs to you.</h3>
+                    <p class="mt-4 leading-relaxed text-stone-700">
+                        Clarity becomes direction. Through somatic practices, values
+                        work, and coaching, insight turns into action — so you leave
+                        knowing who you are and what you want, not just that you're
+                        exhausted.
+                    </p>
+                </article>
+            </div>
+
+            <figure class="mx-auto mt-14 max-w-2xl text-center">
+                <blockquote class="font-display text-2xl italic leading-snug text-stone-900 md:text-3xl">
+                    "I finally see — from my own eyes, not from fear."
+                </blockquote>
+                <figcaption class="mt-4 text-xs font-semibold uppercase tracking-widest text-stone-600">
+                    The promise of Week 6
+                </figcaption>
+            </figure>
+        </div>
+    </section>
+
+    <!-- ============================ WHY IT'S DIFFERENT ============================ -->
+    <section class="relative bg-primary-100 py-24 md:py-32">
+        <div class="mx-auto max-w-6xl px-6 md:px-10">
+            <div class="mx-auto max-w-2xl text-center">
+                <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">
+                    Built differently
+                </p>
+                <h2 class="mt-4 font-display text-4xl leading-tight text-stone-900 sm:text-5xl">
+                    Teacher burnout isn't fixed by <em class="font-normal text-primary-800">more productivity tips</em>.
+                </h2>
+                <p class="mt-6 text-lg leading-relaxed text-stone-700">
+                    This isn't a course. It's six weeks of 1:1 work — yoga, somatics,
+                    mindfulness, and transformational coaching — built around you.
+                </p>
+            </div>
+
+            <div class="mt-16 grid grid-cols-1 gap-6 md:grid-cols-3">
+                <article class="rounded-3xl bg-sand-50 p-8 ring-1 ring-stone-900/5 shadow-sm">
+                    <div class="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary-200 text-2xl">
+                        🌿
+                    </div>
+                    <h3 class="font-display text-2xl text-stone-900">Body-led, not just talked through</h3>
+                    <p class="mt-3 leading-relaxed text-stone-700">
+                        You won't only analyse your burnout — you'll feel your way
+                        through it. Each week includes breathwork, somatic inquiry,
+                        and movement, because the body holds what the mind hasn't
+                        processed yet.
+                    </p>
+                </article>
+
+                <article class="rounded-3xl bg-sand-50 p-8 ring-1 ring-stone-900/5 shadow-sm">
+                    <div class="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-secondary-200 text-2xl">
+                        🪷
+                    </div>
+                    <h3 class="font-display text-2xl text-stone-900">Coaching that asks, not tells</h3>
+                    <p class="mt-3 leading-relaxed text-stone-700">
+                        I don't hand you a plan. I ask the questions that help you
+                        hear yourself again. Grounded in values work, identity
+                        coaching, and yoga philosophy — designed for lasting change,
+                        not temporary relief.
+                    </p>
+                </article>
+
+                <article class="rounded-3xl bg-sand-50 p-8 ring-1 ring-stone-900/5 shadow-sm">
+                    <div class="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-accent-200 text-2xl">
+                        🧭
+                    </div>
+                    <h3 class="font-display text-2xl text-stone-900">Clarity that leads somewhere</h3>
+                    <p class="mt-3 leading-relaxed text-stone-700">
+                        Every session ends with one small, real move. Not homework
+                        — a step toward the life that actually fits, whether that's
+                        still teaching or something completely different. Both are
+                        valid outcomes.
+                    </p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================ TESTIMONIALS ============================ -->
+    <section class="relative bg-sand-50 py-24 md:py-32">
+        <div class="mx-auto max-w-5xl px-6 md:px-10">
+            <div class="mx-auto max-w-2xl text-center">
+                <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">
+                    From early clients
+                </p>
+                <h2 class="mt-4 font-display text-4xl leading-tight text-stone-900 sm:text-5xl">
+                    Real words from teachers who've <em class="font-normal text-primary-800">been where you are</em>.
+                </h2>
+            </div>
+
+            <div class="mt-14 grid grid-cols-1 gap-8 md:grid-cols-2">
+                <figure class="rounded-3xl bg-white p-10 ring-1 ring-stone-900/5 shadow-sm">
+                    <div class="text-accent-500" aria-label="Five stars">★★★★★</div>
+                    <blockquote class="mt-5 font-display text-2xl italic leading-snug text-stone-900">
+                        "I felt heard for the first time in years. Maria doesn't just
+                        coach — she creates a space where you can actually breathe again."
+                    </blockquote>
+                    <figcaption class="mt-6 text-sm font-semibold uppercase tracking-widest text-stone-600">
+                        Primary school teacher
+                    </figcaption>
+                </figure>
+
+                <figure class="rounded-3xl bg-white p-10 ring-1 ring-stone-900/5 shadow-sm">
+                    <div class="text-accent-500" aria-label="Five stars">★★★★★</div>
+                    <blockquote class="mt-5 font-display text-2xl italic leading-snug text-stone-900">
+                        "I came in thinking I needed a career plan. I left knowing
+                        who I was outside of teaching. That's worth more than any plan."
+                    </blockquote>
+                    <figcaption class="mt-6 text-sm font-semibold uppercase tracking-widest text-stone-600">
+                        Secondary teacher, nine years in
+                    </figcaption>
+                </figure>
+            </div>
+
+            <figure class="mx-auto mt-12 max-w-3xl text-center">
+                <blockquote class="font-display text-xl italic leading-snug text-stone-700 md:text-2xl">
+                    "I stopped dreading Sunday evenings. Not because I found a better
+                    job — because I found myself again."
+                </blockquote>
+                <figcaption class="mt-3 text-xs font-semibold uppercase tracking-widest text-stone-500">
+                    Year 4 teacher
+                </figcaption>
+            </figure>
+        </div>
+    </section>
+
+    <!-- ============================ ABOUT MARIA ============================ -->
+    <section class="relative bg-secondary-100 py-24 md:py-32">
+        <div class="mx-auto max-w-4xl px-6 text-center md:px-10">
+            <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">
+                Your guide
+            </p>
+            <h2 class="mt-4 font-display text-4xl leading-tight text-stone-900 sm:text-5xl">
+                I know what it's like to pour yourself into a role until you forget who you are <em class="font-normal text-primary-800">outside it</em>.
+            </h2>
+            <div class="mx-auto mt-8 max-w-2xl space-y-5 text-lg leading-relaxed text-stone-700">
+                <p>
+                    I'm Maria Montserrat — yoga teacher, mindfulness practitioner,
+                    and transformational coach. After years of working with
+                    burned-out educators, I built You're Your Calling because I kept
+                    seeing the same pattern: smart, caring people who gave everything
+                    to their students and had nothing left for themselves.
+                </p>
+                <p>
+                    This programme combines yoga, somatics, mindfulness, and
+                    coaching — not as separate tools, but as one integrated journey
+                    back to yourself.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================ WEEK BY WEEK ============================ -->
+    <section class="relative bg-primary-100 py-24 md:py-32">
+        <div class="mx-auto max-w-5xl px-6 md:px-10">
+            <div class="mx-auto max-w-2xl text-center">
+                <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">
+                    The six weeks
+                </p>
+                <h2 class="mt-4 font-display text-4xl leading-tight text-stone-900 sm:text-5xl">
+                    Week by <em class="font-normal text-primary-800">week</em>.
+                </h2>
+                <p class="mt-6 text-base leading-relaxed text-stone-700">
+                    90-minute weekly calls &middot; between-session practice recordings &middot; WhatsApp support
+                </p>
+            </div>
+
+            <ol class="mt-14 space-y-4">
+                {weeks.map((w) => (
+                    <li class="group flex flex-col gap-4 rounded-3xl bg-sand-50 p-6 ring-1 ring-stone-900/5 shadow-sm transition hover:shadow-md md:flex-row md:gap-8 md:p-8">
+                        <div class="flex shrink-0 items-start gap-4 md:w-48">
+                            <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-700 font-display text-xl text-white">
+                                {w.n}
+                            </span>
+                            <span class="self-center text-xs font-semibold uppercase tracking-[0.3em] text-primary-800 md:hidden">
+                                Week {w.n}
+                            </span>
+                            <span class="hidden self-center text-xs font-semibold uppercase tracking-[0.3em] text-primary-800 md:inline">
+                                Week {w.n}
+                            </span>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-display text-xl text-stone-900 md:text-2xl">{w.title}</h3>
+                            <p class="mt-2 leading-relaxed text-stone-700">{w.body}</p>
+                        </div>
+                    </li>
+                ))}
+            </ol>
+        </div>
+    </section>
+
+    <!-- ============================ WHAT'S INCLUDED + PRICING ============================ -->
+    <section id="whats-included" class="relative bg-sand-50 py-24 md:py-32">
+        <div class="mx-auto max-w-5xl px-6 md:px-10">
+            <div class="mx-auto max-w-2xl text-center">
+                <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">
+                    Everything included
+                </p>
+                <h2 class="mt-4 font-display text-4xl leading-tight text-stone-900 sm:text-5xl">
+                    Your decision. Your pace. <em class="font-normal text-primary-800">Your calling</em>.
+                </h2>
+            </div>
+
+            <div class="mt-14 grid grid-cols-1 gap-8 md:grid-cols-5">
+                <!-- Included list -->
+                <div class="rounded-3xl bg-white p-8 ring-1 ring-stone-900/5 shadow-sm md:col-span-3">
+                    <h3 class="font-display text-2xl text-stone-900">The 6-Week 1:1 Programme</h3>
+                    <p class="mt-2 text-sm font-semibold uppercase tracking-widest text-stone-500">Includes</p>
+                    <ul class="mt-6 space-y-3">
+                        {included.map((item) => (
+                            <li class="flex items-start gap-3 text-stone-800">
+                                <svg class="mt-1 h-5 w-5 shrink-0 text-primary-700" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.704 5.296a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.29-7.29a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                                <span>{item}</span>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+
+                <!-- Pricing card -->
+                <aside class="flex flex-col rounded-3xl bg-primary-700 p-8 text-white shadow-lg shadow-primary-700/30 md:col-span-2">
+                    <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-100">
+                        Founding price
+                    </p>
+                    <div class="mt-6 flex items-baseline gap-3">
+                        <span class="font-display text-6xl leading-none">€497</span>
+                        <span class="text-sm font-medium text-primary-100">total</span>
+                    </div>
+                    <p class="mt-3 text-sm text-primary-100">
+                        <s class="opacity-70">€847</s> &middot; 41% off the standard price
+                    </p>
+
+                    <ul class="mt-8 space-y-2 text-sm text-primary-50">
+                        <li class="flex items-center gap-2">
+                            <span class="h-1.5 w-1.5 rounded-full bg-accent-500"></span>
+                            Only 3 spots available
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="h-1.5 w-1.5 rounded-full bg-accent-500"></span>
+                            Free discovery call first
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="h-1.5 w-1.5 rounded-full bg-accent-500"></span>
+                            Full refund after Week 1 if it isn't right
+                        </li>
+                    </ul>
+
+                    <a
+                        href={APPLY_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="group mt-8 inline-flex items-center justify-center rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-primary-800 transition hover:bg-primary-50"
+                    >
+                        Apply for a spot
+                        <svg class="ml-2 h-4 w-4 transition group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 4.293a1 1 0 011.414 0l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414-1.414L13.586 11H4a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                    </a>
+                </aside>
+            </div>
+
+            <p class="mx-auto mt-10 max-w-2xl text-center text-sm leading-relaxed text-stone-500">
+                You're not betting on yourself — you're making a clear-eyed decision.
+                If something feels off on the discovery call, we don't proceed. No
+                awkwardness, no invoice.
+            </p>
+        </div>
+    </section>
+
+    <!-- ============================ FAQ ============================ -->
+    <section class="relative bg-primary-100 py-24 md:py-32">
+        <div class="mx-auto max-w-3xl px-6 md:px-10">
+            <div class="text-center">
+                <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">
+                    Still wondering?
+                </p>
+                <h2 class="mt-4 font-display text-4xl leading-tight text-stone-900 sm:text-5xl">
+                    Your questions, <em class="font-normal text-primary-800">answered</em>.
+                </h2>
+            </div>
+
+            <div class="mt-14 space-y-4">
+                {faqs.map((f) => (
+                    <details class="group rounded-2xl bg-sand-50 p-6 ring-1 ring-stone-900/5 shadow-sm transition open:shadow-md">
+                        <summary class="flex cursor-pointer items-center justify-between gap-4 font-display text-lg text-stone-900 marker:hidden md:text-xl">
+                            <span>{f.q}</span>
+                            <svg class="h-5 w-5 shrink-0 text-primary-700 transition group-open:rotate-45" viewBox="0 0 20 20" fill="currentColor"><path d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"/></svg>
+                        </summary>
+                        <p class="mt-4 leading-relaxed text-stone-700">{f.a}</p>
+                    </details>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================ FINAL CTA ============================ -->
+    <section class="relative overflow-hidden bg-secondary-800 py-24 md:py-32">
+        <div class="absolute inset-0 -z-10 opacity-20" aria-hidden="true">
+            <div class="absolute -left-20 top-10 h-72 w-72 rounded-full bg-accent-500 blur-3xl"></div>
+            <div class="absolute -right-20 bottom-10 h-80 w-80 rounded-full bg-primary-500 blur-3xl"></div>
+        </div>
+
+        <div class="relative mx-auto max-w-3xl px-6 text-center md:px-10">
+            <p class="text-xs font-semibold uppercase tracking-[0.35em] text-accent-300">
+                Only 3 spots available
+            </p>
+            <h2 class="mt-6 font-display text-4xl leading-tight text-white sm:text-5xl md:text-6xl">
+                Ready to find out who you actually <em class="font-normal text-accent-300">are</em>?
+            </h2>
+            <p class="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-secondary-100">
+                It starts with a free 30-minute discovery call. No pressure, no
+                commitment — just a real conversation about whether this is right
+                for you.
+            </p>
+
+            <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+                <a
+                    href={APPLY_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    class="group inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-base font-semibold text-secondary-900 shadow-lg transition hover:bg-secondary-50"
+                >
+                    Apply for a spot
+                    <svg class="ml-2 h-4 w-4 transition group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 4.293a1 1 0 011.414 0l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414-1.414L13.586 11H4a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                </a>
+                <a href="/teacher-yoga" class="text-sm font-semibold uppercase tracking-widest text-secondary-100 underline-offset-4 transition hover:text-white hover:underline">
+                    Or browse Maria's other offerings
+                </a>
+            </div>
+        </div>
+    </section>
+</Layout>
+
+<style>
+    /* Hide the default summary triangle in browsers that still show it. */
+    details > summary {
+        list-style: none;
+    }
+    details > summary::-webkit-details-marker {
+        display: none;
+    }
+</style>

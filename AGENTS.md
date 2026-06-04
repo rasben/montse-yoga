@@ -4,15 +4,32 @@ Guidance for AI coding agents working in this repository.
 
 ## Project overview
 
-Marketing website for yoga instructor Maria Montserrat, served at **[maria-montserrat.com](https://maria-montserrat.com/)**. The site promotes her yoga business and online courses, and is intended to be **multi-lingual** (i18n is a goal — not yet implemented). Static site built with Astro, with Svelte available for interactive islands (none hydrated yet), Tailwind for styling, and Flowbite-Svelte for UI components. Deployed to GitHub Pages automatically on push to `main`.
+Marketing website for Maria Montserrat, served at **[maria-montserrat.com](https://maria-montserrat.com/)**. Static site built with Astro, deployed to GitHub Pages automatically on push to `main`. Multi-lingual support (EN / ES / DK) is a goal — i18n routing is not yet implemented; for now Maria's trilingual reach is signalled with the `Langs` component (flags) and copy.
 
-**Why this site exists.** It replaces a third-party hosted page ([mariamontserrat.impact.me](https://mariamontserrat.impact.me/), kept around as a content/structure reference) for two reasons: avoiding recurring fees on a hosted CMS, and getting full design control instead of being limited to what the CMS templates allow. Design proposals from agents — layouts, color/type direction, copy drafts, component structure — are explicitly welcome and part of the work on this project.
+**Why this site exists.** It replaces a third-party hosted page ([mariamontserrat.impact.me](https://mariamontserrat.impact.me/), kept around as a course-listing data source) for two reasons: avoiding recurring fees on a hosted CMS, and getting full design control instead of being limited to what the CMS templates allow. Design proposals from agents — layouts, color/type direction, copy drafts, component structure — are explicitly welcome and part of the work on this project.
+
+**Site structure ("three universes").** The home page is a front door that splits visitors into three audiences; the global header carries the same split on every page.
+
+- **`/` (`index.astro`)** — short intro + three "universe" cards.
+- **`/teacher-yoga`** — Maria's yoga & breathwork offer for teachers, carers, and helping professionals (the original landing-page content).
+- **`/brands`** — Maria's UGC / content-creator persona. Trilingual UGC for skincare, wellness, lifestyle, food, travel, and health brands.
+- **Substack** — `https://mariamontserratmaria.substack.com/` — her essays / blog. Linked from the header and home page; not hosted in this repo.
+- **`/courses`** — listing of self-paced courses, fed from `src/data/courses.json` (see `npm run fetch-courses`).
+- **`/flyer`** — short-delay redirect to Maria's Canva site, used as a printable QR-code landing. Renders without the global header/footer via `Layout`'s `showHeader={false} showFooter={false}` props.
+
+There is also a "Regulér" collaboration card on the home page linking to a separate Canva site Maria runs with Michala Storm — deliberately *not* in the global header (it's a joint project, not one of the three core universes).
 
 **Stack:** Astro 5 · Svelte 5 · TypeScript 5 · Tailwind CSS 4 · Flowbite-Svelte
 
-## Maria's teaching niches
+Svelte and Flowbite-Svelte are wired up but only used in `flyer.astro` today. There are no hydrated client islands; all interactive behaviour on the brands page (video controls, count-up animations) is in inline `<script>` blocks in the `.astro` file.
 
-Maria's practice spans nearly two decades across multiple continents. When writing copy or building content, always reflect her actual specialties — not generic yoga marketing language.
+## Maria's personas
+
+The site presents two related but distinct personas. When writing copy or building content, always reflect the actual specialties — not generic yoga or UGC marketing language.
+
+### Yoga teacher (`/teacher-yoga`, `/courses`)
+
+Maria's teaching practice spans nearly two decades across multiple continents.
 
 **Teaching styles she works with:**
 - **Yin yoga** — long passive holds, release of connective tissue, doorway to stillness and meditation. Her most distinctive niche.
@@ -24,9 +41,17 @@ Maria's practice spans nearly two decades across multiple continents. When writi
 **Background and training:**
 - Formally trained in yin yoga, breathwork, and somatic movement
 - Additional studies in Chinese medicine and face reading (mian xiang) — informs her holistic approach
-- Based at The Yoga Flat in Copenhagen (multiple locations); also teaches online via impact.me
+- Based in Copenhagen; also teaches online
 
-**Voice notes for copy:** Calm, creative, meditative — not performance-oriented or fitness-focused. The offer is about reconnecting with yourself, not achieving poses. Classes are described as "calm, creative, and deeply meditative."
+**Voice notes for copy:** Calm, creative, meditative — not performance-oriented or fitness-focused. The offer is about reconnecting with yourself, not achieving poses. The audience-first framing is burnout / nervous-system recovery, and the work is positioned especially for teachers, child carers, and people in helping professions.
+
+### Content creator (`/brands`)
+
+Mexican-born, Denmark-based, trilingual UGC creator (EN · ES · DK). The page documents organic reach (Instagram / TikTok / Facebook), spec UGC in three languages, photography, and services.
+
+**Niches:** skincare & beauty, wellness & mindfulness, lifestyle, fashion, food & beverage, travel & hospitality, health & autoimmune, plant-based, nervous-system recovery.
+
+**Voice notes for copy:** Honest, lived-in, conversion-focused. The pitch is authenticity — content "that feels real because it is." Personal-brand storytelling around burnout, the nervous system, and the way back to yourself is what builds the trust brands borrow.
 
 ## Commands
 
@@ -59,7 +84,7 @@ When working with the non-technical contributor, **prefer this script over runni
 
 ### `npm run fetch-courses` (updating the course listing)
 
-`scripts/fetch-courses.mjs` scrapes Maria's course listings from `mariamontserrat.impact.me/courses` and writes them to `src/data/courses.json`. The `Courses.astro` component reads that file at build time — there is no runtime fetch, so the site stays fully static.
+`scripts/fetch-courses.mjs` scrapes Maria's course listings from `mariamontserrat.impact.me/courses` and writes them to `src/data/courses.json`. Both the `/courses` page and the `Courses.astro` teaser component read that file at build time — there is no runtime fetch, so the site stays fully static.
 
 **Workflow when a course is added or changed:**
 
@@ -96,12 +121,18 @@ Open `debug/courses.html`, find the course card HTML structure, and update the `
 ```
 src/
   pages/         File-based routes — filename maps to URL (index.astro → /)
-  layouts/       Page wrappers (Layout.astro is the only one)
-  components/    Reusable .astro components
-  styles/        global.css (Tailwind + custom CSS variables)
-  assets/        Images processed/optimized by Astro — import them, don't reference by path
+                 index.astro, teacher-yoga.astro, brands.astro, courses.astro, flyer.astro
+  layouts/       Page wrappers (Layout.astro is the only one — wraps every page
+                 with the global Header + SiteFooter, toggleable per page)
+  components/    Reusable .astro components — Header, SiteFooter, Hero, Offerings,
+                 Courses (teaser), Contact, Langs (flag row)
+  styles/        global.css — Tailwind import + Mexican-palette CSS variables +
+                 font-family tokens + fade-up animations
+  assets/        Images processed/optimized by Astro — import them, don't reference
+                 by path. `src/assets/local/` holds Maria's raw source images.
+  data/          courses.json — single source of truth for the /courses listing
 public/          Served as-is (favicons, manifest)
-scripts/         Project scripts (e.g. publish.mjs — see Commands)
+scripts/         Project scripts — publish.mjs (safe deploy), fetch-courses.mjs (scraper)
 dist/            Build output — never commit, never edit
 .github/workflows/deploy.yml   Auto-deploys main to GitHub Pages
 ```
@@ -110,19 +141,30 @@ dist/            Build output — never commit, never edit
 
 **Routing.** Add a page by dropping a `.astro` file into `src/pages/`. The filename becomes the URL.
 
-**Components.** PascalCase filenames (`Header.astro`, `Contact.astro`). Pages are lowercase (`index.astro`, `flyer.astro`). New pages should import `Layout.astro` and follow the pattern in `src/pages/index.astro`.
+**Components.** PascalCase filenames (`Header.astro`, `Contact.astro`). Pages are lowercase (`index.astro`, `flyer.astro`). New pages should import `Layout.astro` and follow the pattern in `src/pages/index.astro` — `Layout` already renders the global Header and SiteFooter, so a new page just needs to add its own `<section>`s.
 
-**UI library.** Use Flowbite-Svelte components (`Button`, `Heading`, `Navbar`, etc.) and `flowbite-svelte-icons` for icons rather than hand-rolling markup. Pass styling via the `class` prop with Tailwind utilities.
+**Global chrome.** `Layout.astro` renders `Header` and `SiteFooter` on every page by default. Pass `showHeader={false}` / `showFooter={false}` to opt out (used by `flyer.astro` so the redirect splash isn't framed by the site nav).
 
-**Styling.** Tailwind utilities first. Custom theme colors live as CSS variables in `src/styles/global.css` — `--color-primary-*` (orange/coral) and `--color-secondary-*` (sky blue). Component-scoped styles go inside `<style>` tags in the `.astro` file (auto-scoped by Astro).
+**UI library.** Flowbite-Svelte (`Button`, `Heading`, `Spinner`, etc.) and `flowbite-svelte-icons` are available — currently only used by `flyer.astro` and `Contact.astro`. For most components, plain Astro + Tailwind has been simpler. Either pattern is fine; pick what reads cleanest at the call site.
+
+**Styling.** Tailwind utilities first. The palette is a Mexican-inspired set defined as CSS variables in `src/styles/global.css`:
+
+- `--color-primary-*` — orchid magenta (anchor `#b866a2`)
+- `--color-secondary-*` — turquoise / teal
+- `--color-accent-*` — marigold / amber
+- `--color-rojo-*` — warm Mexican red, for occasional pop
+- `--color-sand-*` — warm cream backgrounds
+
+Type system: `--font-display` is Playfair Display (high-contrast serif, used for `h1–h4`), `--font-sans` is Inter (body). Both are loaded via Google Fonts in `Layout.astro`. Component-scoped styles go inside `<style>` tags in the `.astro` file (auto-scoped by Astro).
 
 **Assets.** Import images from `src/assets/` so Astro can optimize them:
 
 ```astro
 ---
 import maria from '../assets/maria-tree-pose.jpg';
+import { Image } from 'astro:assets';
 ---
-<img src={maria.src} alt="..." />
+<Image src={maria} alt="..." widths={[480, 720, 960]} sizes="(min-width: 768px) 50vw, 90vw" />
 ```
 
 Files in `public/` are served as raw paths and are not processed.
@@ -152,15 +194,19 @@ Infer who you're talking to from the conversation: the technical maintainer will
 
 ## Things to know
 
-- The site is 100% static generation. There are no API routes, no middleware, and no Svelte islands hydrated on the client. Two pieces of client-side JavaScript exist:
+- The site is 100% static generation. There are no API routes, no middleware, and no Svelte islands hydrated on the client. Two pieces of client-side JavaScript exist outside the analytics tag:
   - A **Plausible analytics** tag in `src/layouts/Layout.astro` (privacy-friendly, no cookies). Preserve it across redesigns and head/Layout refactors.
   - A redirect script in `src/pages/flyer.astro` that sends visitors to Maria's Canva site after a short delay. Older Facebook deep-link logic remains in source but is currently disabled (commented-out `openEvents()`); the live behaviour is the Canva redirect only.
-- `src/components/Welcome.astro` and `Hero.astro` come from the Astro starter and are not currently referenced from any page.
-- Contact links (Instagram, Facebook, email, phone) appear in both `src/pages/index.astro` and `src/components/Contact.astro` — keep them in sync when updating.
-- Multi-lingual support is a planned goal. When implementing, prefer Astro's built-in [`i18n` routing](https://docs.astro.build/en/guides/internationalization/) over a third-party library.
+  - In addition, `brands.astro` ships two inline `<script>` blocks for autoplaying-in-view video controls and the scroll-triggered analytics-card count-up animation. They run as plain client scripts, not hydrated islands.
+- **Brands page images and videos are hot-linked from Maria's Canva site** (`brands.maria-montserrat.com/_assets/{media,video}`) as a temporary measure. The files are immutable content-hashed assets, but bandwidth is still on Canva's account. Swap to local files under `src/assets/brands/` (images) and `public/videos/` (videos) once Maria exports the originals.
+- The **analytics figures on `/brands`** (Instagram / TikTok / Facebook reach) are a *manual snapshot*, not a live feed. The constant `analyticsUpdated` and each platform's `period` document the date range. Refresh by copying the headline numbers from each platform's own analytics dashboard.
+- `src/components/Welcome.astro`, `src/assets/astro.svg`, and `src/assets/background.svg` come from the Astro starter and are not referenced anywhere. Safe to delete in a tidy-up pass.
+- Contact details (email, phone, social handles) are duplicated across `src/components/Contact.astro` (used on `/teacher-yoga`), `src/components/SiteFooter.astro` (global footer), and `src/pages/brands.astro` (its own contact section) — keep them in sync when any one changes.
+- The "Regulér" collaboration card on the home page links to a separate Canva site (`maria-montserrat.my.canva.site/reguler/`) and is deliberately not in the global header — it's a joint project with another teacher, not part of Maria's three core universes.
+- Multi-lingual support is a planned goal. When implementing, prefer Astro's built-in [`i18n` routing](https://docs.astro.build/en/guides/internationalization/) over a third-party library. The `Langs` component (`src/components/Langs.astro`) is the current placeholder for surfacing the EN/ES/DK story.
 
 ## Keeping these docs current
 
-This file (and `CLAUDE.md`, which points here) is the source of truth for agent guidance. **Whenever the project's stack, layout, conventions, deployment, or goals change, update `AGENTS.md` in the same change.** Examples that should trigger an update: adding i18n, introducing a CMS or content collections, adopting a linter/formatter or test framework, switching hosting, or adding a new top-level directory.
+This file (and `CLAUDE.md`, which points here) is the source of truth for agent guidance. **Whenever the project's stack, layout, conventions, deployment, or goals change, update `AGENTS.md` in the same change.** Examples that should trigger an update: adding i18n, introducing a CMS or content collections, adopting a linter/formatter or test framework, switching hosting, or adding a new top-level directory or page.
 
 This repo is **public**. Keep notes factual and professional — no personal commentary, internal jokes, or anything that wouldn't belong on a public README.
