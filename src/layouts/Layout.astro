@@ -2,9 +2,28 @@
 import '../styles/global.css'
 import Header from '../components/Header.astro';
 import SiteFooter from '../components/SiteFooter.astro';
+import {
+    asLang,
+    useTranslations,
+    htmlLang,
+    ogLocale,
+    LOCALES,
+    localizedPath,
+    stripLocale,
+    DEFAULT_LOCALE,
+} from '../i18n/utils';
 
 interface Props {
+    /**
+     * Translation key prefix for this page's meta (title, description) — e.g.
+     * "home", "teacherYoga", "brands". Resolved against the dictionary at
+     * src/i18n/ui.ts using the request's locale. Use this instead of passing
+     * raw title/description strings so the site stays multilingual.
+     */
+    pageKey?: string;
+    /** Override the title resolved from pageKey.meta.title. */
     title?: string;
+    /** Override the description resolved from pageKey.meta.description. */
     description?: string;
     /**
      * Path to the social-share image, served from /public (e.g. "/og-default.jpg").
@@ -20,8 +39,9 @@ interface Props {
 }
 
 const {
-    title = 'Maria Montserrat — Yoga Teacher & Trilingual Content Creator',
-    description = 'Yoga and breathwork for burnout — with Maria Montserrat. Specialising in teachers, child carers, and helping professionals. Classes in Copenhagen and online courses worldwide.',
+    pageKey,
+    title: titleProp,
+    description: descriptionProp,
     image = '/og-default.jpg',
     ogType = 'website',
     noindex = false,
@@ -29,11 +49,27 @@ const {
     showFooter = true,
 } = Astro.props;
 
+const lang = asLang(Astro.currentLocale);
+const t = useTranslations(lang);
+
+const title = titleProp ?? (pageKey ? t(`${pageKey}.meta.title`) : t('home.meta.title'));
+const description = descriptionProp ?? (pageKey ? t(`${pageKey}.meta.description`) : t('home.meta.description'));
+
 const SITE_NAME = 'Maria Montserrat';
 // Astro.site is set in astro.config.mjs; fall back defensively in case it's missing.
 const siteUrl = Astro.site ?? new URL('https://maria-montserrat.com');
 const canonical = new URL(Astro.url.pathname, siteUrl).toString();
 const imageUrl = new URL(image, siteUrl).toString();
+
+// Build hreflang alternates so search engines learn that /es/teacher-yoga is
+// the Spanish version of /teacher-yoga, etc. We strip the locale off the
+// current path, then map every locale back through localizedPath().
+const { rest: pathWithoutLocale } = stripLocale(Astro.url.pathname);
+const alternates = LOCALES.map((l) => ({
+    lang: htmlLang(l),
+    href: new URL(localizedPath(pathWithoutLocale, l), siteUrl).toString(),
+}));
+const xDefault = new URL(localizedPath(pathWithoutLocale, DEFAULT_LOCALE), siteUrl).toString();
 
 // Person schema — helps Google show the "knowledge panel" style info card.
 const personJsonLd = {
@@ -69,7 +105,7 @@ const websiteJsonLd = {
 ---
 
 <!doctype html>
-<html lang="en" class="h-auto">
+<html lang={htmlLang(lang)} class="h-auto">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
@@ -79,6 +115,12 @@ const websiteJsonLd = {
 		<meta name="description" content={description} />
 		<link rel="canonical" href={canonical} />
 		{noindex && <meta name="robots" content="noindex, nofollow" />}
+
+		<!-- Language alternates (hreflang) -->
+		{alternates.map((alt) => (
+			<link rel="alternate" hreflang={alt.lang} href={alt.href} />
+		))}
+		<link rel="alternate" hreflang="x-default" href={xDefault} />
 
 		<!-- Open Graph (Facebook, LinkedIn, Zulip, Slack, iMessage, etc.) -->
 		<meta property="og:site_name" content={SITE_NAME} />
@@ -90,9 +132,10 @@ const websiteJsonLd = {
 		<meta property="og:image:alt" content={`Maria Montserrat — ${title}`} />
 		<meta property="og:image:width" content="1500" />
 		<meta property="og:image:height" content="843" />
-		<meta property="og:locale" content="en_US" />
-		<meta property="og:locale:alternate" content="es_ES" />
-		<meta property="og:locale:alternate" content="da_DK" />
+		<meta property="og:locale" content={ogLocale(lang)} />
+		{LOCALES.filter((l) => l !== lang).map((l) => (
+			<meta property="og:locale:alternate" content={ogLocale(l)} />
+		))}
 
 		<!-- Twitter / X cards -->
 		<meta name="twitter:card" content="summary_large_image" />

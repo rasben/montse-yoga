@@ -1,9 +1,7 @@
 ---
 // Teacher-yoga page — Maria's yoga & breathwork offer for teachers, carers,
-// and helping professionals moving beyond burnout. Route: /teacher-yoga
-//
-// This is the yoga side of Maria's work (distinct from /brands, her UGC /
-// content-creator page). It reuses the original landing-page sections.
+// and helping professionals. The composed sections (Hero/Offerings/Courses/
+// Contact) read their copy from src/i18n/ui.ts based on the URL locale.
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import Offerings from '../components/Offerings.astro';
@@ -11,11 +9,7 @@ import Courses from '../components/Courses.astro';
 import Contact from '../components/Contact.astro';
 ---
 
-<Layout
-    title="Yoga for Teachers & Carers — Maria Montserrat"
-    description="Yoga and breathwork for burnout — with Maria Montserrat. Specialising in teachers, child carers, and helping professionals. Classes in Copenhagen and online courses worldwide."
-    image="/og-teacher-yoga.jpg"
->
+<Layout pageKey="teacherYoga" image="/og-teacher-yoga.jpg">
     <Hero />
     <Offerings />
     <Courses />

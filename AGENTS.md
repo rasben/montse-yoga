@@ -4,7 +4,7 @@ Guidance for AI coding agents working in this repository.
 
 ## Project overview
 
-Marketing website for Maria Montserrat, served at **[maria-montserrat.com](https://maria-montserrat.com/)**. Static site built with Astro, deployed to GitHub Pages automatically on push to `main`. Multi-lingual support (EN / ES / DK) is a goal — i18n routing is not yet implemented; for now Maria's trilingual reach is signalled with the `Langs` component (flags) and copy.
+Marketing website for Maria Montserrat, served at **[maria-montserrat.com](https://maria-montserrat.com/)**. Static site built with Astro, deployed to GitHub Pages automatically on push to `main`. The site ships in three languages (EN / ES / DA) via Astro's built-in i18n routing — English at `/`, Spanish at `/es/`, Danish at `/da/` (see [Internationalisation](#internationalisation) below).
 
 **Why this site exists.** It replaces a third-party hosted page ([mariamontserrat.impact.me](https://mariamontserrat.impact.me/), kept around as a course-listing data source) for two reasons: avoiding recurring fees on a hosted CMS, and getting full design control instead of being limited to what the CMS templates allow. Design proposals from agents — layouts, color/type direction, copy drafts, component structure — are explicitly welcome and part of the work on this project.
 
@@ -19,7 +19,7 @@ Marketing website for Maria Montserrat, served at **[maria-montserrat.com](https
 
 There is also a "Regulér" collaboration card on the home page linking to a separate Canva site Maria runs with Michala Storm — deliberately *not* in the global header (it's a joint project, not one of the three core universes).
 
-**Stack:** Astro 5 · Svelte 5 · TypeScript 5 · Tailwind CSS 4 · Flowbite-Svelte
+**Stack:** Astro 5 (with built-in i18n) · Svelte 5 · TypeScript 5 · Tailwind CSS 4 · Flowbite-Svelte
 
 Svelte and Flowbite-Svelte are wired up but only used in `flyer.astro` today. There are no hydrated client islands; all interactive behaviour on the brands page (video controls, count-up animations) is in inline `<script>` blocks in the `.astro` file.
 
@@ -121,11 +121,22 @@ Open `debug/courses.html`, find the course card HTML structure, and update the `
 ```
 src/
   pages/         File-based routes — filename maps to URL (index.astro → /)
-                 index.astro, teacher-yoga.astro, brands.astro, courses.astro, flyer.astro
+                 index.astro, teacher-yoga.astro, brands.astro, courses.astro,
+                 your-calling.astro, flyer.astro
+                 es/ and da/ subfolders mirror the English routes for the
+                 Spanish and Danish versions (e.g. es/teacher-yoga.astro → /es/teacher-yoga)
   layouts/       Page wrappers (Layout.astro is the only one — wraps every page
-                 with the global Header + SiteFooter, toggleable per page)
-  components/    Reusable .astro components — Header, SiteFooter, Hero, Offerings,
-                 Courses (teaser), Contact, Langs (flag row)
+                 with the global Header + SiteFooter, toggleable per page;
+                 sets <html lang>, hreflang, og:locale from the URL's locale)
+  components/    Reusable .astro components — Header (with language switcher),
+                 SiteFooter, Hero, Offerings, Courses (teaser), Contact,
+                 Langs (flag row)
+  components/pages/  Per-page body components rendered by the route files in
+                     /pages and /pages/{es,da}. Each Body reads its locale from
+                     Astro.currentLocale and pulls copy via useTranslations.
+  i18n/          ui.ts (the full EN/ES/DA dictionary — single source of truth
+                 for all visible copy) and utils.ts (useTranslations, useList,
+                 localizedPath, stripLocale, asLang, etc.)
   styles/        global.css — Tailwind import + Mexican-palette CSS variables +
                  font-family tokens + fade-up animations
   assets/        Images processed/optimized by Astro — import them, don't reference
@@ -219,7 +230,55 @@ Infer who you're talking to from the conversation: the technical maintainer will
 - `src/components/Welcome.astro`, `src/assets/astro.svg`, and `src/assets/background.svg` come from the Astro starter and are not referenced anywhere. Safe to delete in a tidy-up pass.
 - Contact details (email, phone, social handles) are duplicated across `src/components/Contact.astro` (used on `/teacher-yoga`), `src/components/SiteFooter.astro` (global footer), and `src/pages/brands.astro` (its own contact section) — keep them in sync when any one changes.
 - The "Regulér" collaboration card on the home page links to a separate Canva site (`maria-montserrat.my.canva.site/reguler/`) and is deliberately not in the global header — it's a joint project with another teacher, not part of Maria's three core universes.
-- Multi-lingual support is a planned goal. When implementing, prefer Astro's built-in [`i18n` routing](https://docs.astro.build/en/guides/internationalization/) over a third-party library. The `Langs` component (`src/components/Langs.astro`) is the current placeholder for surfacing the EN/ES/DK story.
+- Multi-lingual support is implemented. See [Internationalisation](#internationalisation) below.
+
+## Internationalisation
+
+The site ships in three languages using Astro's built-in [i18n routing](https://docs.astro.build/en/guides/internationalization/):
+
+| Language | URL prefix          |
+| -------- | ------------------- |
+| English  | none (default at `/`) |
+| Spanish  | `/es/`              |
+| Danish   | `/da/`              |
+
+**Config** lives in `astro.config.mjs` — `defaultLocale: 'en'`, `locales: ['en', 'es', 'da']`, `prefixDefaultLocale: false`. The default-locale paths don't get a prefix so existing English URLs continue to work.
+
+**All visible copy** lives in `src/i18n/ui.ts` as a single nested object keyed by language → page → field. The structure is mirrored exactly across the three languages — when adding a new string in code, add the same key under all three. Missing keys fall back to English (with a build-time `console.warn`), so the site won't break, but you'll see English text in the wrong place.
+
+**Helpers** (in `src/i18n/utils.ts`):
+
+- `asLang(Astro.currentLocale)` — normalises the locale to one of `'en' | 'es' | 'da'`.
+- `useTranslations(lang)` — returns `t(key)` for dotted lookups, e.g. `t('home.hero.headline')`.
+- `useList(lang)` — same, but for arrays (e.g. cards, FAQ items, niche tags).
+- `localizedPath('/teacher-yoga', lang)` — builds a locale-aware link (`/teacher-yoga` for EN, `/es/teacher-yoga` for ES, `/da/teacher-yoga` for DA). Always use this when linking internally.
+- `stripLocale(pathname)` — used by the Header's language switcher and the Layout's hreflang tags to find the equivalent URL in each language.
+
+**Routing pattern.** Each public page has three sibling route files:
+
+```
+src/pages/teacher-yoga.astro          → /teacher-yoga          (EN)
+src/pages/es/teacher-yoga.astro       → /es/teacher-yoga       (ES)
+src/pages/da/teacher-yoga.astro       → /da/teacher-yoga       (DA)
+```
+
+Each route file is a thin shell (5–10 lines) that imports `Layout` and the page's body component from `src/components/pages/`. The body component reads its locale automatically from `Astro.currentLocale` and pulls copy via `useTranslations` — so the three sibling route files are nearly identical, differing only in relative import paths. **When adding a new page**, create all three.
+
+**Per-page meta (title, description)** is also localized. `Layout.astro` takes a `pageKey` prop ( e.g. `"home"`, `"teacherYoga"`, `"brands"`) and resolves the title/description from `<pageKey>.meta.*` in the dictionary. You can still override with explicit `title=`/`description=` props for one-offs.
+
+**Language switcher** lives in the global `Header`. It strips the current locale prefix from the URL and re-applies the chosen one, so the user stays on the same page when they switch.
+
+**SEO.** `Layout.astro` emits:
+- `<html lang="…">` matching the page locale.
+- `<link rel="alternate" hreflang="…">` for each locale plus `x-default`.
+- `og:locale` set to the page locale + `og:locale:alternate` for the other two.
+- Canonical URL is the localized URL of the current page.
+
+`public/sitemap.xml` lists all 15 routes (5 pages × 3 languages) with `xhtml:link rel="alternate"` annotations. **Update it when a new public route is added in any language.**
+
+**Courses (`src/data/courses.json`)** are scraped from impact.me in English only. The page chrome around the course grid is fully translated, but course titles and descriptions stay English regardless of viewer language. There's a small "Courses are taught in English" note on the non-English pages.
+
+**Initial Spanish + Danish translations** were drafted by an AI agent in the project's voice (calm/meditative for the yoga side, honest/conversion-focused for the brands side). Maria can adjust freely — every string is in `src/i18n/ui.ts` and the structure is preserved across languages, so editing is mechanical.
 
 ## Keeping these docs current
 

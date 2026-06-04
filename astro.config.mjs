@@ -10,6 +10,14 @@ export default defineConfig({
   site: 'https://maria-montserrat.com',
   integrations: [svelte()],
 
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['en', 'es', 'da'],
+    routing: {
+      prefixDefaultLocale: false,
+    },
+  },
+
   vite: {
     plugins: [tailwindcss()]
   }

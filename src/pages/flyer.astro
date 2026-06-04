@@ -1,6 +1,10 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { Button, Heading, Spinner } from "flowbite-svelte";
+import { asLang, useTranslations } from '../i18n/utils';
+
+const lang = asLang(Astro.currentLocale);
+const t = useTranslations(lang);
 ---
 
 <script lang="ts">
@@ -34,8 +38,7 @@ import { Button, Heading, Spinner } from "flowbite-svelte";
 </script>
 
 <Layout
-    title="Maria Montserrat"
-    description="Redirecting you to Maria's events page."
+    pageKey="flyer"
     noindex={true}
     showHeader={false}
     showFooter={false}
@@ -46,11 +49,11 @@ import { Button, Heading, Spinner } from "flowbite-svelte";
             <div class="py-10 relative">
                 <div>
                     <Button href="{WEB_URL}">
-                        Click here if nothing happens
+                        {t('flyer.fallback')}
                     </Button>
                 </div>
 
-                <Heading tag="h1" class="text-white mix-blend-difference absolute top-1/2 -mt-5 left-0 right-0 z-10">Loading..</Heading>
+                <Heading tag="h1" class="text-white mix-blend-difference absolute top-1/2 -mt-5 left-0 right-0 z-10">{t('flyer.loading')}</Heading>
                 <Spinner class="w-full h-full max-w-[400px] max-h-[400px]" type="pulse" color="rose" />
             </div>
 
