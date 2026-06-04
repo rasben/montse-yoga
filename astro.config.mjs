@@ -7,7 +7,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://rasben.github.io',
+  site: 'https://maria-montserrat.com',
   integrations: [svelte()],
 
   vite: {

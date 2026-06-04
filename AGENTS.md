@@ -175,7 +175,23 @@ Files in `public/` are served as raw paths and are not processed.
 
 `.github/workflows/deploy.yml` builds and publishes to GitHub Pages on every push to `main`. The custom domain is **maria-montserrat.com**. There is no staging environment — verify locally with `npm run dev` and `npm run build` before merging.
 
-> **Note for agents:** the `site` field in `astro.config.mjs` still points at `https://rasben.github.io`. When multi-lingual routing or canonical URLs / SEO meta tags are added, update `site` to `https://maria-montserrat.com` in the same change so generated URLs match the production domain.
+The `site` field in `astro.config.mjs` is set to `https://maria-montserrat.com`. `Layout.astro` uses `Astro.site` to build absolute URLs for canonical links, Open Graph / Twitter cards, and JSON-LD — don't change `site` without updating those tags.
+
+### SEO & social previews
+
+`Layout.astro` generates the full SEO/OG meta stack on every page from its props:
+
+- `title`, `description` — page title & meta description (defaults are home-page copy).
+- `image` — path to a social-share image under `/public` (default `/og-default.jpg`). Resolved to an absolute URL against `Astro.site`. Use ~1200×630 / 1.91:1 for best Facebook/LinkedIn/Zulip rendering; the existing per-page images (`/og-default.jpg`, `/og-teacher-yoga.jpg`) are 1500×843 which works.
+- `ogType` — `"website"` (default), `"article"`, or `"profile"`.
+- `noindex` — set true for utility pages we don't want in search (e.g. `/flyer`).
+
+Other static SEO files live in `public/`:
+
+- `robots.txt` — allows everything except `/flyer`, points crawlers at the sitemap.
+- `sitemap.xml` — hand-rolled list of the five public routes. **Update it when a new public route is added.** (If routes start churning, consider adding the `@astrojs/sitemap` integration to generate it automatically.)
+
+After changing any meta tag, OG image, or title/description, test with the [Facebook Sharing Debugger](https://developers.facebook.com/tools/debug/) (also covers Zulip, Slack, iMessage which use the same OG tags) and the [LinkedIn Post Inspector](https://www.linkedin.com/post-inspector/) so caches are refreshed.
 
 ## Working with different contributors
 

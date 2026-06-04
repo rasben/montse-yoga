@@ -6,16 +6,66 @@ import SiteFooter from '../components/SiteFooter.astro';
 interface Props {
     title?: string;
     description?: string;
+    /**
+     * Path to the social-share image, served from /public (e.g. "/og-default.jpg").
+     * Resolved to an absolute URL against Astro.site for og:image / twitter:image.
+     */
+    image?: string;
+    /** og:type — "website" for landing pages, "article" for essays. */
+    ogType?: 'website' | 'article' | 'profile';
+    /** Set true on internal/utility pages we don't want indexed (e.g. /flyer). */
+    noindex?: boolean;
     showHeader?: boolean;
     showFooter?: boolean;
 }
 
 const {
-    title = 'Yoga with Maria Montserrat',
+    title = 'Maria Montserrat — Yoga Teacher & Trilingual Content Creator',
     description = 'Yoga and breathwork for burnout — with Maria Montserrat. Specialising in teachers, child carers, and helping professionals. Classes in Copenhagen and online courses worldwide.',
+    image = '/og-default.jpg',
+    ogType = 'website',
+    noindex = false,
     showHeader = true,
     showFooter = true,
 } = Astro.props;
+
+const SITE_NAME = 'Maria Montserrat';
+// Astro.site is set in astro.config.mjs; fall back defensively in case it's missing.
+const siteUrl = Astro.site ?? new URL('https://maria-montserrat.com');
+const canonical = new URL(Astro.url.pathname, siteUrl).toString();
+const imageUrl = new URL(image, siteUrl).toString();
+
+// Person schema — helps Google show the "knowledge panel" style info card.
+const personJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: 'Maria Montserrat',
+    url: siteUrl.toString(),
+    image: imageUrl,
+    jobTitle: 'Yoga Teacher & Content Creator',
+    description:
+        'Yoga and breathwork teacher specialising in burnout recovery for teachers and carers, and a trilingual (EN · ES · DK) UGC content creator based in Copenhagen.',
+    address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Copenhagen',
+        addressCountry: 'DK',
+    },
+    knowsLanguage: ['en', 'es', 'da'],
+    sameAs: [
+        'https://www.instagram.com/mariamontserratyoga/',
+        'https://www.facebook.com/mariamontserratyoga/',
+        'https://mariamontserratmaria.substack.com/',
+    ],
+};
+
+// WebSite schema — gives search engines the site name and search action.
+const websiteJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: SITE_NAME,
+    url: siteUrl.toString(),
+    inLanguage: ['en', 'es', 'da'],
+};
 ---
 
 <!doctype html>
@@ -24,8 +74,35 @@ const {
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
+
 		<title>{title}</title>
 		<meta name="description" content={description} />
+		<link rel="canonical" href={canonical} />
+		{noindex && <meta name="robots" content="noindex, nofollow" />}
+
+		<!-- Open Graph (Facebook, LinkedIn, Zulip, Slack, iMessage, etc.) -->
+		<meta property="og:site_name" content={SITE_NAME} />
+		<meta property="og:type" content={ogType} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonical} />
+		<meta property="og:image" content={imageUrl} />
+		<meta property="og:image:alt" content={`Maria Montserrat — ${title}`} />
+		<meta property="og:image:width" content="1500" />
+		<meta property="og:image:height" content="843" />
+		<meta property="og:locale" content="en_US" />
+		<meta property="og:locale:alternate" content="es_ES" />
+		<meta property="og:locale:alternate" content="da_DK" />
+
+		<!-- Twitter / X cards -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={imageUrl} />
+		<meta name="twitter:image:alt" content={`Maria Montserrat — ${title}`} />
+
+		<!-- Brand colour for browser chrome -->
+		<meta name="theme-color" content="#b866a2" />
 
 		<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -41,6 +118,10 @@ const {
 			rel="stylesheet"
 			href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600;1,700&family=Inter:wght@400;500;600;700&display=swap"
 		/>
+
+		<!-- Structured data -->
+		<script type="application/ld+json" set:html={JSON.stringify(personJsonLd)} />
+		<script type="application/ld+json" set:html={JSON.stringify(websiteJsonLd)} />
 
 		<!-- Privacy-friendly analytics by Plausible -->
 		<script async src="https://plausible.io/js/pa-tmv3Qy6nvoU_4N3mAkOAv.js"></script>

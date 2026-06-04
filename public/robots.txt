@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /flyer
+
+Sitemap: https://maria-montserrat.com/sitemap.xml
