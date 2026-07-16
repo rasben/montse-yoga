@@ -12,11 +12,6 @@
 // Images are pulled from Maria's Canva ("Maria _ The staffroom", "The
 // Staffroom header", "the staffroom logo", "Testimonials - Maria website")
 // and saved locally to src/assets/staffroom/.
-//
-// CHECKOUT LINK — PLACEHOLDER: there's no membership/checkout platform wired
-// up yet (Stripe, Podia, etc.), so both CTA buttons currently point at a
-// mailto: link. Replace `CHECKOUT_URL` below with the real signup link once
-// one exists.
 import Layout from '../layouts/Layout.astro';
 import { Image } from 'astro:assets';
 import maria from '../assets/staffroom/staffroom-hero.png';
@@ -24,7 +19,7 @@ import staffroomHeader from '../assets/staffroom/staffroom-header.png';
 import staffroomLogo from '../assets/staffroom/staffroom-logo.png';
 import staffroomTestimonials from '../assets/staffroom/staffroom-testimonials.png';
 
-const CHECKOUT_URL = 'mailto:maria@maria-montserrat.com?subject=Join%20The%20Staffroom%20%E2%80%94%20founding%20month';
+const CHECKOUT_URL = 'https://www.skool.com/thestaffroom/about';
 
 const promises = [
     'You know what your body has been trying to tell you for years.',
