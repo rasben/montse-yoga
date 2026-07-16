@@ -2,7 +2,7 @@
 // Global site header — rendered on every page via Layout.astro so the logo
 // and the three "Maria universes" are always one click away.
 //
-//   • For teachers     → /teacher-yoga  (yoga & breathwork)
+//   • For teachers     → /staffroom     (The Staffroom membership)
 //   • For brands       → /brands        (UGC / content creation)
 //   • For readers      → the Substack blog
 import logo from '../assets/logo-wide.png';
@@ -12,7 +12,7 @@ const path = Astro.url.pathname;
 const here = path !== '/' && path.endsWith('/') ? path.slice(0, -1) : path;
 
 const links = [
-    { label: 'For teachers', href: '/teacher-yoga' },
+    { label: 'For teachers', href: '/staffroom' },
     { label: 'For brands', href: '/brands' },
     { label: 'For readers', href: 'https://mariamontserratmaria.substack.com/', external: true },
 ];

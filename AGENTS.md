@@ -11,11 +11,13 @@ Marketing website for Maria Montserrat, served at **[maria-montserrat.com](https
 **Site structure ("three universes").** The home page is a front door that splits visitors into three audiences; the global header carries the same split on every page.
 
 - **`/` (`index.astro`)** — short intro + three "universe" cards.
-- **`/teacher-yoga`** — Maria's yoga & breathwork offer for teachers, carers, and helping professionals (the original landing-page content).
+- **`/staffroom`** — **The Staffroom**, a monthly membership sales page for teachers who are still functioning on the outside while quietly disappearing on the inside. This is the "For teachers" destination in the global header. Replaced the old `/teacher-yoga` generic offerings page (removed).
 - **`/brands`** — Maria's UGC / content-creator persona. Trilingual UGC for skincare, wellness, lifestyle, food, travel, and health brands.
 - **Substack** — `https://mariamontserratmaria.substack.com/` — her essays / blog. Linked from the header and home page; not hosted in this repo.
 - **`/courses`** — listing of self-paced courses, fed from `src/data/courses.json` (see `npm run fetch-courses`).
 - **`/flyer`** — short-delay redirect to Maria's Canva site, used as a printable QR-code landing. Renders without the global header/footer via `Layout`'s `showHeader={false} showFooter={false}` props.
+
+**Disabled page:** `src/pages/_your-calling.astro` (underscore prefix — Astro ignores files/folders starting with `_` for routing, so it has no URL and isn't in the sitemap). This was an earlier 6-week 1:1 coaching offer (€497, 3 spots) at `/your-calling`, closely related to The Staffroom. Maria asked to hide it for now rather than delete it, in case she wants to revive it later — remove the underscore and add it back to nav/sitemap/AGENTS.md if so.
 
 There is also a "Regulér" collaboration card on the home page linking to a separate Canva site Maria runs with Michala Storm — deliberately *not* in the global header (it's a joint project, not one of the three core universes).
 
@@ -27,7 +29,7 @@ Svelte and Flowbite-Svelte are wired up but only used in `flyer.astro` today. Th
 
 The site presents two related but distinct personas. When writing copy or building content, always reflect the actual specialties — not generic yoga or UGC marketing language.
 
-### Yoga teacher (`/teacher-yoga`, `/courses`)
+### Yoga teacher / The Staffroom (`/staffroom`, `/courses`)
 
 Maria's teaching practice spans nearly two decades across multiple continents.
 
@@ -43,7 +45,7 @@ Maria's teaching practice spans nearly two decades across multiple continents.
 - Additional studies in Chinese medicine and face reading (mian xiang) — informs her holistic approach
 - Based in Copenhagen; also teaches online
 
-**Voice notes for copy:** Calm, creative, meditative — not performance-oriented or fitness-focused. The offer is about reconnecting with yourself, not achieving poses. The audience-first framing is burnout / nervous-system recovery, and the work is positioned especially for teachers, child carers, and people in helping professions.
+**Voice notes for copy:** Calm, creative, meditative — not performance-oriented or fitness-focused. The offer is about reconnecting with yourself, not achieving poses. The audience-first framing is exhaustion / nervous-system recovery, positioned especially for teachers, child carers, and people in helping professions. **Avoid the word "burnout"** in `/staffroom` copy specifically (Maria's explicit instruction) — use "exhaustion," "running on empty," "depleted," or describe the felt experience directly instead. Other pages/docs may still use "burnout" until she asks otherwise.
 
 ### Content creator (`/brands`)
 
@@ -121,11 +123,15 @@ Open `debug/courses.html`, find the course card HTML structure, and update the `
 ```
 src/
   pages/         File-based routes — filename maps to URL (index.astro → /)
-                 index.astro, teacher-yoga.astro, brands.astro, courses.astro, flyer.astro
+                 index.astro, staffroom.astro, brands.astro, courses.astro, flyer.astro
+                 (_your-calling.astro is disabled — underscore prefix, no route)
   layouts/       Page wrappers (Layout.astro is the only one — wraps every page
                  with the global Header + SiteFooter, toggleable per page)
-  components/    Reusable .astro components — Header, SiteFooter, Hero, Offerings,
-                 Courses (teaser), Contact, Langs (flag row)
+  components/    Reusable .astro components — Header, SiteFooter, Langs (flag row).
+                 Hero, Offerings, Courses (teaser), and Contact are currently UNUSED
+                 (they only rendered on the old `/teacher-yoga`, removed when
+                 `/staffroom` replaced it) — safe to delete in a tidy-up pass, or
+                 repurpose if a future page needs that layout again.
   styles/        global.css — Tailwind import + Mexican-palette CSS variables +
                  font-family tokens + fade-up animations
   assets/        Images processed/optimized by Astro — import them, don't reference
@@ -182,14 +188,14 @@ The `site` field in `astro.config.mjs` is set to `https://maria-montserrat.com`.
 `Layout.astro` generates the full SEO/OG meta stack on every page from its props:
 
 - `title`, `description` — page title & meta description (defaults are home-page copy).
-- `image` — path to a social-share image under `/public` (default `/og-default.jpg`). Resolved to an absolute URL against `Astro.site`. Use ~1200×630 / 1.91:1 for best Facebook/LinkedIn/Zulip rendering; the existing per-page images (`/og-default.jpg`, `/og-teacher-yoga.jpg`) are 1500×843 which works.
+- `image` — path to a social-share image under `/public` (default `/og-default.jpg`). Resolved to an absolute URL against `Astro.site`. Use ~1200×630 / 1.91:1 for best Facebook/LinkedIn/Zulip rendering; the existing per-page images (`/og-default.jpg`, `/og-staffroom.jpg`) are roughly that ratio which works.
 - `ogType` — `"website"` (default), `"article"`, or `"profile"`.
 - `noindex` — set true for utility pages we don't want in search (e.g. `/flyer`).
 
 Other static SEO files live in `public/`:
 
 - `robots.txt` — allows everything except `/flyer`, points crawlers at the sitemap.
-- `sitemap.xml` — hand-rolled list of the five public routes. **Update it when a new public route is added.** (If routes start churning, consider adding the `@astrojs/sitemap` integration to generate it automatically.)
+- `sitemap.xml` — hand-rolled list of the four public routes (`/`, `/staffroom`, `/brands`, `/courses`). **Update it when a new public route is added.** (If routes start churning, consider adding the `@astrojs/sitemap` integration to generate it automatically.)
 
 After changing any meta tag, OG image, or title/description, test with the [Facebook Sharing Debugger](https://developers.facebook.com/tools/debug/) (also covers Zulip, Slack, iMessage which use the same OG tags) and the [LinkedIn Post Inspector](https://www.linkedin.com/post-inspector/) so caches are refreshed.
 
@@ -217,7 +223,8 @@ Infer who you're talking to from the conversation: the technical maintainer will
 - **Brands page images and videos are hot-linked from Maria's Canva site** (`brands.maria-montserrat.com/_assets/{media,video}`) as a temporary measure. The files are immutable content-hashed assets, but bandwidth is still on Canva's account. Swap to local files under `src/assets/brands/` (images) and `public/videos/` (videos) once Maria exports the originals.
 - The **analytics figures on `/brands`** (Instagram / TikTok / Facebook reach) are a *manual snapshot*, not a live feed. The constant `analyticsUpdated` and each platform's `period` document the date range. Refresh by copying the headline numbers from each platform's own analytics dashboard.
 - `src/components/Welcome.astro`, `src/assets/astro.svg`, and `src/assets/background.svg` come from the Astro starter and are not referenced anywhere. Safe to delete in a tidy-up pass.
-- Contact details (email, phone, social handles) are duplicated across `src/components/Contact.astro` (used on `/teacher-yoga`), `src/components/SiteFooter.astro` (global footer), and `src/pages/brands.astro` (its own contact section) — keep them in sync when any one changes.
+- `src/components/Hero.astro`, `Offerings.astro`, `Courses.astro` (teaser), and `Contact.astro` are currently unused — see the Project layout note above.
+- Contact details (email, phone, social handles) live in `src/components/SiteFooter.astro` (global footer) and `src/pages/brands.astro` (its own contact section) — keep them in sync when either changes.
 - The "Regulér" collaboration card on the home page links to a separate Canva site (`maria-montserrat.my.canva.site/reguler/`) and is deliberately not in the global header — it's a joint project with another teacher, not part of Maria's three core universes.
 - Multi-lingual support is a planned goal. When implementing, prefer Astro's built-in [`i18n` routing](https://docs.astro.build/en/guides/internationalization/) over a third-party library. The `Langs` component (`src/components/Langs.astro`) is the current placeholder for surfacing the EN/ES/DK story.
 
