@@ -68,7 +68,7 @@ npm run fetch-courses  # Scrape impact.me and update src/data/courses.json (see 
 npm run astro          # Raw Astro CLI (e.g. `npm run astro add <integration>`)
 ```
 
-There is no test framework, linter, or formatter configured. Match the style of surrounding code.
+There is no test framework, linter, or formatter configured. Match the style of surrounding code. The only automated check is CI running `npm run build` (see Deployment → Continuous integration).
 
 **Agents should not run the local commands above to "verify" their work** (`npm run dev`, `npm start`, `npm run build`, `npm run preview`, etc.). The maintainer runs and checks these manually. Make the code changes and describe what to look at; if something genuinely requires a command to be run, say so explicitly and let the maintainer do it.
 
@@ -180,6 +180,12 @@ Files in `public/` are served as raw paths and are not processed.
 ## Deployment
 
 `.github/workflows/deploy.yml` builds and publishes to GitHub Pages on every push to `main`. The custom domain is **maria-montserrat.com**. There is no staging environment — verify locally with `npm run dev` and `npm run build` before merging.
+
+### Continuous integration
+
+`.github/workflows/ci.yml` runs `npm ci` + `npm run build` on every pull request (including Dependabot's) and on pushes to any branch other than `main`. It's the compile gate: if the site fails to build, the check goes red. Pushes to `main` aren't re-checked here — the Deploy workflow already builds them.
+
+Dependabot (`.github/dependabot.yml`) opens weekly PRs for npm packages and GitHub Actions; minor/patch npm bumps are grouped into one PR. The intent is that a green CI check on a Dependabot PR means it's safe to merge without further checking. Enabling branch protection on `main` that requires the **Build** check, plus GitHub's auto-merge, would let those PRs merge themselves once green (not yet configured).
 
 The `site` field in `astro.config.mjs` is set to `https://maria-montserrat.com`. `Layout.astro` uses `Astro.site` to build absolute URLs for canonical links, Open Graph / Twitter cards, and JSON-LD — don't change `site` without updating those tags.
 

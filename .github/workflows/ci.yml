@@ -1,0 +1,38 @@
+name: CI
+
+# Verifies the site still compiles. Runs on every pull request (including
+# Dependabot's) and on pushes to branches other than `main` (pushes to `main`
+# are already covered by the Deploy workflow's build step).
+on:
+  pull_request:
+  push:
+    branches-ignore: [ main ]
+  workflow_dispatch:
+
+# A newer commit on the same branch/PR cancels the in-progress run.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build site
+        run: npm run build
