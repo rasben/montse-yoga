@@ -8,6 +8,11 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    # Supply-chain guard: only propose releases that are at least a week old,
+    # so a compromised package version is likely to have been yanked before
+    # Dependabot ever opens (and auto-merge merges) a PR for it.
+    cooldown:
+      default-days: 7
     # Bundle minor + patch bumps into a single PR to cut noise; the CI build
     # check gates each PR, so grouped low-risk updates can be merged in one go.
     groups:
@@ -21,3 +26,6 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    # Same one-week cooldown as npm, for the same supply-chain reason.
+    cooldown:
+      default-days: 7
