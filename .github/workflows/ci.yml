@@ -6,7 +6,9 @@ name: CI
 on:
   pull_request:
   push:
-    branches-ignore: [ main ]
+    # Dependabot branches are excluded because their PRs already trigger the
+    # pull_request run — otherwise every Dependabot PR builds twice.
+    branches-ignore: [ main, 'dependabot/**' ]
   workflow_dispatch:
 
 # A newer commit on the same branch/PR cancels the in-progress run.
@@ -34,5 +36,19 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Type-check
+        run: npm run check
+
       - name: Build site
         run: npm run build
+
+      # A successful compile can still produce a broken site (a route silently
+      # dropped, the analytics tag lost in a Layout refactor). Guard the things
+      # a green build alone doesn't prove.
+      - name: Smoke-check build output
+        run: |
+          for page in index.html staffroom/index.html brands/index.html courses/index.html flyer/index.html; do
+            test -s "dist/$page" || { echo "::error::dist/$page is missing or empty"; exit 1; }
+          done
+          grep -q 'plausible' dist/index.html || { echo "::error::Plausible analytics tag missing from home page"; exit 1; }
+          grep -q 'https://maria-montserrat.com' dist/index.html || { echo "::error::canonical domain missing from home page"; exit 1; }

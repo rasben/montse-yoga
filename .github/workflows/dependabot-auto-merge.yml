@@ -1,0 +1,62 @@
+name: Dependabot auto-merge
+
+# Merges Dependabot PRs automatically once the CI build goes green.
+#
+# Implemented as a workflow_run follower rather than GitHub's native
+# auto-merge on purpose: native auto-merge requires branch protection with
+# required status checks on `main`, and required checks also block the
+# direct-push `npm run publish-site` flow. This keeps `main` unprotected.
+#
+# The one-week supply-chain delay lives in .github/dependabot.yml (`cooldown`):
+# a release must be at least 7 days old before Dependabot even opens a PR,
+# so by the time anything reaches this workflow the waiting period is over.
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+
+permissions:
+  contents: write
+  pull-requests: write
+  actions: write
+
+jobs:
+  merge:
+    name: Merge Dependabot PR
+    # Only successful CI runs that Dependabot itself triggered.
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.actor.login == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Merge the pull request
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: ${{ github.event.workflow_run.head_branch }}
+          HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          pr_number=$(gh pr list \
+            --repo "$GITHUB_REPOSITORY" \
+            --head "$BRANCH" \
+            --author 'app/dependabot' \
+            --state open \
+            --json number --jq '.[0].number')
+          if [ -z "$pr_number" ] || [ "$pr_number" = "null" ]; then
+            echo "No open Dependabot PR for branch $BRANCH - nothing to merge."
+            exit 0
+          fi
+
+          # --match-head-commit refuses to merge if the PR gained commits
+          # after this CI run, so unchecked code never lands on main.
+          gh pr merge "$pr_number" \
+            --repo "$GITHUB_REPOSITORY" \
+            --merge \
+            --delete-branch \
+            --match-head-commit "$HEAD_SHA"
+
+          # Pushes made with GITHUB_TOKEN don't trigger other workflows
+          # (GitHub's recursion guard), so the on-push Deploy run won't fire
+          # for this merge. Dispatch it explicitly - dependency bumps can
+          # change the generated HTML, so the site must rebuild.
+          gh workflow run deploy.yml --repo "$GITHUB_REPOSITORY" --ref main
