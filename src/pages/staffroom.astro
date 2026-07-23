@@ -19,7 +19,10 @@ import staffroomHeader from '../assets/staffroom/staffroom-header.png';
 import staffroomLogo from '../assets/staffroom/staffroom-logo.png';
 import staffroomTestimonials from '../assets/staffroom/staffroom-testimonials.png';
 
+// Same Skool link for both — free and paid tiers are both reached from
+// the community's /about page (confirmed with Maria 2026-07-17).
 const CHECKOUT_URL = 'https://www.skool.com/thestaffroom/about';
+const SKOOL_FREE_URL = CHECKOUT_URL;
 
 const promises = [
     'You know what your body has been trying to tell you for years.',
@@ -408,6 +411,28 @@ const faqs = [
                 >
                     Join the founding month
                     <svg class="ml-2 h-4 w-4 transition group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 4.293a1 1 0 011.414 0l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414-1.414L13.586 11H4a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                </a>
+            </div>
+
+            <!-- Not ready yet? — free tier on Skool -->
+            <div class="mx-auto mt-10 max-w-lg border-t border-white/15 pt-10 text-left">
+                <p class="font-display text-2xl text-white">Not ready yet?</p>
+                <p class="mt-4 leading-relaxed text-secondary-100">
+                    The free community is where you find out you’re not alone. The full
+                    membership is where you find out who you actually are.
+                </p>
+                <p class="mt-3 leading-relaxed text-secondary-100">
+                    You can join The Staffroom free — the community, the guide, and the
+                    essays — and feel what the space is like before you decide to go deeper.
+                </p>
+                <a
+                    href={SKOOL_FREE_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="group mt-6 inline-flex items-center gap-2 text-base font-semibold text-white underline-offset-4 transition hover:underline"
+                >
+                    Start free
+                    <svg class="h-4 w-4 transition group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 4.293a1 1 0 011.414 0l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414-1.414L13.586 11H4a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
                 </a>
             </div>
         </div>
