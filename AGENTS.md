@@ -62,13 +62,14 @@ npm install            # First-time setup — installs dependencies
 npm start              # Dev server at http://localhost:4321 (opens the browser)
 npm run dev            # Dev server without opening a browser
 npm run build          # Static build to ./dist/
+npm run check          # Type-check .astro files (astro check) — also runs in CI
 npm run preview        # Preview the production build
 npm run publish-site   # Safe build-commit-push flow (see below)
 npm run fetch-courses  # Scrape impact.me and update src/data/courses.json (see below)
 npm run astro          # Raw Astro CLI (e.g. `npm run astro add <integration>`)
 ```
 
-There is no test framework, linter, or formatter configured. Match the style of surrounding code. The only automated check is CI running `npm run build` (see Deployment → Continuous integration).
+There is no test framework, linter, or formatter configured. Match the style of surrounding code. The automated checks are CI running `npm run check` (type-checking) and `npm run build` plus a smoke check of the output (see Deployment → Continuous integration).
 
 **Agents should not run the local commands above to "verify" their work** (`npm run dev`, `npm start`, `npm run build`, `npm run preview`, etc.). The maintainer runs and checks these manually. Make the code changes and describe what to look at; if something genuinely requires a command to be run, say so explicitly and let the maintainer do it.
 
@@ -183,7 +184,7 @@ Files in `public/` are served as raw paths and are not processed.
 
 ### Continuous integration
 
-`.github/workflows/ci.yml` runs `npm ci` + `npm run build` on every pull request (including Dependabot's) and on pushes to any branch other than `main` and `dependabot/**`. It's the compile gate: if the site fails to build, the check goes red. Pushes to `main` aren't re-checked here — the Deploy workflow already builds them; Dependabot branches are covered by their PR runs. After the build, a smoke-check step verifies each public route exists in `dist/` and that the Plausible tag and canonical domain survived the build — **add new public routes to that step's page list** (same trigger as updating `public/sitemap.xml`).
+`.github/workflows/ci.yml` runs `npm ci` + `npm run check` (`astro check` type-checking) + `npm run build` on every pull request (including Dependabot's) and on pushes to any branch other than `main` and `dependabot/**`. It's the compile gate: if the site fails to type-check or build, the check goes red. Pushes to `main` aren't re-checked here — the Deploy workflow already builds them; Dependabot branches are covered by their PR runs. After the build, a smoke-check step verifies each public route exists in `dist/` and that the Plausible tag and canonical domain survived the build — **add new public routes to that step's page list** (same trigger as updating `public/sitemap.xml`).
 
 Dependabot (`.github/dependabot.yml`) opens weekly PRs for npm packages and GitHub Actions; minor/patch npm bumps are grouped into one PR. A 7-day `cooldown` means a release must be at least a week old before Dependabot proposes it — a deliberate supply-chain guard (compromised versions are usually yanked within days), don't remove it. Green Dependabot PRs merge themselves: `.github/workflows/dependabot-auto-merge.yml` listens for successful CI runs triggered by Dependabot, merges the PR, and dispatches the Deploy workflow (merges made with `GITHUB_TOKEN` don't fire on-push workflows). This is intentionally *not* GitHub's native auto-merge: that would require branch protection with required status checks on `main`, which would also block the direct-push `npm run publish-site` flow.
 

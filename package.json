@@ -6,6 +6,7 @@
     "start": "astro dev --open",
     "dev": "astro dev",
     "build": "astro build",
+    "check": "astro check",
     "preview": "astro preview",
     "publish-site": "node scripts/publish.mjs",
     "fetch-courses": "node scripts/fetch-courses.mjs",
@@ -20,6 +21,7 @@
     "typescript": "^5.9.3"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.9",
     "flowbite": "^4.0.1",
     "flowbite-svelte": "^1.31.0",
     "flowbite-svelte-icons": "^3.1.0"
