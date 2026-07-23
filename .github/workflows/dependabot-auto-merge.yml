@@ -60,3 +60,8 @@ jobs:
           # for this merge. Dispatch it explicitly - dependency bumps can
           # change the generated HTML, so the site must rebuild.
           gh workflow run deploy.yml --repo "$GITHUB_REPOSITORY" --ref main
+
+          # Same recursion guard: this merge moved main without firing the
+          # on-push rebase workflow, so ask the remaining Dependabot PRs to
+          # catch up explicitly.
+          gh workflow run rebase-dependabot-prs.yml --repo "$GITHUB_REPOSITORY" --ref main

@@ -1,0 +1,51 @@
+name: Rebase Dependabot PRs
+
+# Keeps open Dependabot PRs current with `main`. Dependabot's own
+# `rebase-strategy: auto` only rebases when a PR becomes *conflicted*; this
+# workflow also catches PRs that are merely behind, by asking Dependabot to
+# rebase them (`@dependabot rebase` comment) whenever `main` moves.
+#
+# Two triggers are needed to cover every way `main` moves:
+#   - push: direct pushes (`npm run publish-site`) and PRs merged by a human.
+#   - workflow_dispatch: called by dependabot-auto-merge.yml after it merges,
+#     because pushes made with GITHUB_TOKEN never fire on-push workflows.
+#
+# If Dependabot ever ignores the comments (some setups report it only obeys
+# commands from real users, not github-actions[bot] — watch for the missing
+# 👍 reaction on the comment), swap GH_TOKEN for a personal access token
+# stored as a secret.
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  pull-requests: write
+
+concurrency:
+  group: rebase-dependabot-prs
+  cancel-in-progress: true
+
+jobs:
+  rebase:
+    name: Request rebases
+    runs-on: ubuntu-latest
+    steps:
+      - name: Comment @dependabot rebase on stale PRs
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # GitHub computes merge state asynchronously after a push; give it
+          # a moment so PRs aren't still reported as UNKNOWN.
+          sleep 30
+          gh pr list \
+            --repo "$GITHUB_REPOSITORY" \
+            --author 'app/dependabot' \
+            --state open \
+            --json number,mergeStateStatus \
+            --jq '.[] | select(.mergeStateStatus == "BEHIND" or .mergeStateStatus == "DIRTY") | .number' |
+          while read -r pr; do
+            echo "Requesting rebase of #$pr"
+            gh pr comment "$pr" --repo "$GITHUB_REPOSITORY" --body '@dependabot rebase'
+          done
