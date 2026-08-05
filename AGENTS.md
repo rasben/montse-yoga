@@ -68,7 +68,7 @@ npm run astro          # Raw Astro CLI (e.g. `npm run astro add <integration>`)
 
 There is no test framework, linter, or formatter configured. Match the style of surrounding code.
 
-**Agents should not run the local commands above to "verify" their work** (`npm run dev`, `npm start`, `npm run build`, `npm run preview`, etc.). The maintainer runs and checks these manually. Make the code changes and describe what to look at; if something genuinely requires a command to be run, say so explicitly and let the maintainer do it.
+**Agents are allowed to run the local commands above** (`npm run dev`, `npm start`, `npm run build`, `npm run preview`, etc.) to verify their work and keep a live preview running while discussing changes. Prefer running the dev server in the background and using a browser tool to check pages rather than asking the maintainer to check manually.
 
 ### `npm run publish-site` (the safe deploy flow)
 
