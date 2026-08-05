@@ -7,29 +7,40 @@
 // Mexican palette (magenta / turquoise / marigold + sand) and the Playfair
 // Display / Inter type pair defined in src/styles/global.css.
 //
-// IMAGES — TEMPORARY: the photos below are hot-linked straight from Maria's
-// Canva site so we can preview the layout. They should be replaced with
-// optimized local assets (drop files into src/assets/brands/ and switch
-// to `astro:assets` <Image>) once Maria uploads the originals. Each image's
-// Canva filename is the last path segment of its URL.
+// IMAGES — the first three photography items and two travel items are still
+// hot-linked straight from Maria's old Canva site (she hasn't uploaded local
+// originals for those specific shots yet). Everything else below is a local
+// asset in src/assets/brands/, imported via `astro:assets` for optimization.
 import Layout from '../layouts/Layout.astro';
 import Langs from '../components/Langs.astro';
+import { Image } from 'astro:assets';
+
+import gaiamYogaBlock from '../assets/brands/gaiam-yoga-block.jpg';
+import chocolatePastry from '../assets/brands/chocolate-pastry.jpg';
+import puppyPhoto from '../assets/brands/puppy.jpg';
+import beachPastries from '../assets/brands/beach-pastries.jpg';
+import pastryRedJelly from '../assets/brands/pastry-red-jelly.jpg';
+import arlaCulturaKefir from '../assets/brands/arla-cultura-kefir.jpg';
+import hotelRoom from '../assets/brands/hotel-room.jpg';
+import templeCarving from '../assets/brands/temple-carving.jpg';
+import planeWindow from '../assets/brands/plane-window.jpg';
+import planeScreen from '../assets/brands/plane-screen.jpg';
+import hangingLantern from '../assets/brands/hanging-lantern.jpg';
+import freja from '../assets/brands/freja.jpg';
+import pastries from '../assets/brands/pastries.jpg';
+import mariaBridge from '../assets/brands/mariabridge.jpg';
+import introMariaPoster from '../assets/brands/intro-maria-poster.jpg';
 
 const CANVA = 'https://brands.maria-montserrat.com/_assets/media';
 const img = (file: string) => `${CANVA}/${file}`;
 
-// VIDEOS — hot-linked from Maria's Canva site, same as the images above.
-// These are immutable, content-hashed static files (cache-control: immutable,
-// range-supported), so the URLs are stable and safe to hot-link — but they're
-// still served by Canva, so we pay their bandwidth on each view. Swap to local
-// files in public/videos/ + a `/videos/...` src once Maria exports the
-// originals, if we want to drop the Canva dependency entirely.
-const CANVA_VIDEO = 'https://brands.maria-montserrat.com/_assets/video';
-const vid = (hash: string) => `${CANVA_VIDEO}/${hash}.mp4`;
+// Brand UGC videos, hosted on Cloudflare R2 (public r2.dev bucket URL).
+const R2_VIDEOS = 'https://pub-114eaff8586c4838bd1a76c1d5011563.r2.dev';
+const vid = (file: string) => `${R2_VIDEOS}/${file}`;
 
 const BLOG_URL = 'https://mariamontserratmaria.substack.com/';
 
-// Flag per language code, used on the spec-UGC cards.
+// Flag per language code, used on the content-example cards.
 const FLAG: Record<string, { flag: string; label: string }> = {
     EN: { flag: '🇬🇧', label: 'English' },
     ES: { flag: '🇪🇸 🇲🇽', label: 'Spanish' },
@@ -110,56 +121,78 @@ function countAttrs(value: string) {
     };
 }
 
-// "How I show up" — organic reels (personal brand). These are the three real
-// organic videos on the Canva site; `video` is each clip's content hash, mapped
-// confidently from each video's own caption (aria-label) on the source page.
-const reels = [
-    { title: 'Finding myself after burnout', tags: 'Emotional narrative · organic', video: '09d9617a6e0b7f73635171dcf4493806' },
-    { title: 'Snapping at everyone you love', tags: 'Nervous system reel · organic', video: 'ea57e8a8be5dd671e5cd2e90abd0b601' },
-    { title: 'Teacher Stress Reset', tags: 'Somatic tutorial · organic', video: '19ca814b78e3b5f398c8f0e2c82cad68' },
-];
-
-// "Spec UGC · ad-ready" — concept work shot in three languages. `video` is each
-// clip's content hash. NOTE: the Canva markup made it impossible to pair each
-// spec clip to its label with certainty, so these are attached in the source
-// DOM order — eyeball the six clips and reorder the hashes if any label is off.
-const specWork = [
-    { hook: '10 years, same mat. Still my favourite.', type: 'Lifestyle testimonial', lang: 'EN', video: '90f1f16670ed5e36bf9ecb487ae572ed' },
-    { hook: 'Lo primero antes de mirar el móvil.', type: 'Morning ritual', lang: 'ES', video: 'f9422c4ffcdb553b0cf4dc9473eaf053' },
-    { hook: 'Min daglige kefir — sådan starter jeg dagen.', type: 'Food & health', lang: 'DK', video: '6787f00efb5f22019a059acbf6585404' },
-    { hook: 'The serum that finally calmed my reactive skin.', type: 'Skincare testimonial', lang: 'EN', video: '8f50e2a7cec1afcffa95f33946373d60' },
-    { hook: 'Mi rutina de noche en 30 segundos.', type: 'Skincare demo', lang: 'ES', video: '1b171679299c6d0a1406b10aa4b9ec10' },
-    { hook: 'Min morgenflow derhjemme.', type: 'Lifestyle · yoga', lang: 'DK', video: 'f56f080685e4c0149194f247e30809b8' },
+// Content Examples — one real client UGC video per brand. Source files live
+// in src/assets/videos/ (gitignored — too large to commit), compressed with
+// ffmpeg and hosted on Cloudflare R2 (see vid() above).
+const contentExamples = [
+    { brand: 'Fit Planet', type: 'Unboxing', lang: 'ES', video: vid('fitplanet.mp4') },
+    { brand: 'Gaiam', type: 'Demo', lang: 'EN', video: vid('gaiam.mp4') },
+    { brand: 'Sesderma', type: 'Talking Head', lang: 'ES', video: vid('sesderma.mp4') },
+    { brand: 'Nupo', type: 'Skit', lang: 'DK', video: vid('NUPO.mp4') },
+    { brand: 'Arla', type: 'Voiceover B-roll', lang: 'DK', video: vid('arla.mp4') },
+    { brand: 'Dolce Gusto', type: 'POV / Lifestyle', lang: 'ES', video: vid('dolce.mp4') },
+    { brand: 'Organic Basics', type: 'Unboxing', lang: 'EN', video: vid('organibasics.mp4') },
+    { brand: 'Spies Rejser', type: 'Talking Head', lang: 'DK', video: vid('spies.mp4') },
+    { brand: 'Floria Beach Hotel', type: 'POV Walkthrough', lang: 'EN', video: vid('floriabeach.mp4') },
 ];
 
 // Niches she creates for (text list — replaces the third-party brand-logo wall).
 const niches = [
     'Skincare & beauty', 'Wellness & mindfulness', 'Lifestyle', 'Fashion',
     'Food & beverage', 'Travel & hospitality', 'Health & autoimmune',
-    'Plant-based', 'Nervous-system recovery',
+    'Plant-based', 'Nervous-system recovery', 'Apps & tech',
 ];
 
-// Photography — hot-linked from Canva for now (see note above).
+// Photography — first 3 still hot-linked from Canva (no local original yet);
+// the rest are Maria's own local uploads in src/assets/brands/.
 const photography = [
-    { file: '867011bb5ed745b0d4a36ae51dc3b2df.jpg', alt: 'Lifestyle photograph — dog playing in the grass' },
-    { file: '24772a4d9af8e44a2a8b452e99a4f8d9.jpg', alt: 'Food photograph — pistachio cannoli on a ceramic plate' },
-    { file: 'ca6fcc9917b99d965ea3d04f0f0852b3.jpg', alt: 'Product photograph — skincare bottle and jar' },
-    { file: '2e0df4d4e189a39fa8e45d288b14064f.jpg', alt: 'Lifestyle product photograph' },
-    { file: 'a3d96731c504bc656f26e2b1816155f2.jpg', alt: 'Lifestyle photograph' },
-    { file: '9d384f234a5cfac4ab2becceca767ef4.jpg', alt: 'Product & lifestyle photograph' },
+    { src: img('867011bb5ed745b0d4a36ae51dc3b2df.jpg'), alt: 'Product photograph — Sesderma skincare bottle and jar' },
+    { src: gaiamYogaBlock, alt: 'Product photograph — Gaiam yoga block' },
+    { src: chocolatePastry, alt: 'Food photograph — chocolate-dipped pastry' },
+    { src: puppyPhoto, alt: 'Lifestyle photograph — Cavalier King Charles puppy' },
+    { src: beachPastries, alt: 'Food photograph — pastries on a plate at the beach' },
+    { src: pastryRedJelly, alt: 'Food photograph — roscón-style pastry with candied fruit' },
+    { src: arlaCulturaKefir, alt: 'Product photograph — Arla Cultura kefir with a bowl of muesli' },
+    { src: freja, alt: 'Lifestyle photograph — dog lying in the grass surrounded by tennis balls' },
+    { src: pastries, alt: 'Food photograph — pistachio cannoli dusted with powdered sugar' },
 ];
 
+// w/h are each photo's real natural pixel dimensions — used to weight
+// flex-grow so a row of two photos always fills the full width edge-to-edge
+// (a "justified gallery" row) instead of leaving a gap for narrower pairs.
 const travel = [
-    { file: '9fb3fa3cf2a6e98c2ec89ea9268a91cd.jpg', alt: 'Travel photograph — ancient temple' },
-    { file: '68ea5af2ab5f6809d91cc6f7510e474b.jpg', alt: 'Travel photograph — stone Buddha statue' },
-    { file: 'c68e20c16382a2926ab6afd9bf0fcdaa.jpg', alt: 'Travel photograph — traditional dancers' },
-    { file: '2d28f907060f3ba96575343a3d41c311.jpg', alt: 'Travel photograph — local festival' },
+    { src: img('9fb3fa3cf2a6e98c2ec89ea9268a91cd.jpg'), alt: 'Travel photograph — ancient temple', w: 1599, h: 1066 },
+    { src: hotelRoom, alt: 'Travel photograph — hotel room lounge chair', w: 1536, h: 2048 },
+    { src: templeCarving, alt: 'Travel photograph — ornate temple carving', w: 864, h: 1296 },
+    { src: img('68ea5af2ab5f6809d91cc6f7510e474b.jpg'), alt: 'Travel photograph — stone Buddha statue', w: 1599, h: 1066 },
+    { src: img('c68e20c16382a2926ab6afd9bf0fcdaa.jpg'), alt: 'Travel photograph — traditional dancers', w: 1599, h: 1066 },
+    { src: planeWindow, alt: 'Travel photograph — airplane window at sunset', w: 1536, h: 2048 },
+    { src: planeScreen, alt: 'Travel photograph — in-flight entertainment screen', w: 1536, h: 2048 },
+    { src: hangingLantern, alt: 'Travel photograph — hanging lantern by the sea', w: 2048, h: 1536 },
 ];
 
 // Services
+const whatICanDo = [
+    {
+        title: 'Concept Development',
+        body: 'From blank brief to creative direction. I research the customer moment your brand needs to own, develop the angle, and map it across formats. You get a strategy, not just a script.',
+    },
+    {
+        title: 'Copywriting',
+        body: "Ad copy, product descriptions, social captions, editorial content — written in Danish, English, or Spanish. From the customer's language, not the brand's internal vocabulary.",
+    },
+    {
+        title: 'Video Content',
+        body: "UGC-style video built around your customer's real doubt, not your product features. Talking head, demo, POV, unboxing, skit — organic or paid. Filmed in Danish, English, or Spanish.",
+    },
+    {
+        title: 'Editorial Content',
+        body: 'Styled stills, mood-led photography, and brand storytelling — sharpened over years shooting for a weekly lifestyle and fashion title, on assignments with Louis Vuitton, Zara, and Interjet.',
+    },
+];
 const services = [
-    'UGC Videos (ads & organic)', 'Voiceover Videos', 'UGC Photos',
-    'Product Photography', 'On-Location Content', 'Content Bundles', 'Monthly Retainer',
+    'Talking head videos', 'Testimonials', 'Unboxing', 'Tutorials', 'Vlogs',
+    'Voiceover', 'UGC Photos', 'Product Photography', 'On-Location Content',
 ];
 const deliverables = [
     'Vertical format (9:16)', 'Research on branding & concepts', 'Scriptwriting',
@@ -182,16 +215,16 @@ const deliverables = [
                     UGC Creator <Langs class="text-base tracking-normal" />
                 </p>
                 <h1 class="fade-up-delay-1 mt-6 font-display text-5xl leading-[1.05] text-stone-900 sm:text-6xl md:text-7xl">
-                    Trilingual creator. <em class="font-normal text-primary-800">Three markets.</em>
+                    Not just a content creator, <em class="font-normal text-primary-800">a concept developer.</em>
                 </h1>
                 <p class="fade-up-delay-2 mt-8 max-w-xl text-lg leading-relaxed text-stone-800 md:text-xl">
-                    Real content that converts. I'm Maria — a content creator based in Denmark,
-                    making UGC in English, Spanish, and Danish for brands that fit how I
-                    actually live.
+                    With multicultural experience helping you reach Danish, English, and
+                    Spanish-speaking audiences. Background in fashion and lifestyle journalism,
+                    e-commerce, and education. I know how to connect with people through words
+                    and visuals.
                 </p>
-                <p class="fade-up-delay-2 mt-4 max-w-xl text-base leading-relaxed text-stone-600">
-                    Mexican-born, Denmark-based, flexitarian, dog mum (Freja&nbsp;+&nbsp;Macarena),
-                    tennis &amp; padel player, Hashimoto's warrior, secondhand shopper, sun chaser.
+                <p class="fade-up-delay-2 mt-4 max-w-xl text-base font-semibold italic text-primary-800 underline underline-offset-4">
+                    From idea to execution in three markets
                 </p>
 
                 <div class="fade-up-delay-3 mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
@@ -222,44 +255,55 @@ const deliverables = [
         </div>
     </section>
 
-    <!-- ============================ ABOUT ============================ -->
-    <section class="relative overflow-hidden bg-white py-24 md:py-32">
-        <div class="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-16 px-6 md:grid-cols-2 md:px-10">
-            <div class="relative order-2 md:order-1">
-                <div class="absolute -inset-3 -z-10 bg-primary-500" style="border-radius: 48% 52% 60% 40% / 56% 44% 56% 44%;"></div>
-                <div class="relative overflow-hidden shadow-xl shadow-primary-900/15" style="border-radius: 48% 52% 60% 40% / 56% 44% 56% 44%;">
-                    <img
-                        src={img('299251c842a4cc0800fb5ed40f0b90c8.jpg')}
-                        alt="Maria Montserrat seated outdoors"
-                        class="h-[460px] w-full object-cover md:h-[560px]"
-                        loading="lazy"
-                    />
+    <!-- ============================ INTRO VIDEO ============================ -->
+    <section class="bg-sand-100 pt-14 pb-7 md:pt-20 md:pb-10">
+        <div class="mx-auto max-w-3xl px-6 text-center md:px-10">
+            <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">Hear it from me</p>
+            <h2 class="mt-4 font-display text-4xl leading-tight text-stone-900 sm:text-5xl">
+                3 reasons <em class="font-normal text-primary-800">I'm the UGC creator you need</em>
+            </h2>
+        </div>
+        <div class="mx-auto mt-10 max-w-5xl px-6 md:px-10">
+            <div class="iv relative aspect-video w-full overflow-hidden rounded-3xl bg-primary-500 shadow-xl shadow-primary-900/15">
+                <video
+                    src={vid('intro_maria.mp4')}
+                    poster={introMariaPoster.src}
+                    class="iv-video h-full w-full object-cover"
+                    playsinline
+                    preload="metadata"
+                    aria-label="3 reasons I'm the UGC creator you need"
+                ></video>
+
+                <!-- Teaser copy, hidden once playback starts -->
+                <div class="iv-teaser pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-stone-900/80 via-stone-900/25 to-transparent p-6 pt-20 text-left sm:p-8 sm:pt-24">
+                    <p class="text-xs font-semibold uppercase tracking-[0.3em] text-white/80">60 seconds, no fluff</p>
+                    <p class="mt-2 max-w-md font-display text-xl text-white sm:text-2xl">Hear straight from me why brands bring me back</p>
                 </div>
-            </div>
-            <div class="order-1 md:order-2">
-                <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">About me</p>
-                <h2 class="mt-4 font-display text-4xl leading-tight text-stone-900 sm:text-5xl">
-                    One creator, <em class="font-normal text-primary-800">three markets</em>.
-                </h2>
-                <p class="mt-6 text-lg leading-relaxed text-stone-700">
-                    In the last 30 days my content has reached 582K+ accounts and generated
-                    1.1M+ views. I create conversion-focused UGC for skincare, wellness,
-                    lifestyle, fashion, food, travel, and health brands — including autoimmune,
-                    plant-based, and nervous-system-recovery niches.
-                </p>
-                <p class="mt-4 leading-relaxed text-stone-600">
-                    My background spans teaching, journalism, yoga &amp; mindfulness instruction,
-                    fashion design, and somatic practice — trained in fashion design,
-                    communications, and pedagogy. My philosophy:
-                    <em class="text-primary-800">give your best, not your all.</em>
-                    I make content that feels real because it is.
-                </p>
+
+                <!-- Big play button, hidden once playback starts -->
+                <button type="button" class="iv-play group absolute inset-0 flex items-center justify-center bg-stone-900/10 transition hover:bg-stone-900/20" aria-label="Play video with sound">
+                    <span class="grid h-20 w-20 place-items-center rounded-full bg-white/95 shadow-xl transition group-hover:scale-105 sm:h-24 sm:w-24">
+                        <svg class="ml-1.5 h-9 w-9 text-primary-800" viewBox="0 0 20 20" fill="currentColor"><path d="M6 4l10 6-10 6V4z"/></svg>
+                    </span>
+                </button>
+
+                <!-- Pause/mute controls, shown only once playback has started -->
+                <div class="iv-controls absolute bottom-3 left-3 z-10 hidden gap-2">
+                    <button type="button" class="iv-toggle grid h-10 w-10 place-items-center rounded-full bg-stone-900/45 text-white backdrop-blur-sm transition hover:bg-stone-900/65" aria-label="Play or pause video">
+                        <svg class="iv-icon-play hidden h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M6 4l10 6-10 6V4z"/></svg>
+                        <svg class="iv-icon-pause h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M6 4h3v12H6zM11 4h3v12h-3z"/></svg>
+                    </button>
+                    <button type="button" class="iv-mute grid h-10 w-10 place-items-center rounded-full bg-stone-900/45 text-white backdrop-blur-sm transition hover:bg-stone-900/65" aria-label="Mute or unmute video">
+                        <svg class="iv-icon-muted hidden h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+                        <svg class="iv-icon-unmuted h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 4.5a9 9 0 0 1 0 15"/></svg>
+                    </button>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- ============================ ANALYTICS ============================ -->
-    <section class="bg-sand-100 py-20 md:py-28">
+    <section class="bg-sand-100 pt-7 pb-14 md:pt-10 md:pb-20">
         <div class="mx-auto max-w-6xl px-6 md:px-10">
             <div class="mx-auto max-w-2xl text-center">
                 <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">Analytics</p>
@@ -354,34 +398,30 @@ const deliverables = [
         </div>
     </section>
 
-    <!-- ============================ HOW I SHOW UP (reels) ============================ -->
-    <section id="work" class="relative overflow-hidden bg-white py-24 md:py-32">
+    <!-- ============================ CONTENT EXAMPLES ============================ -->
+    <section id="work" class="relative overflow-hidden bg-sand-50 py-12 md:py-18">
         <div class="relative mx-auto max-w-6xl px-6 md:px-10">
             <div class="mx-auto max-w-2xl text-center">
-                <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">How I show up</p>
+                <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">Content examples</p>
                 <h2 class="mt-4 font-display text-4xl leading-tight text-stone-900 sm:text-5xl">
-                    Organic reels, <em class="font-normal text-primary-800">real moments</em>.
+                    Real client work, <em class="font-normal text-primary-800">in three languages</em>.
                 </h2>
-                <p class="mt-6 text-lg leading-relaxed text-stone-700">
-                    Personal-brand storytelling around burnout, the nervous system, and finding
-                    your way back to yourself — the content that builds the trust brands borrow.
-                </p>
             </div>
             <div class="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {reels.map((r) => (
-                    <article class="group flex flex-col overflow-hidden rounded-3xl bg-sand-50 ring-1 ring-stone-900/5 transition hover:shadow-lg hover:shadow-primary-900/8">
-                        <div class="bv group/video relative aspect-[9/16] bg-primary-500">
+                {contentExamples.map((c) => (
+                    <article class="group flex flex-col overflow-hidden rounded-3xl bg-white ring-1 ring-stone-900/5 transition hover:shadow-lg hover:shadow-primary-900/8">
+                        <div class="bv relative aspect-[9/16] bg-secondary-500">
                             <video
-                                src={vid(r.video)}
+                                src={c.video}
                                 class="bv-video h-full w-full object-cover"
                                 autoplay
                                 muted
                                 loop
                                 playsinline
                                 preload="metadata"
-                                aria-label={r.title}
+                                aria-label={`${c.brand} — ${c.type}`}
                             ></video>
-                            <div class="bv-controls absolute bottom-3 left-3 z-10 flex gap-2 opacity-0 transition focus-within:opacity-100 group-hover/video:opacity-100">
+                            <div class="bv-controls absolute bottom-3 left-3 z-10 flex gap-2">
                                 <button type="button" class="bv-toggle grid h-10 w-10 place-items-center rounded-full bg-stone-900/45 text-white backdrop-blur-sm transition hover:bg-stone-900/65" aria-label="Play or pause video">
                                     <svg class="bv-icon-play hidden h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M6 4l10 6-10 6V4z"/></svg>
                                     <svg class="bv-icon-pause h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M6 4h3v12H6zM11 4h3v12h-3z"/></svg>
@@ -391,13 +431,14 @@ const deliverables = [
                                     <svg class="bv-icon-unmuted hidden h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 4.5a9 9 0 0 1 0 15"/></svg>
                                 </button>
                             </div>
-                            <span class="pointer-events-none absolute right-4 top-4 inline-flex items-center gap-1 rounded-full bg-white/80 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-primary-800 backdrop-blur-sm">
-                                <svg class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor"><path d="M6 4l10 6-10 6V4z"/></svg> Reel
-                            </span>
+                            <span class="pointer-events-none absolute left-3 top-3 inline-flex items-center gap-0.5 rounded-full bg-white/85 px-2.5 py-1.5 text-lg leading-none shadow-sm backdrop-blur-sm" role="img" aria-label={FLAG[c.lang].label} title={FLAG[c.lang].label}>{FLAG[c.lang].flag}</span>
+                            <span class="pointer-events-none absolute right-4 top-4 rounded-full bg-white/80 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-stone-700 backdrop-blur-sm">{c.type}</span>
                         </div>
                         <div class="px-6 py-4">
-                            <p class="text-sm font-semibold text-stone-800">{r.title}</p>
-                            <p class="text-xs uppercase tracking-widest text-stone-500">{r.tags}</p>
+                            <p class="text-sm font-semibold text-stone-800">{c.brand}</p>
+                            <p class="flex items-center gap-1.5 text-xs uppercase tracking-widest text-stone-500">
+                                {c.type} <span role="img" aria-label={FLAG[c.lang].label} title={FLAG[c.lang].label} class="text-sm">{FLAG[c.lang].flag}</span>
+                            </p>
                         </div>
                     </article>
                 ))}
@@ -406,7 +447,7 @@ const deliverables = [
     </section>
 
     <!-- ============================ NICHES (text — replaces logo wall) ============================ -->
-    <section class="bg-primary-700 py-20 md:py-24">
+    <section class="bg-primary-700 py-14 md:py-18">
         <div class="mx-auto max-w-4xl px-6 text-center md:px-10">
             <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-100">What I create for</p>
             <h2 class="mt-4 font-display text-4xl leading-tight text-white sm:text-5xl">
@@ -426,56 +467,8 @@ const deliverables = [
         </div>
     </section>
 
-    <!-- ============================ SPEC UGC ============================ -->
-    <section class="relative overflow-hidden bg-sand-50 py-24 md:py-32">
-        <div class="relative mx-auto max-w-6xl px-6 md:px-10">
-            <div class="mx-auto max-w-2xl text-center">
-                <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">Spec UGC · ad-ready</p>
-                <h2 class="mt-4 font-display text-4xl leading-tight text-stone-900 sm:text-5xl">
-                    Concept work, <em class="font-normal text-primary-800">in three languages</em>.
-                </h2>
-            </div>
-            <div class="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {specWork.map((w) => (
-                    <article class="group flex flex-col overflow-hidden rounded-3xl bg-white ring-1 ring-stone-900/5 transition hover:shadow-lg hover:shadow-primary-900/8">
-                        <div class="bv group/video relative aspect-[9/16] bg-secondary-500">
-                            <video
-                                src={vid(w.video)}
-                                class="bv-video h-full w-full object-cover"
-                                autoplay
-                                muted
-                                loop
-                                playsinline
-                                preload="metadata"
-                                aria-label={`${w.type} — ${w.hook}`}
-                            ></video>
-                            <div class="bv-controls absolute bottom-3 left-3 z-10 flex gap-2 opacity-0 transition focus-within:opacity-100 group-hover/video:opacity-100">
-                                <button type="button" class="bv-toggle grid h-10 w-10 place-items-center rounded-full bg-stone-900/45 text-white backdrop-blur-sm transition hover:bg-stone-900/65" aria-label="Play or pause video">
-                                    <svg class="bv-icon-play hidden h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M6 4l10 6-10 6V4z"/></svg>
-                                    <svg class="bv-icon-pause h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M6 4h3v12H6zM11 4h3v12h-3z"/></svg>
-                                </button>
-                                <button type="button" class="bv-mute grid h-10 w-10 place-items-center rounded-full bg-stone-900/45 text-white backdrop-blur-sm transition hover:bg-stone-900/65" aria-label="Mute or unmute video">
-                                    <svg class="bv-icon-muted h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
-                                    <svg class="bv-icon-unmuted hidden h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 4.5a9 9 0 0 1 0 15"/></svg>
-                                </button>
-                            </div>
-                            <span class="pointer-events-none absolute left-3 top-3 inline-flex items-center gap-0.5 rounded-full bg-white/85 px-2.5 py-1.5 text-lg leading-none shadow-sm backdrop-blur-sm" role="img" aria-label={FLAG[w.lang].label} title={FLAG[w.lang].label}>{FLAG[w.lang].flag}</span>
-                            <span class="pointer-events-none absolute right-4 top-4 rounded-full bg-white/80 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-stone-700 backdrop-blur-sm">Ad-ready</span>
-                        </div>
-                        <div class="px-6 py-4">
-                            <p class="text-sm font-semibold text-stone-800">{w.type}</p>
-                            <p class="flex items-center gap-1.5 text-xs uppercase tracking-widest text-stone-500">
-                                Spec UGC <span role="img" aria-label={FLAG[w.lang].label} title={FLAG[w.lang].label} class="text-sm">{FLAG[w.lang].flag}</span>
-                            </p>
-                        </div>
-                    </article>
-                ))}
-            </div>
-        </div>
-    </section>
-
     <!-- ============================ PHOTOGRAPHY ============================ -->
-    <section class="bg-white py-24 md:py-32">
+    <section class="bg-white py-12 md:py-18">
         <div class="mx-auto max-w-6xl px-6 md:px-10">
             <div class="mx-auto max-w-2xl text-center">
                 <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">Photography</p>
@@ -486,16 +479,52 @@ const deliverables = [
             <div class="mt-14 grid grid-cols-2 gap-4 md:grid-cols-3">
                 {photography.map((p) => (
                     <div class="aspect-[4/5] overflow-hidden rounded-2xl bg-sand-200">
-                        <img src={img(p.file)} alt={p.alt} class="h-full w-full object-cover transition duration-500 hover:scale-105" loading="lazy" />
+                        {typeof p.src === 'string'
+                            ? <img src={p.src} alt={p.alt} class="h-full w-full object-cover transition duration-500 hover:scale-105" loading="lazy" />
+                            : <Image src={p.src} alt={p.alt} class="h-full w-full object-cover transition duration-500 hover:scale-105" loading="lazy" />}
                     </div>
                 ))}
             </div>
 
             <h3 class="mt-20 text-center font-display text-3xl text-stone-900 sm:text-4xl">Travel</h3>
-            <div class="mt-10 grid grid-cols-2 gap-4 md:grid-cols-4">
-                {travel.map((t) => (
-                    <div class="aspect-[4/3] overflow-hidden rounded-2xl bg-sand-200">
-                        <img src={img(t.file)} alt={t.alt} class="h-full w-full object-cover transition duration-500 hover:scale-105" loading="lazy" />
+            <div class="mt-10 flex flex-col gap-4">
+                {[[travel[0], travel[1]], [travel[2], travel[3]], [travel[4], travel[5]], [travel[6], travel[7]]].map((row) => (
+                    <div class="flex gap-4">
+                        {row.map((t) => (
+                            <div
+                                class="min-w-0 overflow-hidden rounded-2xl bg-sand-200"
+                                style={`flex-grow: ${t.w / t.h}; flex-basis: 0; aspect-ratio: ${t.w} / ${t.h};`}
+                            >
+                                {typeof t.src === 'string'
+                                    ? <img src={t.src} alt={t.alt} class="h-full w-full object-cover transition duration-500 hover:scale-105" loading="lazy" />
+                                    : <Image src={t.src} alt={t.alt} class="h-full w-full object-cover transition duration-500 hover:scale-105" loading="lazy" />}
+                            </div>
+                        ))}
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================ WHAT CAN I DO FOR YOU ============================ -->
+    <section class="bg-white py-12 md:py-18">
+        <div class="mx-auto max-w-6xl px-6 md:px-10">
+            <div class="mx-auto max-w-2xl text-center">
+                <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">What can I do for you?</p>
+                <h2 class="mt-4 font-display text-4xl leading-tight text-stone-900 sm:text-5xl">
+                    More than <em class="font-normal text-primary-800">someone to execute a brief</em>
+                </h2>
+                <p class="mt-6 text-lg leading-relaxed text-stone-700">
+                    Brands bring me in when they need more than someone to execute a brief. I
+                    develop the idea, write the copy, and produce the content, in the language
+                    and format that better fits your market.
+                </p>
+            </div>
+            <div class="mt-14 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
+                {whatICanDo.map((w) => (
+                    <div>
+                        <h3 class="font-display text-xl text-stone-900">{w.title}</h3>
+                        <p class="mt-3 text-sm leading-relaxed text-stone-600">{w.body}</p>
                     </div>
                 ))}
             </div>
@@ -503,7 +532,7 @@ const deliverables = [
     </section>
 
     <!-- ============================ SERVICES ============================ -->
-    <section class="bg-sand-100 py-24 md:py-32">
+    <section class="bg-sand-100 py-12 md:py-18">
         <div class="mx-auto max-w-6xl px-6 md:px-10">
             <div class="mx-auto max-w-2xl text-center">
                 <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">My services</p>
@@ -533,48 +562,198 @@ const deliverables = [
                             </li>
                         ))}
                     </ul>
-                    <p class="mt-8 rounded-2xl bg-white/15 px-5 py-3 text-center text-sm font-semibold uppercase tracking-widest ring-1 ring-white/20">
-                        Rates available upon request
-                    </p>
+                    <div class="mt-8 space-y-2 rounded-2xl bg-white/15 px-5 py-5 text-center text-sm ring-1 ring-white/20">
+                        <p class="font-semibold">
+                            From DKK 1,500/video · 3-video bundle: DKK 4,500/month · Paid ad licensing from DKK 2,500/month
+                        </p>
+                        <p class="text-primary-100">Multi-format or long-term scope: send me the brief and I'll put together a custom package.</p>
+                        <p class="text-primary-100">All video includes organic use on brand's owned social channels.</p>
+                        <p class="text-primary-100">Paid ad licensing is a separate rights category.</p>
+                        <p class="text-primary-100">Languages available: Danish · English · Spanish</p>
+                    </div>
                 </div>
+            </div>
+
+            <div class="mt-14 flex flex-col items-center justify-center gap-4 text-center sm:flex-row sm:text-left">
+                <p class="text-lg leading-relaxed text-stone-700">
+                    Want to hear my ideas?<br class="hidden sm:block" />
+                    Contact me for a free 15-minute brainstorming call.
+                </p>
+                <a href="mailto:maria@maria-montserrat.com" class="inline-flex shrink-0 items-center justify-center rounded-full bg-primary-700 px-8 py-4 text-base font-semibold text-white shadow-lg shadow-primary-700/30 transition hover:bg-primary-800">
+                    Let's work together!
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================ ABOUT ============================ -->
+    <section class="relative overflow-hidden bg-white py-12 md:py-18">
+        <div class="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-16 px-6 md:grid-cols-2 md:px-10">
+            <div class="relative order-2 md:order-1">
+                <div class="absolute -inset-3 -z-10 bg-primary-500" style="border-radius: 48% 52% 60% 40% / 56% 44% 56% 44%;"></div>
+                <div class="relative overflow-hidden shadow-xl shadow-primary-900/15" style="border-radius: 48% 52% 60% 40% / 56% 44% 56% 44%;">
+                    <img
+                        src={img('299251c842a4cc0800fb5ed40f0b90c8.jpg')}
+                        alt="Maria Montserrat seated outdoors"
+                        class="h-[460px] w-full object-cover md:h-[560px]"
+                        loading="lazy"
+                    />
+                </div>
+            </div>
+            <div class="order-1 md:order-2">
+                <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">About me</p>
+                <h2 class="mt-4 font-display text-4xl leading-tight text-stone-900 sm:text-5xl">
+                    Not just a creator. <em class="font-normal text-primary-800">A creative.</em>
+                </h2>
+                <p class="mt-6 text-lg leading-relaxed text-stone-700">
+                    Maria Montserrat. Mexican, based in Copenhagen for the past ten years.
+                </p>
+                <ul class="mt-6 space-y-3">
+                    <li class="flex items-start gap-3 text-stone-700">
+                        <svg class="mt-1 h-4 w-4 shrink-0 text-primary-700" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                        <span>Journalist and stylist for a weekly lifestyle and fashion magazine — from trend specials to brand shoots with Louis Vuitton, Zara, Carla Fernandez, and Interjet</span>
+                    </li>
+                    <li class="flex items-start gap-3 text-stone-700">
+                        <svg class="mt-1 h-4 w-4 shrink-0 text-primary-700" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                        <span>Content creation for an e-commerce platform</span>
+                    </li>
+                    <li class="flex items-start gap-3 text-stone-700">
+                        <svg class="mt-1 h-4 w-4 shrink-0 text-primary-700" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                        <span>Six years as a teacher in Denmark</span>
+                    </li>
+                    <li class="flex items-start gap-3 text-stone-700">
+                        <svg class="mt-1 h-4 w-4 shrink-0 text-primary-700" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                        <span>Yoga and mindfulness coach</span>
+                    </li>
+                </ul>
+                <p class="mt-6 leading-relaxed text-stone-600">
+                    Three languages. Three markets. Content from concept to execution —
+                    bring a brief, bring an idea, or bring nothing and I'll start from scratch.
+                </p>
             </div>
         </div>
     </section>
 
     <!-- ============================ WORK TOGETHER (contact) ============================ -->
-    <section id="work-together" class="relative overflow-hidden bg-sand-50 py-24 md:py-32">
+    <section id="work-together" class="relative overflow-hidden bg-sand-50 py-12 md:py-18">
 
-        <div class="relative mx-auto max-w-3xl px-6 text-center md:px-10">
-            <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">Let's work together</p>
-            <h2 class="mt-4 font-display text-4xl leading-tight text-stone-900 sm:text-5xl md:text-6xl">
-                Got a brand that fits <em class="font-normal text-primary-800">how I live</em>?
-            </h2>
-            <p class="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-stone-700">
-                Book a discovery call and let's talk about authentic content in English,
-                Spanish, or Danish.
-            </p>
+        <div class="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-6 md:grid-cols-12 md:gap-16 md:px-10">
+            <div class="text-center md:col-span-7 md:text-left">
+                <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">Let's work together</p>
+                <h2 class="mt-4 font-display text-4xl leading-tight text-stone-900 sm:text-5xl md:text-6xl">
+                    Got a brand that fits <em class="font-normal text-primary-800">how I live</em>?
+                </h2>
+                <p class="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-stone-700 md:mx-0">
+                    Tell me who you're trying to reach and in which language, and I'll tell
+                    you honestly whether I'm the right fit — no deck, no funnel, just a
+                    real conversation about the content you need.
+                </p>
 
-            <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-                <a href="mailto:maria@maria-montserrat.com" class="inline-flex items-center justify-center rounded-full bg-primary-700 px-8 py-4 text-base font-semibold text-white shadow-lg shadow-primary-700/30 transition hover:bg-primary-800">
-                    Email me
-                </a>
+                <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row md:justify-start">
+                    <a href="mailto:maria@maria-montserrat.com" class="inline-flex items-center justify-center rounded-full bg-primary-700 px-8 py-4 text-base font-semibold text-white shadow-lg shadow-primary-700/30 transition hover:bg-primary-800">
+                        Email me
+                    </a>
+                </div>
+
+                <p class="mt-8 text-stone-700">
+                    <a href="mailto:maria@maria-montserrat.com" class="font-medium underline underline-offset-4 transition hover:text-primary-800">maria@maria-montserrat.com</a>
+                </p>
+
+                <div class="mt-10">
+                    <p class="text-xs font-semibold uppercase tracking-widest text-stone-500">Find me on social media</p>
+                    <div class="mt-4 flex items-center justify-center gap-4 md:justify-start">
+                        <a href="https://www.instagram.com/mariamontserratmaria/" target="_blank" rel="noopener noreferrer" class="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-stone-800 ring-1 ring-stone-900/5 shadow-sm transition hover:bg-primary-700 hover:text-white">Instagram</a>
+                        <a href="https://www.tiktok.com/@mariamontserratmaria" target="_blank" rel="noopener noreferrer" class="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-stone-800 ring-1 ring-stone-900/5 shadow-sm transition hover:bg-primary-700 hover:text-white">TikTok</a>
+                        <a href="https://www.facebook.com/mariamontserratmaria" target="_blank" rel="noopener noreferrer" class="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-stone-800 ring-1 ring-stone-900/5 shadow-sm transition hover:bg-primary-700 hover:text-white">Facebook</a>
+                        <a href={BLOG_URL} target="_blank" rel="noopener noreferrer" class="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-stone-800 ring-1 ring-stone-900/5 shadow-sm transition hover:bg-primary-700 hover:text-white">Substack</a>
+                    </div>
+                </div>
             </div>
 
-            <p class="mt-8 text-stone-700">
-                <a href="mailto:maria@maria-montserrat.com" class="font-medium underline underline-offset-4 transition hover:text-primary-800">maria@maria-montserrat.com</a>
-            </p>
-
-            <div class="mt-10">
-                <p class="text-xs font-semibold uppercase tracking-widest text-stone-500">Find me on social media</p>
-                <div class="mt-4 flex items-center justify-center gap-4">
-                    <a href="https://www.instagram.com/mariamontserratmaria/" target="_blank" rel="noopener noreferrer" class="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-stone-800 ring-1 ring-stone-900/5 shadow-sm transition hover:bg-primary-700 hover:text-white">Instagram</a>
-                    <a href="https://www.tiktok.com/@mariamontserratmaria" target="_blank" rel="noopener noreferrer" class="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-stone-800 ring-1 ring-stone-900/5 shadow-sm transition hover:bg-primary-700 hover:text-white">TikTok</a>
-                    <a href="https://www.facebook.com/mariamontserratmaria" target="_blank" rel="noopener noreferrer" class="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-stone-800 ring-1 ring-stone-900/5 shadow-sm transition hover:bg-primary-700 hover:text-white">Facebook</a>
+            <!-- Portrait -->
+            <div class="relative md:col-span-5">
+                <div class="relative mx-auto max-w-sm md:max-w-none">
+                    <div class="absolute -inset-4 -z-10 bg-secondary-500" style="border-radius: 44% 56% 62% 38% / 42% 48% 52% 58%;"></div>
+                    <div class="relative overflow-hidden shadow-2xl shadow-primary-900/20" style="border-radius: 44% 56% 62% 38% / 42% 48% 52% 58%;">
+                        <Image
+                            src={mariaBridge}
+                            alt="Maria Montserrat standing on a bridge"
+                            class="h-[420px] w-full object-cover md:h-[520px]"
+                            loading="lazy"
+                        />
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 </Layout>
+
+<script>
+    // Intro video: click-to-play (no autoplay — it's a talking-head clip with
+    // no captions, so silent autoplay would carry no information). Starts on
+    // the poster frame with a big play button and a teaser line; once clicked,
+    // plays WITH sound and swaps to the small pause/mute controls. Ends back on
+    // the poster so it can be replayed.
+    (() => {
+        const wrap = document.querySelector<HTMLElement>('.iv');
+        const video = wrap?.querySelector<HTMLVideoElement>('.iv-video');
+        if (!wrap || !video) return;
+        const playBtn = wrap.querySelector('.iv-play');
+        const teaser = wrap.querySelector('.iv-teaser');
+        const controls = wrap.querySelector<HTMLElement>('.iv-controls');
+        const toggleBtn = wrap.querySelector('.iv-toggle');
+        const muteBtn = wrap.querySelector('.iv-mute');
+        const iconPlay = wrap.querySelector('.iv-icon-play');
+        const iconPause = wrap.querySelector('.iv-icon-pause');
+        const iconMuted = wrap.querySelector('.iv-icon-muted');
+        const iconUnmuted = wrap.querySelector('.iv-icon-unmuted');
+
+        const syncPlay = () => {
+            const playing = !video.paused && !video.ended;
+            iconPlay?.classList.toggle('hidden', playing);
+            iconPause?.classList.toggle('hidden', !playing);
+        };
+        const syncMute = () => {
+            iconMuted?.classList.toggle('hidden', !video.muted);
+            iconUnmuted?.classList.toggle('hidden', video.muted);
+        };
+        const showPoster = () => {
+            playBtn?.classList.remove('hidden');
+            teaser?.classList.remove('hidden');
+            controls?.classList.add('hidden');
+            controls?.classList.remove('flex');
+        };
+        const showControls = () => {
+            playBtn?.classList.add('hidden');
+            teaser?.classList.add('hidden');
+            controls?.classList.remove('hidden');
+            controls?.classList.add('flex');
+        };
+
+        playBtn?.addEventListener('click', () => {
+            video.muted = false;
+            video.play().catch(() => {});
+            showControls();
+        });
+        toggleBtn?.addEventListener('click', () => {
+            if (video.paused) video.play().catch(() => {});
+            else video.pause();
+        });
+        muteBtn?.addEventListener('click', () => {
+            video.muted = !video.muted;
+            syncMute();
+        });
+        video.addEventListener('ended', () => {
+            video.currentTime = 0;
+            showPoster();
+        });
+        video.addEventListener('play', syncPlay);
+        video.addEventListener('pause', syncPlay);
+
+        syncPlay();
+        syncMute();
+    })();
+</script>
 
 <script>
     // Controls for the autoplaying, muted brand videos. Each clip:

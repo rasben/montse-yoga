@@ -18,7 +18,7 @@ const links = [
 ];
 ---
 
-<header id="site-header" class="sticky top-0 z-50 border-b border-primary-900/10 bg-primary-100">
+<header id="site-header" class="sm:sticky sm:top-0 z-50 border-b border-primary-900/10 bg-primary-100">
     <div class="mx-auto flex flex-col items-center gap-2 px-6 py-3 sm:flex-row sm:justify-between md:px-10">
         <a href="/" class="flex items-center" aria-label="Maria Montserrat — home">
             <img id="site-logo" src={logo.src} alt="Maria Montserrat" class="w-auto" />
@@ -63,13 +63,55 @@ const links = [
     @media (prefers-reduced-motion: reduce) {
         #site-logo { transition: none; }
     }
+
+    /* Hide-on-scroll-down / show-on-scroll-up only applies where the header
+       is actually sticky (sm+). On mobile it's static and just scrolls away
+       with the page, so no transform is needed. */
+    @media (min-width: 640px) {
+        #site-header {
+            transition: transform 0.25s ease;
+        }
+        #site-header.header-hidden {
+            transform: translateY(-100%);
+        }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        #site-header { transition: none; }
+    }
 </style>
 
 <script>
-    // Shrink the logo unless we're at the very top of the page.
+    // Shrink the logo unless we're at the very top of the page, and hide the
+    // (sticky, sm+ only) header when scrolling down, popping it back in once
+    // the user scrolls up for a little while.
     const header = document.getElementById('site-header');
     if (header) {
-        const update = () => header.classList.toggle('scrolled', window.scrollY > 8);
+        let lastY = window.scrollY;
+        let upScrollAccum = 0;
+        let hidden = false;
+        const HIDE_AFTER = 80; // px scrolled from top before we ever hide
+        const REVEAL_AFTER_UP = 40; // px of upward scroll needed to reveal again
+
+        const update = () => {
+            const y = window.scrollY;
+            const delta = y - lastY;
+
+            header.classList.toggle('scrolled', y > 8);
+
+            if (y <= HIDE_AFTER) {
+                hidden = false;
+                upScrollAccum = 0;
+            } else if (delta > 0) {
+                hidden = true;
+                upScrollAccum = 0;
+            } else if (delta < 0) {
+                upScrollAccum += -delta;
+                if (upScrollAccum > REVEAL_AFTER_UP) hidden = false;
+            }
+
+            header.classList.toggle('header-hidden', hidden);
+            lastY = y;
+        };
         update();
         window.addEventListener('scroll', update, { passive: true });
     }
