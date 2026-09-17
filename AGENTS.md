@@ -8,7 +8,7 @@ Marketing website for Maria Montserrat, served at **[maria-montserrat.com](https
 
 **Why this site exists.** It replaces a third-party hosted page ([mariamontserrat.impact.me](https://mariamontserrat.impact.me/), kept around as a course-listing data source) for two reasons: avoiding recurring fees on a hosted CMS, and getting full design control instead of being limited to what the CMS templates allow. Design proposals from agents — layouts, color/type direction, copy drafts, component structure — are explicitly welcome and part of the work on this project.
 
-**Site structure ("three universes").** The home page is a front door that splits visitors into three audiences; the global header carries the same split on every page.
+**Site structure.** The home page is a link-tree-style front door (rewritten September 2026): a short "Hey, I'm Maria" intro, then four destination cards with a small thumbnail, title, description, and CTA button each — Better Than Fine, the From Fear to Clarity newsletter (Substack), 1:1 coaching (a WhatsApp link, not a page route), and For Brands. The global header carries a shorter three-way split (Better Than Fine, For brands, For readers).
 
 - **`/` (`index.astro`)** — short intro + three "universe" cards.
 - **`/staffroom`** — **Better Than Fine** (renamed September 2026 from "The Staffroom"), a free community for women who are functioning on the outside while quietly disappearing on the inside. Widened from a teacher-specific audience to women more broadly, and from a €57–77/month paid membership to entirely free. This is the "Better Than Fine" destination in the global header. The URL/filename (`/staffroom`, `staffroom.astro`) stayed the same — only the on-page branding and copy changed. Replaced the old `/teacher-yoga` generic offerings page (removed).
@@ -19,7 +19,7 @@ Marketing website for Maria Montserrat, served at **[maria-montserrat.com](https
 
 **Disabled page:** `src/pages/_your-calling.astro` (underscore prefix — Astro ignores files/folders starting with `_` for routing, so it has no URL and isn't in the sitemap). This was an earlier 6-week 1:1 coaching offer (€497, 3 spots) at `/your-calling`, closely related to The Staffroom. Maria asked to hide it for now rather than delete it, in case she wants to revive it later — remove the underscore and add it back to nav/sitemap/AGENTS.md if so.
 
-There is also a "Regulér" collaboration card on the home page linking to a separate Canva site Maria runs with Michala Storm — deliberately *not* in the global header (it's a joint project, not one of the three core universes).
+The "Regulér" collaboration card (a joint project with Michala Storm, linking to a separate Canva site) was removed from the home page in the September 2026 rewrite — it was never in the global header either.
 
 **Stack:** Astro 5 · Svelte 5 · TypeScript 5 · Tailwind CSS 4 · Flowbite-Svelte
 
@@ -232,7 +232,7 @@ Infer who you're talking to from the conversation: the technical maintainer will
 - `src/components/Welcome.astro`, `src/assets/astro.svg`, and `src/assets/background.svg` come from the Astro starter and are not referenced anywhere. Safe to delete in a tidy-up pass.
 - `src/components/Hero.astro`, `Offerings.astro`, `Courses.astro` (teaser), and `Contact.astro` are currently unused — see the Project layout note above.
 - Contact details (email, phone, social handles) live in `src/components/SiteFooter.astro` (global footer) and `src/pages/brands.astro` (its own contact section) — keep them in sync when either changes.
-- The "Regulér" collaboration card on the home page links to a separate Canva site (`maria-montserrat.my.canva.site/reguler/`) and is deliberately not in the global header — it's a joint project with another teacher, not part of Maria's three core universes.
+- The "Regulér" collaboration card (`maria-montserrat.my.canva.site/reguler/`, a joint project with another teacher) was removed from the home page in the September 2026 rewrite along with the old "three universes" framing.
 - Multi-lingual support is a planned goal. When implementing, prefer Astro's built-in [`i18n` routing](https://docs.astro.build/en/guides/internationalization/) over a third-party library. The `Langs` component (`src/components/Langs.astro`) is the current placeholder for surfacing the EN/ES/DK story.
 
 ## Keeping these docs current

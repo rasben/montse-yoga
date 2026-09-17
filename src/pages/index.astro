@@ -1,52 +1,69 @@
 ---
-// Homepage — a warm "front door": a short "Hey, I'm Maria" intro with a
-// photo, then the three "Maria universes" clearly labelled by audience.
-// Site nav + logo live in the global Header; contact lives in the global
-// Footer. The substantive content lives on the linked pages.
+// Homepage — link-tree style front door: a short "Hey, I'm Maria" intro with
+// a photo, then four destination cards (rewritten September 2026 from the
+// old "three universes" grid — adds a 1:1 coaching card and a Better Than
+// Fine card, drops the Regulér collaboration box). Site nav + logo live in
+// the global Header; contact lives in the global Footer. The substantive
+// content lives on the linked pages/sites.
 import Layout from '../layouts/Layout.astro';
 import Langs from '../components/Langs.astro';
 import maria from '../assets/maria-grass-seated.jpg';
 import { Image } from 'astro:assets';
 
-const BLOG_URL = 'https://mariamontserratmaria.substack.com/';
+// Reuses the same banner already saved for /staffroom — same image, small
+// thumbnail here.
+import betterThanFineThumb from '../assets/staffroom/staffroom-header.png';
+import fromFearToClarityThumb from '../assets/homepage/from-fear-to-clarity.jpg';
+import coachingThumb from '../assets/homepage/coaching-card.jpg';
+import brandsThumb from '../assets/homepage/brands-card.jpg';
 
-const universes = [
+const cards = [
     {
-        label: 'For teachers',
-        title: 'The Staffroom',
-        body: 'A monthly membership for teachers who are still showing up on the outside — and quietly disappearing on the inside. Weekly practices, live calls, and a community that already gets it.',
-        cta: 'Join The Staffroom',
-        href: '/staffroom',
-        external: false,
-        accent: 'bg-primary-500',
-        icon: '🌙',
+        tag: 'Free community',
+        title: 'Better Than Fine',
+        body: 'A free community for women who are performing fine and know, privately, that performing fine and actually feeling fine are not the same thing. Body-based practices. Real conversations. A framework for figuring out who you are when you’re not performing.',
+        cta: 'Join the community',
+        href: 'https://www.skool.com/thestaffroom',
+        external: true,
+        thumb: betterThanFineThumb,
+        thumbAlt: 'Better Than Fine',
     },
     {
-        label: 'For brands',
-        title: 'UGC & content creation',
-        body: 'Authentic, conversion-focused content in English, Spanish, and Danish — skincare, wellness, lifestyle, food, travel, and health. 582K+ accounts reached in a single month.',
+        tag: 'Free newsletter',
+        title: 'From Fear to Clarity',
+        body: 'Weekly essays and practices on identity, the nervous system, and what happens when you stop performing fine. For women who are still going, and privately asking if this is all there is.',
+        cta: 'Read the essays',
+        href: 'https://mariamontserratmaria.substack.com/',
+        external: true,
+        thumb: fromFearToClarityThumb,
+        thumbAlt: 'From Fear to Clarity — Maria’s Substack newsletter',
+    },
+    {
+        tag: '1:1 work',
+        title: 'Mindfulness and yoga coaching',
+        body: 'One-to-one work using yoga, mindfulness, and somatic practices to help you hear yourself clearly and figure out what you actually want. Not a programme. A direct line.',
+        cta: 'Work with me',
+        href: 'https://wa.me/4540305519?text=Hi%20Maria%2C%20I%27m%20interested%20in%201%3A1%20coaching',
+        external: true,
+        thumb: coachingThumb,
+        thumbAlt: 'Maria in a yoga pose, hands together at heart centre',
+    },
+    {
+        tag: 'For brands',
+        title: 'UGC and content creation',
+        body: 'Conversion-focused content in English, Spanish, and Danish. Wellness, lifestyle, and consumer brands. Worked with brands across Europe.',
         cta: 'See my work',
         href: '/brands',
         external: false,
-        accent: 'bg-secondary-500',
-        icon: '🎬',
-    },
-    {
-        label: 'For blog readers',
-        title: 'Essays & reflections',
-        body: 'Honest writing on burnout, the nervous system, leaving a career that was quietly breaking me, and finding the way back to myself.',
-        cta: 'Read the blog',
-        href: BLOG_URL,
-        external: true,
-        accent: 'bg-accent-500',
-        icon: '✍️',
+        thumb: brandsThumb,
+        thumbAlt: 'Maria smiling outdoors',
     },
 ];
 ---
 
 <Layout
-    title="Maria Montserrat — Yoga Teacher & Content Creator"
-    description="Hey, I'm Maria — a yoga & breathwork teacher for exhaustion and a trilingual UGC content creator (EN · ES · DK), based in Copenhagen. Find the path that fits you."
+    title="Maria Montserrat — Yoga Instructor, Mindfulness Coach & Content Creator"
+    description="Hey, I'm Maria — a yoga instructor, mindfulness coach, and nervous system practitioner based in Copenhagen, working with women who perform brilliantly and go blank when asked who they are outside of it. Trilingual (EN · ES · DA) content creator."
 >
     <!-- ============================ INTRO ============================ -->
     <section class="relative overflow-hidden">
@@ -62,10 +79,9 @@ const universes = [
                     Hey, I'm <em class="font-normal text-primary-800">Maria</em>.
                 </h1>
                 <p class="fade-up-delay-2 mt-8 max-w-xl text-lg leading-relaxed text-stone-800 md:text-xl">
-                    Mexican-born, Denmark-based. I'm a yoga &amp; breathwork teacher and a
-                    trilingual content creator. My classes are calm, creative, and
-                    unhurried — a place to slow down and breathe when you're worn out.
-                    I also make honest content for brands that fit the way I actually live.
+                    Mexican-born, Denmark-based. Yoga instructor, mindfulness coach, and
+                    nervous system practitioner. I work with women who are performing
+                    brilliantly… and going blank when asked who they are outside of it.
                 </p>
                 <p class="fade-up-delay-3 mt-6 text-sm font-semibold uppercase tracking-widest text-stone-600">
                     Pick the path that fits you ↓
@@ -91,69 +107,46 @@ const universes = [
         </div>
     </section>
 
-    <!-- ============================ THREE UNIVERSES ============================ -->
+    <!-- ============================ FOUR CARDS ============================ -->
     <section class="relative overflow-hidden bg-secondary-100 py-14 md:py-20">
-        <div class="relative mx-auto max-w-6xl px-6 md:px-10">
+        <div class="relative mx-auto max-w-3xl px-6 md:px-10">
             <div class="mx-auto max-w-2xl text-center">
                 <h2 class="font-display text-3xl leading-tight text-stone-900 sm:text-4xl">
-                    Three ways to find me
+                    Four ways to find me
                 </h2>
                 <p class="mt-4 leading-relaxed text-stone-600">
                     Whoever you are, there's a door for you.
                 </p>
             </div>
 
-            <div class="mt-14 grid grid-cols-1 gap-6 md:grid-cols-3">
-                {universes.map((u) => (
+            <!-- Link-tree style: one clickable row per destination, small
+                 thumbnail on the left, a pill "button" on the right. -->
+            <div class="mt-12 flex flex-col gap-5">
+                {cards.map((c) => (
                     <a
-                        href={u.href}
-                        {...(u.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                        class="group flex flex-col overflow-hidden rounded-3xl bg-sand-50 ring-1 ring-stone-900/5 shadow-sm transition hover:-translate-y-1 hover:shadow-xl hover:shadow-primary-900/10"
+                        href={c.href}
+                        {...(c.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                        class="group flex flex-col gap-5 rounded-3xl bg-sand-50 p-5 ring-1 ring-stone-900/5 shadow-sm transition hover:-translate-y-1 hover:shadow-xl hover:shadow-primary-900/10 sm:flex-row sm:items-center sm:gap-6 sm:p-6"
                     >
-                        <div class={`flex items-center justify-center px-8 py-10 ${u.accent}`}>
-                            <span class="flex h-16 w-16 items-center justify-center rounded-2xl bg-white/90 text-3xl">{u.icon}</span>
+                        <Image
+                            src={c.thumb}
+                            alt={c.thumbAlt}
+                            widths={[160, 240, 320]}
+                            sizes="112px"
+                            class="h-24 w-full shrink-0 rounded-2xl object-cover sm:h-28 sm:w-28"
+                            loading="lazy"
+                        />
+                        <div class="flex flex-1 flex-col">
+                            <p class="text-xs font-semibold uppercase tracking-[0.3em] text-primary-800">{c.tag}</p>
+                            <h3 class="mt-2 font-display text-2xl text-stone-900">{c.title}</h3>
+                            <p class="mt-2 leading-relaxed text-stone-600">{c.body}</p>
                         </div>
-                        <div class="flex flex-1 flex-col p-8">
-                            <p class="text-xs font-semibold uppercase tracking-[0.3em] text-primary-800">{u.label}</p>
-                            <h3 class="mt-3 font-display text-2xl text-stone-900">{u.title}</h3>
-                            <p class="mt-3 flex-1 leading-relaxed text-stone-600">{u.body}</p>
-                            <span class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary-700 transition group-hover:text-primary-800">
-                                {u.cta}
-                                <svg class="h-4 w-4 transition group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 4.293a1 1 0 011.414 0l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414-1.414L13.586 11H4a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-                            </span>
-                        </div>
+                        <span class="mt-2 inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-primary-700 px-6 py-3 text-sm font-semibold text-white shadow-sm transition group-hover:bg-primary-800 sm:mt-0">
+                            {c.cta}
+                            <svg class="h-4 w-4 transition group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 4.293a1 1 0 011.414 0l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414-1.414L13.586 11H4a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+                        </span>
                     </a>
                 ))}
-            </div>
-
-            <!-- Collaboration — deliberately a different kind of box from the three
-                 core "universes": this one is a joint project with another person,
-                 and intentionally NOT in the global header. -->
-            <div class="mt-10 overflow-hidden rounded-3xl bg-secondary-800 shadow-lg ring-1 ring-secondary-900/20">
-                <div class="flex flex-col gap-6 p-8 md:flex-row md:items-center md:justify-between md:p-10">
-                    <div class="max-w-xl">
-                        <p class="inline-flex items-center rounded-full bg-white/15 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-white ring-1 ring-white/20">
-                            Et samarbejde med Michala Storm
-                        </p>
-                        <h3 class="mt-4 flex items-center gap-2 font-display text-3xl text-white">
-                            Regulér
-                            <span class="text-xl" role="img" aria-label="In Danish" title="Danish">🇩🇰</span>
-                        </h3>
-                        <p class="mt-3 leading-relaxed text-secondary-100">
-                            Et ko-reguleringsforløb for pædagoger — fordi du ikke kan regulere
-                            andre, hvis du ikke kan regulere dig selv.
-                        </p>
-                    </div>
-                    <a
-                        href="https://maria-montserrat.my.canva.site/reguler/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="group inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-secondary-900 shadow-sm transition hover:bg-secondary-50"
-                    >
-                        Se forløbet
-                        <svg class="h-4 w-4 transition group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 4.293a1 1 0 011.414 0l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414-1.414L13.586 11H4a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-                    </a>
-                </div>
             </div>
         </div>
     </section>
