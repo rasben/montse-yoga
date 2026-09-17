@@ -11,11 +11,11 @@
 // her words. Deliberately avoids the word "burnout" throughout, per her
 // instruction (see AGENTS.md "Voice notes for copy").
 //
-// Images are unchanged from the original Staffroom build, pulled from
-// Maria's Canva ("Maria _ The staffroom", "The Staffroom header", "the
-// staffroom logo", "Testimonials - Maria website") and saved locally to
-// src/assets/staffroom/. The header banner graphic still reads "The
-// Staffroom" — Maria hasn't supplied a "Better Than Fine" version yet.
+// Images are mostly unchanged from the original Staffroom build, pulled
+// from Maria's Canva ("Maria _ The staffroom", "the staffroom logo",
+// "Testimonials - Maria website") and saved locally to src/assets/staffroom/.
+// The header banner (staffroom-header.png) was replaced September 2026 with
+// a new "Better Than Fine" Canva graphic — same filename/import, new image.
 import Layout from '../layouts/Layout.astro';
 import { Image } from 'astro:assets';
 import maria from '../assets/staffroom/staffroom-hero.png';
@@ -147,12 +147,12 @@ const faqs = [
             </div>
         </div>
 
-        <!-- Header banner (Maria's "You are Your Calling / The Staffroom" Canva banner) -->
+        <!-- Header banner (Maria's "Better Than Fine" Canva banner) -->
         <div class="relative z-10 mx-auto max-w-5xl px-6 pb-16 md:px-10">
             <div class="overflow-hidden rounded-3xl shadow-lg shadow-primary-900/15">
                 <Image
                     src={staffroomHeader}
-                    alt="You are Your Calling — The Staffroom"
+                    alt="Better Than Fine — for women who are done performing someone else's version of fine and ready to find out who they are outside the role"
                     widths={[600, 900, 1084]}
                     sizes="(min-width: 768px) 900px, 90vw"
                     class="h-auto w-full object-cover"
