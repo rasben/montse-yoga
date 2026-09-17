@@ -11,7 +11,7 @@ Marketing website for Maria Montserrat, served at **[maria-montserrat.com](https
 **Site structure ("three universes").** The home page is a front door that splits visitors into three audiences; the global header carries the same split on every page.
 
 - **`/` (`index.astro`)** — short intro + three "universe" cards.
-- **`/staffroom`** — **The Staffroom**, a monthly membership sales page for teachers who are still functioning on the outside while quietly disappearing on the inside. This is the "For teachers" destination in the global header. Replaced the old `/teacher-yoga` generic offerings page (removed).
+- **`/staffroom`** — **Better Than Fine** (renamed September 2026 from "The Staffroom"), a free community for women who are functioning on the outside while quietly disappearing on the inside. Widened from a teacher-specific audience to women more broadly, and from a €57–77/month paid membership to entirely free. This is the "Better Than Fine" destination in the global header. The URL/filename (`/staffroom`, `staffroom.astro`) stayed the same — only the on-page branding and copy changed. Replaced the old `/teacher-yoga` generic offerings page (removed).
 - **`/brands`** — Maria's UGC / content-creator persona. Trilingual UGC for skincare, wellness, lifestyle, food, travel, and health brands.
 - **Substack** — `https://mariamontserratmaria.substack.com/` — her essays / blog. Linked from the header and home page; not hosted in this repo.
 - **`/courses`** — listing of self-paced courses, fed from `src/data/courses.json` (see `npm run fetch-courses`).
@@ -29,7 +29,7 @@ Svelte and Flowbite-Svelte are wired up but only used in `flyer.astro` today. Th
 
 The site presents two related but distinct personas. When writing copy or building content, always reflect the actual specialties — not generic yoga or UGC marketing language.
 
-### Yoga teacher / The Staffroom (`/staffroom`, `/courses`)
+### Yoga teacher / Better Than Fine (`/staffroom`, `/courses`)
 
 Maria's teaching practice spans nearly two decades across multiple continents.
 
@@ -45,7 +45,7 @@ Maria's teaching practice spans nearly two decades across multiple continents.
 - Additional studies in Chinese medicine and face reading (mian xiang) — informs her holistic approach
 - Based in Copenhagen; also teaches online
 
-**Voice notes for copy:** Calm, creative, meditative — not performance-oriented or fitness-focused. The offer is about reconnecting with yourself, not achieving poses. The audience-first framing is exhaustion / nervous-system recovery, positioned especially for teachers, child carers, and people in helping professions. **Avoid the word "burnout"** in `/staffroom` copy specifically (Maria's explicit instruction) — use "exhaustion," "running on empty," "depleted," or describe the felt experience directly instead. Other pages/docs may still use "burnout" until she asks otherwise.
+**Voice notes for copy:** Calm, creative, meditative — not performance-oriented or fitness-focused. The offer is about reconnecting with yourself, not achieving poses. The audience-first framing is exhaustion / nervous-system recovery. As of the September 2026 "Better Than Fine" rewrite, `/staffroom` is framed for women broadly — not teacher/carer-specific — though Maria's own bio still draws on her classroom-teaching background. **Avoid the word "burnout"** in `/staffroom` copy specifically (Maria's explicit instruction) — use "exhaustion," "running on empty," "depleted," or describe the felt experience directly instead. Other pages/docs may still use "burnout" until she asks otherwise.
 
 ### Content creator (`/brands`)
 

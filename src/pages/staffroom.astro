@@ -1,17 +1,21 @@
 ---
-// "The Staffroom" — monthly membership sales page for teachers.
-// This is the "For teachers" destination in the global Header nav.
-// Route: /staffroom (replaced the old generic /teacher-yoga offerings page,
-// which has been removed — see AGENTS.md).
+// "Better Than Fine" — free community page, formerly "The Staffroom" (a paid
+// monthly membership for teachers). Rewritten September 2026: audience
+// widened from teachers specifically to women more broadly, and the offer
+// is now entirely free (no more €57/month tier). This is the "Better Than
+// Fine" destination in the global Header nav. Route stays /staffroom —
+// only the on-page copy and branding changed, not the URL or layout.
 //
-// Copy is Maria's, provided in full and used close to verbatim — this file
-// is primarily concerned with layout, not rewriting her words. Deliberately
-// avoids the word "burnout" throughout, per her instruction (see AGENTS.md
-// "Voice notes for copy" under The Staffroom).
+// Copy is Maria's, provided in full via a Google Doc rewrite and used close
+// to verbatim — this file is primarily concerned with layout, not rewriting
+// her words. Deliberately avoids the word "burnout" throughout, per her
+// instruction (see AGENTS.md "Voice notes for copy").
 //
-// Images are pulled from Maria's Canva ("Maria _ The staffroom", "The
-// Staffroom header", "the staffroom logo", "Testimonials - Maria website")
-// and saved locally to src/assets/staffroom/.
+// Images are unchanged from the original Staffroom build, pulled from
+// Maria's Canva ("Maria _ The staffroom", "The Staffroom header", "the
+// staffroom logo", "Testimonials - Maria website") and saved locally to
+// src/assets/staffroom/. The header banner graphic still reads "The
+// Staffroom" — Maria hasn't supplied a "Better Than Fine" version yet.
 import Layout from '../layouts/Layout.astro';
 import { Image } from 'astro:assets';
 import maria from '../assets/staffroom/staffroom-hero.png';
@@ -19,10 +23,8 @@ import staffroomHeader from '../assets/staffroom/staffroom-header.png';
 import staffroomLogo from '../assets/staffroom/staffroom-logo.png';
 import staffroomTestimonials from '../assets/staffroom/staffroom-testimonials.png';
 
-// Same Skool link for both — free and paid tiers are both reached from
-// the community's /about page (confirmed with Maria 2026-07-17).
-const CHECKOUT_URL = 'https://www.skool.com/thestaffroom/about';
-const SKOOL_FREE_URL = CHECKOUT_URL;
+// Free community — one link, one CTA everywhere on the page.
+const JOIN_URL = 'https://www.skool.com/thestaffroom/about';
 
 const promises = [
     'You know what your body has been trying to tell you for years.',
@@ -36,58 +38,58 @@ const promises = [
 
 const features = [
     {
-        emoji: '\u{1F4D3}',
-        title: '8 weeks of weekly teachings',
-        body: 'Teachings, body practices, and reflection prompts you can move through at your own pace — twenty minutes if that’s all you have. The body practices are there because clarity doesn’t come from thinking harder. It comes from listening to what’s already in your body. The prompts are there to help you hear it.',
+        emoji: '\u{1F9D8}',
+        title: 'Body-based practices',
+        body: 'Yoga, mindfulness, somatic exercises, and meditation — delivered in a format you can actually use. Twenty minutes if that’s all you have. These are not add-ons. They are the tools that let you hear what you stopped listening to.',
     },
     {
-        emoji: '\u{1F4DE}',
-        title: 'Live calls every two weeks',
-        body: 'Somewhere to bring what comes up, without carrying it alone. Being heard by someone who already knows the feeling — and a room full of people who do too. This is the part that changes the most.',
+        emoji: '\u{1F4D3}',
+        title: 'The Override',
+        body: 'A free classroom: teachings, body practices, and reflection prompts to help you understand why you went quiet — and how to start hearing yourself again. Move through it at your own pace.',
     },
     {
         emoji: '\u{1F91D}',
         title: 'A community that already gets it',
-        body: 'No “have you tried a different school?” No “you’re so lucky to have that job.” Just people who are in the same place — and figuring out who they are on the other side.',
+        body: 'No “have you tried a different job?” No “you’re so lucky to have that career.” Just women who are in the same sentence you are — and who stopped pretending the sentence ends fine.',
     },
     {
-        emoji: '\u{1F331}',
-        title: 'Monthly practices after week 8',
-        body: 'This doesn’t end in 8 weeks. You don’t finish The Staffroom — you keep using it. The point isn’t to complete a programme. It’s a relationship with yourself that doesn’t disappear when the structure does.',
+        emoji: '\u{1F4DE}',
+        title: 'Monthly live practice',
+        body: 'Every month, a live practice session. Somewhere to keep using the tools, stay in the work, and not let the good weeks make you forget why you came.',
     },
 ];
 
 const faqs = [
     {
         q: '“I don’t have time. I’m already exhausted.”',
-        a: 'The Staffroom is designed for exactly this. Twenty minutes at a time. On your own schedule. In the car park after school if that’s the only quiet moment you have. You don’t need more hours in your week — you need to use a few of them on this instead of on something that isn’t working. The practices work best in small doses anyway. Your body needs space, not marathons.',
+        a: 'Better Than Fine is designed for exactly this. Twenty minutes at a time. On your own schedule. In the community, you set the pace. There’s no catching up and no falling behind.',
     },
     {
         q: '“I’ve tried things like this before and nothing changed.”',
-        a: 'Most things treat the outside: different strategies, better limits, new habits. This goes to the part that hasn’t changed no matter what you’ve tried — because the job was never the real problem. The first seven days are free. You can feel the difference for yourself before you commit.',
+        a: 'Most things treat the outside: different strategies, better limits, new habits. This goes to the part that none of those things can reach — the body. Your body has already been trying to tell you something. The practices here are the tools to start hearing it.',
     },
     {
-        q: '“Is this going to tell me I should quit?”',
-        a: 'No. The Staffroom isn’t about leaving. It’s about knowing who you are whether you stay or go. What you do with that clarity is yours. You can go through The Staffroom and choose to stay — and show up completely differently because of it.',
+        q: '“Is this going to tell me I need to quit my job?”',
+        a: 'No. Better Than Fine isn’t about leaving. It’s about knowing who you are whether you stay or go. What you learn here belongs to you, regardless of what you decide.',
     },
     {
-        q: '“I’ve done everything right — the books, the yoga, the courses, the leave. Nothing actually changed. Why would this be different?”',
-        a: 'Because everything you’ve tried has been aimed at the outside. A different school, better habits, more rest, a good summer — they treat the symptoms. The flat feeling isn’t coming from the outside. It’s coming from the part of you that has been signalling something for years that you’ve learned to override. The Staffroom goes there directly. Not to help you cope better with the current situation. To help you hear what the situation has been trying to tell you.',
+        q: '“I’ve done everything right — the books, the yoga, the courses. Nothing actually changed.”',
+        a: 'Because everything you’ve tried has been aimed at the outside. A different setup, better habits, more structure. This goes somewhere different. The body is the access point. Not as a metaphor. Physically. That’s what makes this different from everything else you’ve tried.',
     },
     {
         q: '“I’m not sure I’m ready.”',
-        a: 'You don’t have to be ready. You have to be tired enough of the current answer. You don’t need to be certain. You just need to be curious enough to try.',
+        a: 'You don’t have to be ready. You have to be tired enough of the current answer. You don’t need to know what you want. You just need to be willing to start listening.',
     },
     {
-        q: '“What if I can’t make the live calls?”',
-        a: 'All calls are recorded and available inside the community. You can also send questions in advance if you know you can’t be there live. You won’t miss the session just because you couldn’t attend it in real time.',
+        q: '“What if I can’t make the live sessions?”',
+        a: 'All monthly practices are recorded and available inside the community. You can also send questions or reflections in advance.',
     },
 ];
 ---
 
 <Layout
-    title="The Staffroom — A Monthly Membership for Teachers | Maria Montserrat"
-    description="The Staffroom is a monthly membership for teachers who are still showing up on the outside while quietly disappearing on the inside. Weekly practices, live calls every two weeks, and a community that already gets it."
+    title="Better Than Fine — A Free Community for Women | Maria Montserrat"
+    description="Better Than Fine is a free community for women who are performing fine on the outside and quietly disappearing on the inside. Body-based practices, a free classroom, and a community that already gets it."
     image="/og-staffroom.jpg"
 >
     <!-- ============================ SECTION 1 — HERO ============================ -->
@@ -98,31 +100,33 @@ const faqs = [
             <div class="md:col-span-6">
                 <p class="fade-up flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">
                     <img src={staffroomLogo.src} alt="" class="h-6 w-6 rounded-full shadow-sm" />
-                    The Staffroom &middot; A monthly membership for teachers
+                    Better Than Fine &middot; A free community
                 </p>
                 <h1 class="fade-up-delay-1 mt-6 font-display text-4xl leading-[1.1] text-stone-900 sm:text-5xl md:text-6xl">
                     You’re still showing up. <em class="font-normal text-primary-800">But you stopped being there.</em>
                 </h1>
                 <p class="fade-up-delay-2 mt-8 max-w-xl text-lg leading-relaxed text-stone-800 md:text-xl">
-                    The Staffroom is a monthly membership for teachers who are still performing
-                    fine on the outside — and quietly disappearing on the inside.
+                    Better Than Fine is a free community for women who are performing fine —
+                    and who know, privately, that performing fine and actually feeling fine are
+                    not the same thing.
                 </p>
 
                 <div class="fade-up-delay-3 mt-8 max-w-xl rounded-2xl bg-white/70 p-5 text-sm leading-relaxed text-stone-700 ring-1 ring-stone-900/5 backdrop-blur-sm">
-                    This is not for teachers in crisis. It’s for the ones who are still going,
-                    still smiling at parents’ evening, still marking at 9pm — who sit somewhere
-                    quiet afterwards and think: <em class="text-primary-800">is this it?</em>
+                    This is not for women in crisis. It’s for the ones who are still going,
+                    still excellent at what they do, and quietly asking: <em class="text-primary-800">is this it?</em>
                 </div>
 
                 <div class="fade-up-delay-3 mt-10">
                     <a
-                        href="#join"
+                        href={JOIN_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         class="group inline-flex items-center justify-center rounded-full bg-primary-700 px-8 py-4 text-base font-semibold text-white shadow-lg shadow-primary-700/30 transition hover:bg-primary-800"
                     >
-                        Join the founding month
+                        Join free
                         <svg class="ml-2 h-4 w-4 transition group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 4.293a1 1 0 011.414 0l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414-1.414L13.586 11H4a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
                     </a>
-                    <p class="mt-3 text-sm font-medium text-stone-600">€57/month &middot; first 7 days free</p>
+                    <p class="mt-3 text-sm font-medium text-stone-600">Free. No card. No catch.</p>
                 </div>
             </div>
 
@@ -162,7 +166,7 @@ const faqs = [
     <section class="bg-white py-24 md:py-32">
         <div class="mx-auto max-w-4xl px-6 md:px-10">
             <div class="mx-auto max-w-2xl text-center">
-                <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">After The Staffroom</p>
+                <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">After Better Than Fine</p>
                 <h2 class="mt-4 font-display text-4xl leading-tight text-stone-900 sm:text-5xl">
                     What actually <em class="font-normal text-primary-800">changes</em>.
                 </h2>
@@ -188,36 +192,31 @@ const faqs = [
 
             <div class="mt-10 space-y-6 text-lg leading-relaxed text-stone-700">
                 <p>
-                    You might haven’t had a breakdown. Or maybe you went on stress leave, came
-                    back and still…
+                    Maybe you haven’t had a breakdown. Maybe everything looks completely fine
+                    from the outside.
                 </p>
                 <p>
                     You show up. You answer the emails. You’re good at this.
-                    And nobody sees the part that’s disappearing.
+                    And nobody sees the part that goes very quiet on the commute home.
                 </p>
                 <p>
-                    You’ve tried to fix it. A different school. Fewer hours. A better summer.
-                    The books you almost finished. The journals you kept for two weeks. The
-                    courses you bought on a hard evening and opened twice.
+                    You’ve tried to fix it. A different role. Fewer hours. A better holiday.
+                    The books on your shelf are full of underlined passages. You journalled.
+                    You went to the workshops.
                 </p>
                 <p class="font-semibold text-stone-900">The feeling followed you.</p>
                 <p>
                     So you’ve started to wonder if the problem is you. That you’re not strong
-                    enough for a normal life. That other people manage somehow — and you’re
-                    the one who can’t keep up. That doing everything right — the yoga, the
-                    journalling, the leave, the changes — and still feeling flat means
-                    something is fundamentally wrong with you.
+                    enough, grateful enough, committed enough. That other women seem to manage.
                 </p>
-                <p class="font-display text-2xl italic text-primary-800">It doesn’t.</p>
+                <p class="font-display text-2xl italic text-primary-800">They don’t.</p>
                 <p>
                     Not in the way you’ve been thinking. Not the broken version of you.
-                    The buried one. The one who got quieter and quieter because there was
-                    never any room for her.
+                    The buried one.
                 </p>
                 <p>
                     You’ve been blaming yourself for a signal you were trained not to hear.
-                    Not because you’re weak. Not because the job is wrong. Not because you
-                    chose badly.
+                    Not because something is wrong with you.
                 </p>
                 <p>Because the thing that needs attention isn’t out there.</p>
                 <p class="font-semibold text-stone-900">It’s in here. And nobody has ever asked you to listen to it.</p>
@@ -226,18 +225,18 @@ const faqs = [
             <div class="mt-16 rounded-3xl bg-white p-8 ring-1 ring-stone-900/5 md:p-10">
                 <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">Here’s what’s actually happening</p>
                 <p class="mt-4 text-lg leading-relaxed text-stone-700">
-                    When you give everything — for years, to 28 students a day, to a system
-                    that never stops asking — the part of you that knows what you need gets
-                    quieter and quieter. Not gone. Just very good at being ignored.
+                    When you give everything — for years, to a career that asks everything of
+                    you, to expectations you took on before you knew who you were — your body
+                    learns to stop sending the signals you were trained to ignore.
                 </p>
                 <p class="mt-6 font-display text-3xl leading-snug text-stone-900">
                     The flat feeling isn’t a flaw. <em class="font-normal text-primary-800">It’s a signal.</em>
                 </p>
                 <p class="mt-6 text-lg leading-relaxed text-stone-700">
                     You don’t need to have the answers. You don’t need to have decided
-                    anything. You need to hear yourself again.
+                    anything. You just need somewhere to start hearing yourself again.
                 </p>
-                <p class="mt-4 font-semibold text-stone-900">That’s what The Staffroom is for.</p>
+                <p class="mt-4 font-semibold text-stone-900">That’s what Better Than Fine is for.</p>
             </div>
         </div>
     </section>
@@ -267,13 +266,14 @@ const faqs = [
             <div class="mt-14 rounded-3xl bg-primary-700 p-8 text-white md:p-10">
                 <h3 class="font-display text-2xl">This is for you if…</h3>
                 <p class="mt-4 max-w-3xl leading-relaxed text-primary-50">
-                    This is for you if you’ve tried the leave, the change of school, the
-                    books, the journalling — and still come home flat. You’ve been telling
-                    yourself you’re just tired for longer than you can remember. You’ve
-                    started to wonder whether the problem is you.
+                    This is for you if you’ve tried the books, the courses, the change of
+                    scenery. If you’ve spent years being excellent at performing and stopped
+                    being able to hear what you want. If the question “what would you do if
+                    you quit your job?” makes you go blank.
                 </p>
                 <p class="mt-4 max-w-3xl font-display text-xl italic text-white">
-                    It isn’t. But you won’t believe that until you hear yourself again.
+                    It isn’t a personal failure. But you won’t believe that until you hear
+                    yourself again.
                 </p>
             </div>
         </div>
@@ -288,33 +288,30 @@ const faqs = [
             </h2>
             <div class="mx-auto mt-8 max-w-2xl space-y-5 text-left text-lg leading-relaxed text-stone-700">
                 <p>
-                    I spent six years in classrooms across two countries. I went through two
-                    kinds of exhaustion — the crash (panic attacks, a month home, back before
-                    I was ready because I felt guilty for leaving) and the flat (still showing
-                    up, still functional, just slowly disappearing).
+                    I spent years in classrooms across two countries. I went through two kinds
+                    of exhaustion: the loud kind that everyone sees and nods at, and the flat
+                    kind that nobody talks about.
                 </p>
                 <p>
                     The flat one scared me more. Nobody sees the flat one. You can’t explain
-                    it. And you start to wonder if you’re imagining it.
+                    it. And when you’re still going — still doing the job, still doing it
+                    well — there’s nothing to point at.
                 </p>
                 <p>
                     I left without a plan. I flew to India and got certified as a yoga
-                    instructor. Not because I had a strategy. Because I needed to find out
-                    who I was when nobody needed anything from me.
+                    instructor. Not because I wanted to be a yoga teacher. Because I needed
+                    to learn how to hear myself again. That’s where I found somatic work,
+                    nervous system practices, and a completely different relationship with
+                    my own body. And that’s where I understood that the problem had never
+                    been out there.
                 </p>
                 <p>
                     I’m a certified yoga instructor, mindfulness coach, and nervous system
-                    practitioner. I built The Staffroom because this space didn’t exist when
-                    I needed it. Not a course to get through. Not a community where you
-                    perform being okay. A place to do the actual work, on your own timeline,
-                    with support that doesn’t disappear.
+                    practitioner. I’ve worked with women across three continents.
                 </p>
                 <p class="font-display text-xl italic leading-snug text-primary-800">
                     I’m not here from a mountaintop. I’m one step ahead. And I remember
-                    exactly what the flat felt like.
-                </p>
-                <p class="text-stone-600">
-                    And I remember blaming myself for it. For years.
+                    exactly what it felt like to be where you are.
                 </p>
             </div>
         </div>
@@ -323,9 +320,9 @@ const faqs = [
     <!-- ============================ SECTION 6 — SOCIAL PROOF ============================ -->
     <section class="bg-white py-24 md:py-32">
         <div class="mx-auto max-w-4xl px-6 text-center md:px-10">
-            <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">What teachers say</p>
+            <p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-800">What women say</p>
             <h2 class="mt-4 font-display text-4xl leading-tight text-stone-900 sm:text-5xl">
-                What teachers say when they finally <em class="font-normal text-primary-800">have words for it</em>.
+                What women say when they finally <em class="font-normal text-primary-800">have words for it</em>.
             </h2>
 
             <div class="mt-12 overflow-hidden rounded-3xl shadow-lg shadow-primary-900/10 ring-1 ring-stone-900/5">
@@ -340,8 +337,8 @@ const faqs = [
             </div>
 
             <p class="mx-auto mt-8 max-w-xl text-sm leading-relaxed text-stone-500">
-                These are from teachers who found this work through my content and courses.
-                The Staffroom is new. What it’s built from is not.
+                These are from women who found this work through my content and practices.
+                Better Than Fine is where you come to do it together.
             </p>
         </div>
     </section>
@@ -385,54 +382,30 @@ const faqs = [
             <div class="mx-auto mt-8 max-w-xl space-y-4 text-lg leading-relaxed text-secondary-100">
                 <p>
                     She got quieter when things got heavy. She stopped asking for attention
-                    when there wasn’t room for her. She got very good at being fine.
+                    when the performing started working. She started to think the problem
+                    was her.
                 </p>
-                <p>She started to think the problem was her.</p>
-                <p class="font-semibold text-white">The Staffroom is where you start listening to her again.</p>
+                <p class="font-semibold text-white">Better Than Fine is where you start listening to her again.</p>
                 <p>
                     The signal doesn’t disappear once you start hearing it. Life keeps being
-                    loud. The Staffroom is the place you come back to — every month — when the
-                    noise gets heavy again.
+                    loud. The work keeps asking everything. But once you know how to hear
+                    yourself, you don’t have to wait for everything to calm down first.
                 </p>
             </div>
 
-            <!-- Pricing card -->
+            <!-- Join card (collapsed from the old paid/free split into one free CTA) -->
             <div class="mx-auto mt-12 max-w-lg rounded-3xl bg-white p-8 text-left shadow-xl md:p-10">
-                <p class="text-xs font-semibold uppercase tracking-[0.3em] text-primary-800">Founding month &middot; July 2026</p>
-                <p class="mt-4 font-display text-5xl text-stone-900">€57<span class="text-xl font-sans font-normal text-stone-500">/month</span></p>
-                <p class="mt-2 text-sm text-stone-600">Locked in at this price forever if you join in July.</p>
-                <p class="mt-1 text-sm text-stone-600">From August 1: €77/month.</p>
-                <p class="mt-4 text-sm font-semibold text-stone-900">First 7 days free. Full refund in the first 7 days, no questions asked.</p>
-                <p class="mt-1 text-xs text-stone-500">No minimum commitment. Cancel anytime.</p>
+                <p class="text-xs font-semibold uppercase tracking-[0.3em] text-primary-800">Better Than Fine &middot; A free community</p>
+                <p class="mt-4 font-display text-4xl text-stone-900">Free. No card. No catch.</p>
 
                 <a
-                    href={CHECKOUT_URL}
-                    class="group mt-8 flex items-center justify-center rounded-full bg-primary-700 px-8 py-4 text-base font-semibold text-white shadow-lg shadow-primary-700/30 transition hover:bg-primary-800"
-                >
-                    Join the founding month
-                    <svg class="ml-2 h-4 w-4 transition group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 4.293a1 1 0 011.414 0l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414-1.414L13.586 11H4a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
-                </a>
-            </div>
-
-            <!-- Not ready yet? — free tier on Skool -->
-            <div class="mx-auto mt-10 max-w-lg border-t border-white/15 pt-10 text-left">
-                <p class="font-display text-2xl text-white">Not ready yet?</p>
-                <p class="mt-4 leading-relaxed text-secondary-100">
-                    The free community is where you find out you’re not alone. The full
-                    membership is where you find out who you actually are.
-                </p>
-                <p class="mt-3 leading-relaxed text-secondary-100">
-                    You can join The Staffroom free — the community, the guide, and the
-                    essays — and feel what the space is like before you decide to go deeper.
-                </p>
-                <a
-                    href={SKOOL_FREE_URL}
+                    href={JOIN_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="group mt-6 inline-flex items-center gap-2 text-base font-semibold text-white underline-offset-4 transition hover:underline"
+                    class="group mt-8 flex items-center justify-center rounded-full bg-primary-700 px-8 py-4 text-base font-semibold text-white shadow-lg shadow-primary-700/30 transition hover:bg-primary-800"
                 >
-                    Start free
-                    <svg class="h-4 w-4 transition group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 4.293a1 1 0 011.414 0l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414-1.414L13.586 11H4a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                    Join free
+                    <svg class="ml-2 h-4 w-4 transition group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 4.293a1 1 0 011.414 0l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414-1.414L13.586 11H4a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
                 </a>
             </div>
         </div>
